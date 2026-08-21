@@ -1,0 +1,1140 @@
+#!/usr/bin/env python3
+"""
+build_notebooks_study2.py -- generate the Study 2 notebooks.
+
+Study 2 is a CPU re-analysis of artifacts Study 1 already produced. It needs no
+GPU and trains no models: every measured run's `per_sample/test.parquet` carries
+per-exit predictions (`pred_d1..dK`, `top1p_d*`, `top2p_d*`), the label, and
+eight difficulty scores, all keyed by a global `sample_idx`.
+
+    S2_NB0_Fetch        pull the CIFAR-100 runs from HuggingFace
+    S2_NB1_Reliability  P-1 verify · P0a collinearity · P0b reliability atlas
+    S2_NB2_Ceiling      P1 optimism bias · P1b honest ceiling
+
+Everything that guards the Study 1 notebooks guards these: the embedded-library
+bootstrap with its build stamp (D-62/D-68), the undefined-name check across
+cells (D-82), the Python-3.10 parse gate (D-73), and the column/path/arity
+validator.
+
+    python build_notebooks_study2.py
+"""
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT))
+
+from build_notebooks_in100 import (  # noqa: E402
+    bootstrap, code, md, notebook, paths_cell,
+)
+
+OUT = ROOT / "notebooks_study2"
+
+SCORES = ("msp", "margin", "entropy", "ce_loss", "el2n", "forget_events",
+          "pred_depth", "msc")
+
+
+# ---------------------------------------------------------------------------
+def nb0():
+    return notebook([
+        md("""
+# S2 · NB0 — fetch the Study 1 runs from HuggingFace
+
+Study 2 re-analyses artifacts Study 1 already produced. This pulls them down
+into the layout the library expects, so every later notebook reads local files.
+
+**What is fetched, and what is not.** Only the small artifacts are needed:
+`per_sample/*.parquet`, `metrics/*.csv`, `summary.json`, `config.yaml`, and
+`budgets/`. **Checkpoints are skipped** — Study 2 never runs a model, and they
+are ~95% of the bytes.
+
+If a download fails part way, re-run this cell: it skips runs already complete
+on disk, exactly like `NB6_Publish` does in the other direction.
+"""),
+        code(bootstrap()),
+        code(paths_cell(phase="p1", detect=False)),
+        code("""
+REPO_ID   = 'Shanmuk4622/msc-cifar100'
+REPO_TYPE = 'dataset'
+
+# Study 2 reads parquet and CSV only. Checkpoints are ~95% of the repo and are
+# never opened, so they are excluded rather than downloaded and ignored.
+WANT = ['runs/*/per_sample/*.parquet',
+        'runs/*/per_sample/meta.json',
+        'runs/*/metrics/*.csv',
+        'runs/*/summary.json',
+        'runs/*/config.yaml',
+        'runs/*/config_hash.txt',
+        'budgets/*.json',
+        'analysis/*.csv']
+
+# This notebook is the only one in Study 2 that touches the network, so it turns
+# the offline guard off explicitly and says so (D-83).
+print('offline guard BEFORE:')
+for k, v in M.offline_state().items():
+    print(f'    {k:44s} {v}')
+M.allow_network()
+print()
+
+import os
+HF_TOKEN = os.environ.get('HF_TOKEN')          # a public dataset needs no token
+print('HF_TOKEN found' if HF_TOKEN else 'no HF_TOKEN -- fine for a public repo')
+"""),
+        md("""
+---
+## Download
+
+`snapshot_download` with `allow_patterns` fetches only what is listed above.
+It resumes: files already present and complete are not re-fetched.
+"""),
+        code("""
+from huggingface_hub import snapshot_download
+from pathlib import Path
+
+dest = Path(MSC_ROOT)
+dest.mkdir(parents=True, exist_ok=True)
+
+print(f'fetching {REPO_ID} -> {dest}')
+print('(checkpoints excluded -- Study 2 never runs a model)')
+
+path = snapshot_download(repo_id=REPO_ID, repo_type=REPO_TYPE,
+                         local_dir=str(dest), allow_patterns=WANT,
+                         token=HF_TOKEN, max_workers=4)
+print(f'\\ndownloaded into {path}')
+"""),
+        md("""
+---
+## Verify what landed
+
+Counting files is not verification — a truncated parquet has a size. This opens
+one and checks the columns Study 2 actually depends on.
+"""),
+        code("""
+from pathlib import Path
+import pandas as pd
+
+runs_dir = Path(MSC_ROOT) / 'runs'
+runs = sorted(d.name for d in runs_dir.iterdir() if d.is_dir()) if runs_dir.exists() else []
+print(f'{len(runs)} run folder(s) under {runs_dir}')
+
+with_ps = [r for r in runs
+           if (runs_dir / r / 'per_sample' / 'test.parquet').exists()]
+print(f'{len(with_ps)} have per_sample/test.parquet')
+
+NEED = ['sample_idx', 'label', 'msp', 'margin', 'entropy', 'ce_loss',
+        'el2n', 'forget_events', 'pred_depth', 'msc']
+
+if with_ps:
+    df = pd.read_parquet(runs_dir / with_ps[0] / 'per_sample' / 'test.parquet')
+    missing = [c for c in NEED if c not in df.columns]
+    exits = sorted(c for c in df.columns if c.startswith('pred_d'))
+    print()
+    print(f'sample run: {with_ps[0]}')
+    print(f'  rows            {len(df):,}')
+    print(f'  per-exit cols   {exits}')
+    print(f'  missing scores  {missing if missing else "none"}')
+    print(f'  sample_idx max  {int(df["sample_idx"].max()):,}  (global index)')
+    if missing:
+        print()
+        print('  *** Study 2 cannot run without these columns. Stop here and')
+        print('  *** tell me which are absent -- the plan changes.')
+else:
+    print('nothing downloaded -- check REPO_ID and the network')
+"""),
+        md("""
+---
+## The raw CIFAR-100 images
+
+Only needed if something has to be recomputed from pixels. The re-analysis
+itself does **not** touch images — every quantity Study 2 uses is already in the
+parquet.
+
+Expected: `<DATA_DIR>/cifar-100-python/` containing `train`, `test`, `meta`.
+"""),
+        code("""
+from pathlib import Path
+p = Path(DATA_DIR) / 'cifar-100-python'
+if p.is_dir() and (p / 'train').exists() and (p / 'test').exists():
+    print(f'CIFAR-100 present at {p}')
+else:
+    print(f'CIFAR-100 NOT at {p}')
+    print('Set DATA_DIR in cell 2 to the folder CONTAINING cifar-100-python.')
+    print(r"  e.g. DATA_DIR = r'C:\\Users\\Administrator\\Desktop\\New folder'")
+    print('Not required for the re-analysis -- only if pixels are needed.')
+"""),
+    ])
+
+
+# ---------------------------------------------------------------------------
+def nb1():
+    return notebook([
+        md(f"""
+# S2 · NB1 — reliability atlas
+
+**P-1 verify → P0a collinearity → P0b atlas.** CPU only, no models.
+
+Answers **R1** (does reliability vary?) and **R2** (does ignoring it distort
+comparisons?), and runs the check that decides whether the study is coherent at
+all: if the {len(SCORES)} scores are near-collinear they are not
+{len(SCORES)} scores.
+
+Scores: {', '.join('`' + s + '`' for s in SCORES)}
+"""),
+        code(bootstrap()),
+        code(paths_cell(phase="p1", detect=False)),
+        md("""
+---
+## P-1 — verify the inventory rather than trusting it
+
+`study2/03_INVENTORY.md` claims what exists. Study 1's defects were repeatedly
+"the plan said X, the artifact was Y", so this checks the artifact and refuses
+to continue if it disagrees.
+"""),
+        code(f"""
+SCORES = {list(SCORES)}
+
+import pandas as pd
+from pathlib import Path
+
+runs_dir = Path(MSC_ROOT) / 'runs'
+runs = sorted(d.name for d in runs_dir.iterdir()
+              if d.is_dir() and (d / 'per_sample' / 'test.parquet').exists())
+print(f'{{len(runs)}} measured run(s)')
+
+meta = []
+for r in runs:
+    m = M.parse_run_id(r)
+    meta.append({{'run_id': r, 'arch': m['arch'], 'seed': m['seed'],
+                 'phase': m['phase'], 'method': m['method'],
+                 'dataset': m['dataset']}})
+mdf = pd.DataFrame(meta)
+base = mdf[mdf['method'] == 'base'] if 'method' in mdf else mdf
+# ---- one run per (arch, seed) -------------------------------------------
+# `resnet32x4` and `wrn_40_2` each have FIVE base runs: p0 pilots at seeds 1-2
+# plus p1 at seeds 1-3, with byte-identical configs. So p0-s1 and p1-s1 are the
+# SAME SEED run twice -- a replicate, which measures run-to-run nondeterminism,
+# not seed variation. Pooling them conflated two different quantities and let
+# two architectures supply 40 of 118 ordered pairs. Keep the highest phase.
+_before = len(base)
+base = (base.sort_values('phase')
+            .drop_duplicates(subset=['arch', 'dataset', 'seed'], keep='last'))
+if len(base) < _before:
+    print(f'  dropped {{_before - len(base)}} duplicate (arch, seed) run(s) '
+          f'-- pilot replicates; {{len(base)}} remain')
+per_arch = base.groupby('arch')['seed'].nunique().sort_values(ascending=False)
+print(f'{{per_arch.size}} architecture(s); '
+      f'{{(per_arch >= 2).sum()}} have >=2 seeds (needed for rho_seed)')
+print(per_arch.to_string())
+
+# 03_INVENTORY.md claimed eight scores on the test split. Checked against a
+# real file, that claim is wrong twice:
+#   * `msc` is not stored anywhere -- it is derived, never persisted;
+#   * `el2n` and `forget_events` are TRAINING dynamics. The columns exist in
+#     test.parquet but are entirely NaN -- a test sample has no training
+#     history -- and are populated only in train_holdout.parquet.
+# So ask each split what it actually carries. Never assume again.
+SPLITS = ['test', 'train_holdout']
+AVAIL = {{}}
+for sp in SPLITS:
+    f = runs_dir / runs[0] / 'per_sample' / f'{{sp}}.parquet'
+    if not f.exists():
+        print(f'{{sp:14s}} FILE MISSING'); continue
+    d = pd.read_parquet(f)
+    live, absent, nan_ = [], [], []
+    for c in SCORES:
+        if c not in d.columns:
+            absent.append(c)
+        elif d[c].notna().mean() <= 0.5:
+            nan_.append(c)
+        else:
+            live.append(c)
+    AVAIL[sp] = live
+    print(f'{{sp:14s}} n={{len(d):>6,}}  usable={{len(live)}}/{{len(SCORES)}}  {{live}}')
+    if absent:
+        print(f'{{"":14s}}   not a column : {{absent}}')
+    if nan_:
+        print(f'{{"":14s}}   all-NaN here : {{nan_}}')
+
+exits = sorted(c for c in pd.read_parquet(
+    runs_dir / runs[0] / 'per_sample' / 'test.parquet').columns
+    if c.startswith('pred_d'))
+print(f'\\nper-exit columns: {{exits}}')
+
+if not AVAIL.get('test'):
+    raise RuntimeError('no usable scores on the test split -- stop')
+print()
+print('P-1: inventory CORRECTED against the artifacts, not trusted.')
+print(f'  routing/bias (NB2) can only use test-split scores : {{AVAIL["test"]}}')
+print(f'  the reliability atlas also runs on train_holdout  : '
+      f'{{AVAIL.get("train_holdout", [])}}')
+"""),
+        md("""
+---
+## P0a — are eight scores really eight?
+
+**Run before anything else.** If `msp`, `margin`, `entropy` and `ce_loss` are
+near-collinear — they are all functions of the same softmax — then "eight
+scores" overstates the coverage and the framing has to change
+(`06_RISK_REGISTER.md` §R-02).
+"""),
+        code("""
+import numpy as np
+from scipy.stats import spearmanr
+
+def score_matrix(run_id, split='test', cols=None):
+    cols = cols or SCORES
+    d = pd.read_parquet(runs_dir / run_id / 'per_sample' / f'{split}.parquet')
+    return d.sort_values('sample_idx')[cols].to_numpy(dtype=float)
+
+def collinearity(split, cols):
+    # Pairwise-complete |Spearman|. The previous version used a LISTWISE mask
+    # -- ~isnan(X).any(axis=1) -- which dropped EVERY row on the test split,
+    # because el2n/forget_events are all-NaN there. It then printed n=0, an
+    # all-NaN matrix, and the conclusion "the scores carry distinct
+    # information". A statistic that returns a reassuring answer from zero
+    # samples is the D-37 shape: a check that cannot fail. This one refuses.
+    X = score_matrix(REF_RUN, split, cols)
+    cm = pd.DataFrame(np.nan, index=cols, columns=cols)
+    npair = pd.DataFrame(0, index=cols, columns=cols)
+    for a_ in range(len(cols)):
+        for b_ in range(len(cols)):
+            m_ = ~(np.isnan(X[:, a_]) | np.isnan(X[:, b_]))
+            npair.iloc[a_, b_] = int(m_.sum())
+            if m_.sum() > 100 and X[m_, a_].std() > 0 and X[m_, b_].std() > 0:
+                cm.iloc[a_, b_] = abs(spearmanr(X[m_, a_], X[m_, b_])[0])
+    nmin = int(npair.values.min())
+    if nmin == 0 or bool(cm.isna().all().all()):
+        raise RuntimeError(
+            f'P0a on {split}: no usable correlations (min pairwise n={nmin}). '
+            'Refusing to conclude anything about collinearity.')
+    return cm, nmin
+
+# runs[0] was 'p0-resnet32x4-...-s1' -- a pilot replicate that dedupe had
+# already dropped from `base`. The collinearity matrix was being computed on a
+# run excluded from every other result in this notebook.
+REF_RUN = sorted(base['run_id'])[0]
+print(f'reference run for P0a: {REF_RUN}')
+print()
+
+CM = {}
+for sp, cols in AVAIL.items():
+    if len(cols) < 2:
+        continue
+    cm_, nmin_ = collinearity(sp, cols)
+    CM[sp] = cm_
+    print(f'|Spearman| between scores -- {sp}, run {REF_RUN}  '
+          f'(pairwise, min n={nmin_:,})')
+    print(cm_.round(2).to_string())
+    print()
+
+# The decision is made where all the scores exist. train_holdout carries all
+# seven; the test split carries five and cannot speak about el2n/forget_events.
+if not CM:
+    raise RuntimeError(
+        'P0a: no split has 2+ usable scores, so there is nothing to correlate. '
+        f'Usable per split: { {k: len(v) for k, v in AVAIL.items()} }. '
+        'Refusing to continue rather than reporting an empty result as a pass.')
+DECIDE = 'train_holdout' if 'train_holdout' in CM else sorted(CM)[0]
+cm = CM[DECIDE]
+live = list(cm.index)
+print(f'collinearity decision taken on: {DECIDE}  ({len(live)} scores)')
+
+thr = 0.90
+pairs = [(a_, b_, cm.loc[a_, b_]) for i, a_ in enumerate(live)
+         for b_ in live[i + 1:] if cm.loc[a_, b_] >= thr]
+print()
+if pairs:
+    print(f'near-collinear pairs (|rho| >= {thr}):')
+    for a, b, v in pairs:
+        print(f'    {a:14s} {b:14s} {v:.3f}')
+    print('-> report these as ONE family in the paper; do not claim independence')
+else:
+    print(f'no pair exceeds |rho| = {thr} -- the scores carry distinct information')
+"""),
+        md("""
+---
+## P0b — the reliability atlas
+
+ρ_seed(score, arch): Spearman between the score from two seeds of the same
+architecture, over the samples both measured. Every seed pair, then the mean —
+not just (seed1, seed2), which throws away two thirds of the evidence when
+three seeds exist.
+"""),
+        code("""
+import itertools
+
+rows, skipped = [], []
+for split, cols in AVAIL.items():
+  for (arch, dset), grp in base.groupby(['arch', 'dataset']):
+    ids = sorted(grp['run_id'])
+    if len(ids) < 2:
+        continue
+    frames = {r: pd.read_parquet(
+                   runs_dir / r / 'per_sample' / f'{split}.parquet')
+                   .set_index('sample_idx') for r in ids}
+    for a, b in itertools.combinations(ids, 2):
+        fa, fb = frames[a], frames[b]
+        common = fa.index.intersection(fb.index)
+        for s in cols:
+            va = fa.loc[common, s].to_numpy(dtype=float)
+            vb = fb.loc[common, s].to_numpy(dtype=float)
+            m = ~(np.isnan(va) | np.isnan(vb))
+            # A silently-skipped cell is how el2n and forget_events vanished
+            # from this grid without a word. Record every one.
+            if m.sum() < 100:
+                skipped.append((split, arch, s, f'n={int(m.sum())}')); continue
+            if np.std(va[m]) == 0 or np.std(vb[m]) == 0:
+                skipped.append((split, arch, s, 'zero variance')); continue
+            rho, _ = spearmanr(va[m], vb[m])
+            rows.append({'split': split, 'arch': arch, 'dataset': dset,
+                         'score': s, 'pair': f'{a[-2:]}|{b[-2:]}',
+                         'rho_seed': float(rho), 'n': int(m.sum())})
+
+if skipped:
+    print(f'{len(skipped)} (arch, score) cell(s) skipped:')
+    for sp_, a, sc, why in skipped[:12]:
+        print(f'    {sp_:14s} {a:16s} {sc:14s} {why}')
+    if len(skipped) > 12:
+        print(f'    ... and {len(skipped) - 12} more')
+    print()
+
+pairs_df = pd.DataFrame(rows)
+grid = (pairs_df.groupby(['split', 'arch', 'dataset', 'score'])['rho_seed']
+        .agg(['mean', 'std', 'count']).reset_index()
+        .rename(columns={'mean': 'rho_seed', 'std': 'sd', 'count': 'n_pairs'}))
+M.save_analysis(sess.data_dir, 's2_reliability_grid', grid)
+M.save_analysis(sess.data_dir, 's2_reliability_pairs', pairs_df)
+
+# D3: CIFAR-100 is the main result. ImageNet-100 has 2 archs x 2 seeds =
+# one seed pair each, which cannot carry an interval; it is reported apart
+# rather than averaged into the grid.
+cif = grid[grid['dataset'] == 'cifar100']
+side = grid[grid['dataset'] != 'cifar100']
+
+for sp_ in AVAIL:
+    sub = cif[cif['split'] == sp_]
+    if not len(sub):
+        continue
+    w = sub.pivot(index='arch', columns='score', values='rho_seed')
+    print(f'rho_seed -- CIFAR-100, {sp_} split '
+          f'[{w.shape[0]} archs x {w.shape[1]} scores]')
+    print(w.round(3).to_string())
+    print()
+
+# The test split is what NB2 routes on, so it carries the main R1 verdict.
+main = cif[cif['split'] == 'test']
+wide = main.pivot(index='arch', columns='score', values='rho_seed')
+
+if len(side):
+    sw = (side[side['split'] == 'test']
+          .pivot(index='arch', columns='score', values='rho_seed'))
+    print('ImageNet-100 -- consistency note only, 1 seed pair per arch, no interval')
+    print(sw.round(3).to_string())
+"""),
+        md("""
+---
+## The memorisation effect — and a test of why
+
+`ce_loss` reliability is 0.647 on the test split for `mixer_nano` and 0.108 on
+`train_holdout`. `train_holdout` is **a slice of train, not withheld from it**
+(`msc_lib._in100_loaders`), so the network has fit those samples.
+
+The proposed mechanism is **saturation**: on data it has memorised, a
+high-capacity network is confident on nearly everything, the per-sample ranking
+becomes degenerate, and seed agreement collapses. That is a hypothesis, so the
+cell below tests it rather than asserting it — if the collapse is saturation,
+the drop must track how completely each architecture fits the training data.
+"""),
+        code("""
+rows_m = []
+for (arch, dset), grp in base.groupby(['arch', 'dataset']):
+    if dset != 'cifar100':
+        continue
+    for r in sorted(grp['run_id']):
+        d_tr = pd.read_parquet(runs_dir / r / 'per_sample' / 'train_holdout.parquet')
+        d_te = pd.read_parquet(runs_dir / r / 'per_sample' / 'test.parquet')
+        ks = sorted(int(c.split('_d')[1]) for c in d_tr.columns
+                    if c.startswith('pred_d') and c.split('_d')[1].isdigit())
+        kf = f'pred_d{ks[-1]}'
+        acc_tr = float((d_tr[kf] == d_tr['label']).mean())
+        acc_te = float((d_te[kf] == d_te['label']).mean())
+        # how peaked is the softmax on memorised data?
+        sat = float((d_tr[f'top1p_d{ks[-1]}'] > 0.99).mean())
+        rows_m.append({'arch': arch, 'run_id': r, 'acc_train': acc_tr,
+                       'acc_test': acc_te, 'gap': acc_tr - acc_te,
+                       'frac_conf_over_99': sat})
+
+mem = pd.DataFrame(rows_m).groupby('arch').mean(numeric_only=True)
+drop = (main[main['score'] == 'ce_loss'].set_index('arch')['rho_seed']
+        - grid[(grid['split'] == 'train_holdout') & (grid['dataset'] == 'cifar100')
+               & (grid['score'] == 'ce_loss')].set_index('arch')['rho_seed'])
+mem['rho_drop'] = drop
+mem = mem.dropna().sort_values('rho_drop', ascending=False)
+M.save_analysis(sess.data_dir, 's2_memorisation', mem.reset_index())
+print(mem.round(3).to_string())
+
+for col in ['acc_train', 'gap', 'frac_conf_over_99']:
+    rr, pp = spearmanr(mem[col], mem['rho_drop'])
+    verdict = 'consistent with saturation' if rr > 0.5 and pp < 0.05 else \
+              ('AGAINST saturation' if rr < 0 else 'inconclusive')
+    print(f'  Spearman({col:18s}, rho_drop) = {rr:+.3f}  p = {pp:.4f}   {verdict}')
+print()
+print('If train accuracy and softmax saturation do NOT predict the drop, the')
+print('memorisation story is wrong and must be withdrawn, not reworded.')
+"""),
+        md("""
+---
+## R1 — the verdict
+
+**H1:** ρ_seed varies across the grid by at least **0.15**.
+"""),
+        code("""
+vals = main['rho_seed'].dropna()          # CIFAR-100 only -- decision D3
+rng = float(vals.max() - vals.min())
+by_score = main.groupby('score')['rho_seed'].agg(['min', 'max', 'mean'])
+by_score['range'] = by_score['max'] - by_score['min']
+
+print(by_score.round(3).sort_values('range', ascending=False).to_string())
+print()
+print(f'grid range  {rng:.3f}   (H1 threshold 0.15)')
+print(f'H1: {"SUPPORTED" if rng >= 0.15 else "FALSIFIED"}')
+if rng < 0.15:
+    print()
+    print('R1 is a null. Report it as one -- do not re-cut looking for a')
+    print('positive (02_PROTOCOL stopping rule 1). R3 continues regardless.')
+"""),
+    ])
+
+
+# ---------------------------------------------------------------------------
+def nb2():
+    return notebook([
+        md("""
+# S2 · NB2 — the optimism bias
+
+**The centrepiece.** An oracle ceiling computed from the same seed it routes is
+optimistically biased: it partly routes on that model's own noise, which no
+deployable router could have.
+
+```
+in-seed   oracle : score from seed i  -> routes seed i's model   (optimistic)
+cross-seed oracle: score from seed j  -> routes seed i's model   (honest)
+optimism bias    = in-seed - cross-seed            at matched FLOPs
+```
+
+Answers **R3**, **R4** and **R5**. CPU only — per-exit predictions are already
+in the parquet, so no model is loaded.
+"""),
+        code(bootstrap()),
+        code(paths_cell(phase="p1", detect=False)),
+        code("""
+# 03_INVENTORY.md claimed eight scores. It was an unverified claim: `msc` is
+# not a stored column, and `el2n`/`forget_events` are NaN on the test split.
+# Ask the artifact instead of trusting the document.
+WANTED = ['msp', 'margin', 'entropy', 'ce_loss', 'el2n', 'forget_events',
+          'pred_depth', 'msc']
+
+import numpy as np, pandas as pd, itertools
+from pathlib import Path
+
+runs_dir = Path(MSC_ROOT) / 'runs'
+runs = sorted(d.name for d in runs_dir.iterdir()
+              if d.is_dir() and (d / 'per_sample' / 'test.parquet').exists())
+meta = pd.DataFrame([{**M.parse_run_id(r), 'run_id': r} for r in runs])
+
+_probe = pd.read_parquet(runs_dir / runs[0] / 'per_sample' / 'test.parquet')
+absent = [c for c in WANTED if c not in _probe.columns]
+allnan = [c for c in WANTED if c in _probe.columns
+          and _probe[c].notna().mean() <= 0.5]
+SCORES = [c for c in WANTED if c not in absent and c not in allnan]
+if absent:
+    print(f'not a column at all      : {absent}')
+if allnan:
+    print(f'NaN on the test split    : {allnan}  (training-set quantities)')
+print(f'usable scores            : {SCORES}  ({len(SCORES)} of {len(WANTED)})')
+if not SCORES:
+    raise RuntimeError('no usable score columns -- refusing to continue')
+base = meta[meta['method'] == 'base']
+# ---- one run per (arch, seed) -------------------------------------------
+# `resnet32x4` and `wrn_40_2` each have FIVE base runs: p0 pilots at seeds 1-2
+# plus p1 at seeds 1-3, with byte-identical configs. So p0-s1 and p1-s1 are the
+# SAME SEED run twice -- a replicate, which measures run-to-run nondeterminism,
+# not seed variation. Pooling them conflated two different quantities and let
+# two architectures supply 40 of 118 ordered pairs. Keep the highest phase.
+_before = len(base)
+base = (base.sort_values('phase')
+            .drop_duplicates(subset=['arch', 'dataset', 'seed'], keep='last'))
+if len(base) < _before:
+    print(f'  dropped {_before - len(base)} duplicate (arch, seed) run(s) '
+          f'-- pilot replicates; {len(base)} remain')
+print(f'{len(base)} base run(s), {base["arch"].nunique()} architecture(s)')
+"""),
+        md("""
+---
+## Routing, from the parquet alone
+
+`pred_dk == label` gives per-exit correctness; `budgets/{arch}.json` gives the
+cost ρ of each exit. Routing by any score is a sort on that column. No model is
+needed, which is why this is minutes rather than GPU-hours.
+
+**Lower score = route earlier**, so scores where *high* means *easy*
+(`msp`, `margin`) are negated. The direction is asserted, not assumed — a
+sign error here would invert the whole result.
+"""),
+        code("""
+HIGH_MEANS_EASY = {'msp', 'margin'}      # everything else: high = hard
+
+def exit_tables(run_id):
+    d = pd.read_parquet(runs_dir / run_id / 'per_sample' / 'test.parquet')
+    d = d.sort_values('sample_idx').reset_index(drop=True)
+    ks = sorted(int(c.split('_d')[1]) for c in d.columns
+                if c.startswith('pred_d') and c.split('_d')[1].isdigit())
+    correct = np.stack([(d[f'pred_d{k}'].to_numpy() == d['label'].to_numpy())
+                        for k in ks], axis=1).astype(float)
+    conf = np.stack([d[f'top1p_d{k}'].to_numpy() for k in ks], axis=1)
+    return d, correct, conf, ks
+
+def _cost(k_assign, rho):
+    return float(np.mean(np.asarray(rho)[k_assign]))
+
+def _cost_of_counts(counts, rho):
+    counts = np.asarray(counts, dtype=float)
+    return float((counts * np.asarray(rho)).sum() / counts.sum())
+
+def route_by(rank, correct, rho, target_rho, all_exits=True):
+    '''Route each sample to an exit so the MEAN cost equals target_rho.
+    Samples with the lowest `rank` exit earliest.
+
+    all_exits=True  -- every one of the K exits is reachable (what an early-exit
+                       system actually does).
+    all_exits=False -- the original two-exit split (exit 0 or exit K-1) kept so
+                       the first run's numbers remain reproducible.
+    '''
+    rank = np.asarray(rank, dtype=float)
+    n, K = correct.shape
+    u = np.empty(n)
+    u[np.argsort(rank, kind='stable')] = np.arange(n) / max(n - 1, 1)
+    lo, hi = 0.0, 1.0
+    for _ in range(60):
+        t = (lo + hi) / 2
+        if all_exits:
+            k_assign = np.clip((u * K * t * 2).astype(int), 0, K - 1)
+        else:
+            k_assign = np.where(u >= 1.0 - t, K - 1, 0)
+        c = _cost(k_assign, rho)
+        if c < target_rho: lo = t
+        else: hi = t
+    return float(correct[np.arange(n), k_assign].mean()), c
+
+def route_confidence(conf, correct, rho, target_rho):
+    '''The baseline the field actually deploys: exit at the FIRST exit whose
+    top-1 probability clears a threshold. Crucially this reads confidence at
+    the EARLY exit, so it is computable without running the rest of the net.
+
+    The first version of this notebook used `-conf[:, -1]` -- the FINAL exit's
+    confidence -- as the baseline. That needs a full forward pass to evaluate,
+    so it is an oracle, not a baseline, and it made every headroom number a
+    comparison between two oracles.
+    '''
+    n, K = correct.shape
+    lo, hi = 0.0, 1.0
+    for _ in range(60):
+        th = (lo + hi) / 2
+        fires = conf >= th
+        fires[:, -1] = True                    # the last exit always answers
+        k_assign = fires.argmax(axis=1)
+        c = _cost(k_assign, rho)
+        if c < target_rho: lo = th
+        else: hi = th
+    counts = np.bincount(k_assign, minlength=K)
+    return float(correct[np.arange(n), k_assign].mean()), c, counts
+
+def route_oracle(correct_choose, correct_eval, rho, target_rho):
+    '''The real oracle ceiling at a budget, by Lagrangian relaxation.
+
+    Choose an exit per sample to maximise expected correctness subject to a
+    mean-cost constraint:   max_k  correct[i,k] - lambda * rho[k],  bisect
+    lambda until the mean cost hits the budget. Because it is a maximum over
+    EVERY assignment meeting the budget, it dominates any particular router --
+    including a confidence threshold. That is what makes it a ceiling.
+
+    Two earlier attempts were not ceilings and both produced negative headroom:
+      1. sorting samples by a per-SAMPLE difficulty score, while the baseline
+         thresholded per-EXIT confidence -- the baseline was better informed;
+      2. forcing the oracle through the baseline's exit histogram -- filling
+         exits greedily by cheapest-correct-exit is a heuristic, not the
+         optimum, and canary 10 showed it losing by up to 3.2 points.
+
+    `correct_choose` picks the exits, `correct_eval` scores them. Passing the
+    same array gives the optimistic in-seed oracle; passing another seed's
+    correctness gives the honest cross-seed one.
+    '''
+    rho = np.asarray(rho, dtype=float)
+    n_ = correct_choose.shape[0]
+
+    def assign(lam):
+        return (correct_choose - lam * rho[None, :]).argmax(axis=1)
+
+    lo, hi = 0.0, 100.0
+    for _ in range(80):
+        lam = (lo + hi) / 2
+        if float(rho[assign(lam)].mean()) > target_rho: lo = lam
+        else: hi = lam
+    k = assign(hi)                       # cost <= target
+    k_rich = assign(lo)                  # cost >= target
+
+    # The argmax jumps in steps, so bisection typically lands UNDER budget --
+    # canary 12 caught it at 0.608 against a target of 0.65. Leftover budget
+    # understates the ceiling, so spend it: upgrade the samples with the best
+    # correctness gain per unit of extra compute until the budget is used.
+    idx = np.arange(n_)
+    cand = np.nonzero(k_rich != k)[0]
+    if len(cand):
+        dcost = rho[k_rich[cand]] - rho[k[cand]]
+        dgain = (correct_choose[cand, k_rich[cand]]
+                 - correct_choose[cand, k[cand]])
+        keep = dcost > 1e-12
+        cand, dcost, dgain = cand[keep], dcost[keep], dgain[keep]
+        if len(cand):
+            room = (target_rho - float(rho[k].mean())) * n_
+            for t in np.argsort(-(dgain / dcost), kind='stable'):
+                if dcost[t] > room:
+                    continue
+                k[cand[t]] = k_rich[cand[t]]
+                room -= dcost[t]
+                if room <= 1e-12:
+                    break
+    return float(correct_eval[idx, k].mean()), float(rho[k].mean())
+
+def oracle_rank(correct):
+    '''The cheapest exit at which the sample is ACTUALLY CORRECT (K if never).
+
+    This is what the early-exit literature means by an oracle -- "exit at the
+    first layer whose prediction matches the final one" (08_RELATED_WORK.md S1)
+    -- and it is per-EXIT information, K numbers per sample.
+
+    Everything measured before this used a per-SAMPLE difficulty score as the
+    "oracle" while the baseline thresholded per-EXIT confidence. The baseline
+    knew "am I right at exit k"; the score only knew "is this sample generically
+    hard". The baseline was strictly better informed, so the headroom came out
+    at -8 accuracy points -- which is a real statement about difficulty scores,
+    but is NOT a ceiling and must never be reported as one.
+    '''
+    correct = np.asarray(correct)
+    n_, K_ = correct.shape
+    ever = correct.any(axis=1)
+    return np.where(ever, correct.argmax(axis=1), K_).astype(float)
+
+def route_matched(rank, correct, counts):
+    '''Route by `rank` using EXACTLY the exit histogram `counts`.
+
+    Why this exists. A per-sample difficulty score carries ONE number per
+    sample; confidence carries K (one per exit). So a confidence threshold can
+    choose any exit histogram that meets the budget, while a sort on a
+    difficulty score was being forced through a rigid quantile spread -- 20% of
+    samples at every exit at rho=0.6. Comparing them then measures the
+    MECHANISM, not the signal, and produced -10 accuracy points for every score
+    at every budget: an oracle apparently losing to a threshold, which cannot
+    happen.
+
+    Fixing that means holding the mechanism constant. We take the baseline's
+    own exit histogram and give the score the same one, so the cost is
+    identical BY CONSTRUCTION -- no bisection, no residual budget mismatch --
+    and the only thing that differs is WHICH samples go where. That is the
+    question the study is actually asking.
+    '''
+    rank = np.asarray(rank, dtype=float)
+    n = len(rank)
+    order = np.argsort(rank, kind='stable')     # easiest first
+    k_assign = np.empty(n, dtype=int)
+    pos = 0
+    for k, cnt in enumerate(counts):            # cheapest exit to the easiest
+        cnt = int(cnt)
+        k_assign[order[pos:pos + cnt]] = k
+        pos += cnt
+    if pos < n:
+        k_assign[order[pos:]] = len(counts) - 1
+    return float(correct[np.arange(n), k_assign].mean())
+
+print('routing helpers defined -- correctness and cost come from the parquet')
+print('  baseline = threshold on EARLY-exit confidence (deployable)')
+print('  score routing = baseline exit histogram, samples chosen by score')
+print('  TRUE oracle   = Lagrangian max over every assignment meeting the budget')
+"""),
+        md("""
+---
+## The bias, both directions
+
+R-03 in the risk register: seeds differ in accuracy, so routing seed *i* with
+seed *j*'s score could look worse simply because *j* is a worse model. A real
+optimism bias is **symmetric**; an accuracy confound is not. Both directions are
+computed and reported.
+"""),
+        code("""
+# The corpus is MIXED: 15 CIFAR-100 architectures and 2 ImageNet-100 ones.
+# `sess.budgets(arch)` uses the SESSION's dataset, which paths_cell set to
+# imagenet100 -- so it asked the imagenet zoo for `convnext_femto` and raised.
+# A budget belongs to the RUN, not to the session.
+_bud = {}
+def rho_for(arch, dataset):
+    if (arch, dataset) not in _bud:
+        b = M.load_or_build_budgets(arch, sess.work, dataset)
+        _bud[(arch, dataset)] = list(b['axes']['depth']['rho'])
+    return _bud[(arch, dataset)]
+
+TARGET_RHO = 0.80          # the operating point; the full curve comes next
+
+rows, orows = [], []
+for (arch, dset), grp in base.groupby(['arch', 'dataset']):
+    ids = sorted(grp['run_id'])
+    if len(ids) < 2:
+        continue
+    try:
+        rho = rho_for(arch, dset)
+    except Exception as e:
+        print(f'  SKIP {arch} ({dset}): {type(e).__name__}: {str(e)[:70]}')
+        continue
+    tab = {r: exit_tables(r) for r in ids}
+    for i, j in itertools.permutations(ids, 2):
+        di, ci, confi, _ = tab[i]
+        dj, _, _, _ = tab[j]
+        common = di['sample_idx'].isin(dj['sample_idx']).to_numpy()
+        base_conf, _, counts = route_confidence(confi[common], ci[common],
+                                                rho, TARGET_RHO)
+
+        # seed j's per-exit correctness, aligned onto seed i's common samples
+        idx_common = di['sample_idx'].to_numpy()[common]
+        posj = pd.Series(np.arange(len(dj)), index=dj['sample_idx'].to_numpy())
+        cj_al = tab[j][1][posj.loc[idx_common].to_numpy()]
+
+        # THE oracle: cheapest correct exit. In-seed = optimistic (it is scored
+        # from the very model it routes); cross-seed = honest.
+        a_in_true, c_in = route_oracle(ci[common], ci[common], rho, TARGET_RHO)
+        a_cx_true, c_cx = route_oracle(cj_al,      ci[common], rho, TARGET_RHO)
+        # An in-seed oracle knows this model's own correctness at every exit and
+        # spends an identical budget. It cannot lose to a threshold on that same
+        # model's confidence. If it does, the harness is broken, not the field.
+        if a_in_true < base_conf - 1e-6 and c_in <= _cost_of_counts(counts, rho) + 1e-6:
+            raise RuntimeError(
+                f'{arch} {i}: in-seed oracle {a_in_true:.4f} < confidence '
+                f'baseline {base_conf:.4f} at no greater cost '
+                f'({c_in:.4f} vs {_cost_of_counts(counts, rho):.4f}). The '
+                'oracle is a maximum over all assignments, so this is '
+                'impossible -- the routing harness is wrong.')
+        ci_c = ci[common]
+        final_ok = ci_c[:, -1]
+        early_ok = ci_c[:, :-1].max(axis=1)
+        orows.append({'acc_full': float(final_ok.mean()),
+                      'acc_best_exit': float(ci_c.mean(axis=0).max()),
+                      'frac_early_saves': float(
+                          ((early_ok > 0) & (final_ok == 0)).mean()),
+                      'arch': arch, 'dataset': dset, 'model_seed': i[-2:],
+                      'score_seed': j[-2:], 'oracle_in': a_in_true,
+                      'oracle_cross': a_cx_true, 'baseline': base_conf,
+                      'bias_true': a_in_true - a_cx_true,
+                      'ceiling_honest': a_cx_true - base_conf,
+                      'ceiling_optimistic': a_in_true - base_conf})
+        for s in SCORES:
+            sign = -1.0 if s in HIGH_MEANS_EASY else 1.0
+            in_seed = sign * di[s].to_numpy(dtype=float)[common]
+            cross   = sign * dj.set_index('sample_idx').loc[
+                di['sample_idx'][common], s].to_numpy(dtype=float)
+            if np.isnan(in_seed).all() or np.isnan(cross).all():
+                continue
+            a_in = route_matched(np.nan_to_num(in_seed, nan=np.inf),
+                                 ci[common], counts)
+            a_cx = route_matched(np.nan_to_num(cross, nan=np.inf),
+                                 ci[common], counts)
+            rows.append({'arch': arch, 'dataset': dset, 'score': s,
+                         'model_seed': i[-2:],
+                         'score_seed': j[-2:], 'in_seed': a_in,
+                         'cross_seed': a_cx, 'bias': a_in - a_cx,
+                         'msp_baseline': base_conf,
+                         'headroom_honest': a_cx - base_conf})
+
+bias = pd.DataFrame(rows)
+M.save_analysis(sess.data_dir, 's2_optimism_bias', bias)
+
+orc = pd.DataFrame(orows)
+M.save_analysis(sess.data_dir, 's2_true_oracle', orc)
+oc = orc[orc['dataset'] == 'cifar100']
+print()
+print('=== THE ORACLE CEILING (cheapest correct exit, matched budget) ===')
+print(f'{len(oc)} (arch, seed-pair) rows, CIFAR-100, rho = {TARGET_RHO}')
+# Levels and deltas printed separately. A median of differences is NOT the
+# difference of medians -- the first version printed 78.30 %, 62.39 % and
+# "+12.20 pt" together, and those do not subtract (78.30-62.39 = 15.91). A
+# reader checking the arithmetic concludes the table is broken.
+print('  medians of the LEVELS:')
+print(f'    confidence baseline        : {oc["baseline"].median()*100:6.2f} %')
+print(f'    oracle, in-seed            : {oc["oracle_in"].median()*100:6.2f} %')
+print(f'    oracle, cross-seed (honest): {oc["oracle_cross"].median()*100:6.2f} %')
+print('  medians of the PER-RUN DIFFERENCES (what the hypotheses test):')
+print(f'    in-seed  - baseline        : '
+      f'{oc["ceiling_optimistic"].median()*100:+6.2f} pt')
+print(f'    cross-seed - baseline      : '
+      f'{oc["ceiling_honest"].median()*100:+6.2f} pt')
+print()
+print(f'  OPTIMISM BIAS (in - cross) : '
+      f'{oc["bias_true"].median()*100:+.3f} accuracy points')
+print(f'  share of the apparent headroom that is optimism: '
+      f'{100*oc["bias_true"].median()/max(oc["ceiling_optimistic"].median(),1e-9):.1f} %')
+
+# ---- the reference line that decides whether any of this is real ---------
+# An oracle that beats the network's OWN full-compute accuracy is not finding
+# headroom; it is exploiting samples where an early exit happens to be right
+# while the final layer is wrong. That is per-exit noise -- unavailable to any
+# router, and non-transferable across seeds by definition. If the in-seed
+# oracle sits above full compute, the optimism bias measures noise-harvesting,
+# which IS the paper's claim, but it has to be shown rather than assumed.
+print()
+print('--- reference lines (same runs, same samples) ---')
+print(f'  full compute, final exit   : {oc["acc_full"].median()*100:.2f} %')
+print(f'  best single exit, no routing: {oc["acc_best_exit"].median()*100:.2f} %')
+above = float((oc['oracle_in'] > oc['acc_full']).mean())
+print(f'  in-seed oracle ABOVE full compute in {above*100:.0f}% of runs '
+      f'(median {(oc["oracle_in"] - oc["acc_full"]).median()*100:+.2f} pt)')
+print(f'  samples where an early exit is right and the FINAL is wrong: '
+      f'{oc["frac_early_saves"].median()*100:.2f} %')
+print('  ^ this is the pool the in-seed oracle harvests from.')
+
+# If oracle_in is exactly acc_full + frac_early_saves, it is simply
+# P(correct at ANY exit): the rho constraint is inactive, the oracle spends
+# LESS than the baseline while scoring higher, and "matched FLOPs" is the wrong
+# phrase. It stays a valid upper bound, and a conservative one -- the baseline
+# at the oracle's lower cost would be worse still.
+slack = float((oc['oracle_in'] - oc['acc_full']
+               - oc['frac_early_saves']).abs().max())
+if slack < 1e-9:
+    print()
+    print(f'  NOTE: the rho={TARGET_RHO} budget NEVER BINDS for the in-seed oracle.')
+    print('  oracle_in == P(correct at ANY exit) exactly, on every run, so this')
+    print('  is the UNCONSTRAINED bound and is not a matched-FLOPs comparison.')
+
+print()
+print('--- per architecture (is the bias driven by a few?) ---')
+pa = (oc.groupby('arch')[['ceiling_optimistic', 'ceiling_honest', 'bias_true']]
+        .median() * 100)
+print(pa.round(2).sort_values('bias_true', ascending=False).to_string())
+print(f'{len(bias)} (arch, score, seed-pair) rows')
+print(bias.groupby('score')[['bias', 'headroom_honest']].mean().round(4).to_string())
+"""),
+        md("""
+---
+## R3 — is the in-seed oracle optimistic?
+
+**H3:** median bias ≥ **0.5 accuracy points** and > 0 for at least 6 of 8 scores.
+
+Either answer is reportable: a large bias means the field's oracle bounds are
+inflated; a bias of zero validates a practice nobody had checked.
+"""),
+        code("""
+med = bias['bias'].median() * 100
+per_score = bias.groupby('score')['bias'].median() * 100
+n_pos = int((per_score > 0).sum())
+
+print(per_score.round(3).sort_values(ascending=False).to_string())
+print()
+print(f'median bias over the whole grid : {med:+.3f} accuracy points')
+print(f'scores with positive bias       : {n_pos} of {len(per_score)}')
+print(f'H3 (>= 0.5 pt AND >= 6 of 8)    : '
+      f'{"SUPPORTED" if (med >= 0.5 and n_pos >= 6) else "NOT SUPPORTED"}')
+print()
+print('symmetry check (R-03): a real bias is direction-symmetric;')
+print('an accuracy confound is not.')
+sym = bias.groupby(['arch', 'score']).apply(
+    lambda g: g['bias'].std(), include_groups=False)
+print(f'  mean within-pair sd of bias: {sym.mean()*100:.3f} pt')
+"""),
+        md("""
+---
+## R5 — after correction, is there headroom?
+
+**H5:** no score's **cross-seed** oracle beats `msp` by more than 1.0 point.
+
+This is the gate. If none clears it, no method is built and the bound is the
+result (`02_PROTOCOL.md` stopping rule 2).
+"""),
+        code("""
+hon = bias.groupby('score')['headroom_honest'].median() * 100
+print(hon.round(3).sort_values(ascending=False).to_string())
+n = int(bias['arch'].nunique())
+se2 = 2 * (0.5 / np.sqrt(10000)) * 100      # 2 SE on an accuracy diff, 10k samples
+print()
+print(f'noise floor (2 SE, 10k samples): +/-{se2:.3f} pt')
+print(f'best honest headroom           : {hon.max():+.3f} pt  ({hon.idxmax()})')
+print(f'H5 (nothing clears +1.0 pt)    : '
+      f'{"SUPPORTED -- no method is built" if hon.max() < 1.0 else "FALSIFIED"}')
+# ---- what clearing the gate does and does NOT license -------------------
+# `pred_depth` is not a deployable routing signal. prediction_depth() runs a
+# kNN probe over the features of EVERY layer and targets the network's own
+# final answer, so obtaining it costs a full forward pass -- a router that
+# needs the whole network to decide where to stop saves nothing. It is the
+# textbook Oracle-EE rule (08_RELATED_WORK.md S1) wearing a score's clothes.
+#
+# So a large number here is a CEILING, not a method. Read it as: this much
+# accuracy is on the table at this budget for a router that could predict
+# prediction depth from cheap early features. That is the follow-up question,
+# and it is worth asking precisely because the ceiling is not flat.
+ORACLE_ONLY = {'pred_depth'}
+deployable = hon.drop(index=[s_ for s_ in ORACLE_ONLY if s_ in hon.index])
+
+print()
+print(f'  oracle-only signals (need full compute to evaluate): {sorted(ORACLE_ONLY)}')
+print(f'  best DEPLOYABLE headroom : {deployable.max():+.3f} pt  ({deployable.idxmax()})')
+print(f'  ceiling from the oracle  : {hon.max():+.3f} pt  ({hon.idxmax()})')
+if hon.max() >= 1.0 and deployable.max() < 1.0:
+    print()
+    print('  -> The GATE IS AMBIGUOUS and must not be read as "build a method".')
+    print('     No deployable score clears +1.0; the oracle clears it by a lot.')
+    print('     That is a statement about headroom, not about any method, and')
+    print('     it contradicts Study 1 B11 (+0.00007) -- which used MSC, a')
+    print('     cost-normalised aggregate, where this uses the raw per-sample')
+    print('     sufficient depth. Chase the discrepancy before building.')
+"""),
+        md("""
+---
+## R4 — does the bias follow reliability?
+
+**H4:** bias correlates with (1 − ρ_seed) at Spearman ≥ 0.5.
+
+If it holds, two observations become one mechanism — and ρ_seed becomes a cheap
+predictor of how inflated a published oracle bound is.
+
+n is small. The scatter is reported, not just the coefficient.
+"""),
+        md("""
+---
+## R-04 — the operating point, not one point
+
+A ceiling measured at a single budget is one point on a curve. Study 1's B11
+lived at rho = 0.806 and concluded there was no headroom anywhere.
+"""),
+        code("""
+sweep = []
+for tr in [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95]:
+    for (arch, dset), grp in base.groupby(['arch', 'dataset']):
+        if dset != 'cifar100':
+            continue
+        ids = sorted(grp['run_id'])
+        if len(ids) < 2:
+            continue
+        try:
+            rho = rho_for(arch, dset)
+        except Exception:
+            continue
+        i, j = ids[0], ids[1]
+        di, ci, confi, _ = exit_tables(i)
+        dj, _, _, _ = exit_tables(j)
+        common = di['sample_idx'].isin(dj['sample_idx']).to_numpy()
+        b, _, cnts = route_confidence(confi[common], ci[common], rho, tr)
+        for sc in SCORES:
+            sign = -1.0 if sc in HIGH_MEANS_EASY else 1.0
+            cross = sign * dj.set_index('sample_idx').loc[
+                di['sample_idx'][common], sc].to_numpy(dtype=float)
+            if np.isnan(cross).all():
+                continue
+            a = route_matched(np.nan_to_num(cross, nan=np.inf), ci[common], cnts)
+            sweep.append({'target_rho': tr, 'arch': arch, 'score': sc,
+                          'headroom': (a - b) * 100})
+
+sw = pd.DataFrame(sweep)
+M.save_analysis(sess.data_dir, 's2_headroom_sweep', sw)
+piv = sw.groupby(['target_rho', 'score'])['headroom'].median().unstack()
+print('median honest headroom (accuracy points) vs compute budget')
+print(piv.round(2).to_string())
+print()
+print('If the curve is flat everywhere, the bound is the paper. If headroom')
+print('appears in a region, that region becomes the subject (R-04).')
+"""),
+        code("""
+from scipy.stats import spearmanr
+grid = pd.read_csv(Path(sess.data_dir) / 'analysis' / 's2_reliability_grid.csv')
+grid = grid[(grid['dataset'] == 'cifar100') & (grid['split'] == 'test')]  # D3
+j = (bias[bias['dataset'] == 'cifar100']
+     .groupby(['arch', 'score'])['bias'].median().reset_index()
+     .merge(grid[['arch', 'score', 'rho_seed']], on=['arch', 'score']))
+j['unreliability'] = 1 - j['rho_seed']
+M.save_analysis(sess.data_dir, 's2_bias_vs_reliability', j)
+
+m = j[['unreliability', 'bias']].dropna()
+r, p = spearmanr(m['unreliability'], m['bias'])
+print(f'n = {len(m)} (arch, score) cells')
+print(f'Spearman(1 - rho_seed, bias) = {r:+.3f}   p = {p:.4f}')
+print(f'H4 (>= 0.5): {"SUPPORTED" if r >= 0.5 else "NOT SUPPORTED"}')
+
+# The test above uses the per-SCORE bias. The ORACLE bias is the study's actual
+# quantity, so test that too rather than letting the reader assume they agree.
+try:
+    orc2 = pd.read_csv(Path(sess.data_dir) / 'analysis' / 's2_true_oracle.csv')
+    orc2 = orc2[orc2['dataset'] == 'cifar100']
+    rel = (grid[grid['score'] == 'ce_loss'][['arch', 'rho_seed']]
+           .drop_duplicates('arch'))
+    jj = (orc2.groupby('arch')['bias_true'].median().reset_index()
+          .merge(rel, on='arch'))
+    r2, p2 = spearmanr(1 - jj['rho_seed'], jj['bias_true'])
+    print()
+    print(f'  same test on the ORACLE bias: rho = {r2:+.3f}  p = {p2:.4f}  '
+          f'(n = {len(jj)} architectures)')
+except Exception as e:
+    print(f'  [oracle-bias variant skipped: {type(e).__name__}: {e}]')
+print()
+print('per-score medians (the scatter behind the number):')
+print(j.groupby('score')[['rho_seed', 'bias']].median().round(4).to_string())
+"""),
+    ])
+
+
+NOTEBOOKS = {
+    "S2_NB0_Fetch.ipynb": nb0,
+    "S2_NB1_Reliability.ipynb": nb1,
+    "S2_NB2_Ceiling.ipynb": nb2,
+}
+
+
+def main() -> int:
+    OUT.mkdir(parents=True, exist_ok=True)
+    for name, fn in NOTEBOOKS.items():
+        nb = fn()
+        (OUT / name).write_text(json.dumps(nb, indent=1), encoding="utf-8")
+        nc = sum(1 for c in nb["cells"] if c["cell_type"] == "code")
+        nm = sum(1 for c in nb["cells"] if c["cell_type"] == "markdown")
+        kb = (OUT / name).stat().st_size / 1024
+        print(f"  {name:28s} {nc:2d} code + {nm:2d} md   {kb:6.0f} KB")
+
+    print("\n  checking for names no earlier cell defines")
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "check_names.py")]
+                       + [str(f) for f in sorted(OUT.glob("S2_*.ipynb"))],
+                       capture_output=True, text=True)
+    print(r.stdout.rstrip() or r.stderr.rstrip())
+    if r.returncode != 0:
+        print("  Generation refused.")
+        return 1
+
+    print("\n  parsing every cell as Python 3.10")
+    import ast
+    bad = 0
+    for f in sorted(OUT.glob("S2_*.ipynb")):
+        for ci, c in enumerate(json.loads(f.read_text(encoding="utf-8"))["cells"]):
+            if c.get("cell_type") != "code":
+                continue
+            try:
+                ast.parse("".join(c.get("source", [])), feature_version=(3, 10))
+            except SyntaxError as e:
+                bad += 1
+                print(f"  [FAIL] {f.name} cell {ci}: {e.msg} (line {e.lineno})")
+                print(f"         {(e.text or '').strip()[:88]}")
+    if bad:
+        print(f"\n  {bad} cell(s) do not parse. Generation refused.")
+        return 1
+    print("  all cells parse")
+    print(f"\nOK -- {len(NOTEBOOKS)} notebook(s) in {OUT}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
