@@ -1,6 +1,12 @@
 # Oracle upper bounds for early-exit routing are inflated by per-exit noise
 
-**Status: draft, all measurements complete.** Every number is traceable to a CSV
+**Status: draft. The blocking limitation is RESOLVED** — Study 3 Q1 retrained
+three architectures with jointly supervised exits and the excess came out
+*larger*, not smaller (8.55 / 9.15 / 10.64 pt vs 6.42 / 7.95 / 6.69 frozen),
+surviving conditioning on accuracy. §5's first bullet carries the numbers.
+
+**Study 3 Q2 also narrows one overstatement** — see §1. **All measurements
+complete.** Every number is traceable to a CSV
 in `analysis/`. The saturation mechanism (§4.3) was a hypothesis in the first
 draft and is now tested and confirmed. §3.1 carries a correction: the first
 draft attributed the whole optimism bias to noise harvesting, which the data
@@ -47,10 +53,33 @@ The oracle early-exit bound in common use is:
 > exit at the first layer whose prediction matches that of the last layer —
 > an ideal upper bound for how much computation could be saved.
 
+**The definition we target is the standard one.** A survey of early-exit
+networks states it directly: *"the oracle is an ideal model that can always
+enable each sample to exit at the shallowest internal classifier that provides a
+correct label prediction"* — a **label** oracle, which is exactly
+`pred_dk == label` as implemented here (not the weaker "matches the final
+prediction" variant, which is capped at full accuracy by construction).
+
+And the inference we are challenging is made explicitly. DE3-BERT observes that
+*"the oracle outperforms the backbone model and existing exiting strategies by a
+large margin… which indicates significant room for improving the estimation of
+prediction correctness."* That reading — oracle above backbone, therefore
+headroom — is the one this paper argues is unsafe.
+
 Every quantity in it comes from one trained network. Our claim is not that this
 is arithmetically wrong; it is that **it is an upper bound on the wrong thing**.
 It bounds what a router could achieve *if it had access to this network's own
 per-exit correctness*, and no deployable router does.
+
+> **Study 3 Q2 tested that last clause rather than asserting it.** A logistic
+> gate trained per exit, seeing everything the confidence baseline sees plus the
+> margin, captures **1.7 %** of the gap (cross-seed, 3 architectures). In-seed
+> capture is no higher, so the gate is not memorising seed noise — there is
+> nothing in the deployable signal to capture. This paper's original wording
+> ("cannot be reached by any router") overstated what had been shown; the
+> measured version is that a second seed cannot reach it, and neither can a
+> learned gate on exit-local confidence. That is a lower bound: a gate with
+> pooled embeddings is untested.
 
 The instrument is a second training seed. Same architecture, same recipe,
 different initialisation:
@@ -278,6 +307,30 @@ findings, not one mechanism seen twice.
 
 ## 5. Limitations
 
+- **RESOLVED (Study 3 Q1, 2026-08-20).** ~~The exits are post-hoc heads on a
+  frozen backbone.~~ This *was* the most serious limitation. It has now been
+  tested directly: three architectures retrained with exits **jointly**
+  supervised give an excess of **8.55 / 9.15 / 10.64 pt** — every one *larger*
+  than its frozen counterpart (6.42 / 7.95 / 6.69), and the effect survives
+  conditioning on backbone accuracy (median +2.49 pt adjusted). The mechanism
+  is now clear: a weak early exit is right on almost nothing, so it cannot
+  rescue a sample the final layer gets wrong. **Rescues require competent
+  exits, so the pool grows with exit quality.** See `study3/03_LOG.md`.
+  The original text is kept below because the concern was correct to raise.
+
+- ~~**The exits are post-hoc heads on a frozen backbone, not a trained
+  early-exit network.**~~ *(superseded — see above)* This is the most serious
+  limitation and the first thing a reviewer will raise. Study 1 trained exit heads with the backbone **frozen**
+  (`msc_lib.py`, "exit heads: backbone frozen"), whereas MSDNet, BranchyNet and
+  DE3-BERT-style networks train exits *jointly*, producing stronger and
+  better-calibrated early classifiers. Weaker exits plausibly **enlarge** the
+  early-right/final-wrong pool, so the **+6.86 pt magnitude is likely an
+  overestimate** for a properly trained early-exit model. The *direction* is
+  structural — a cheapest-correct-exit oracle can never fall below full accuracy
+  and will exceed it whenever any early exit is right where the final layer is
+  wrong — but the magnitude must be re-measured on a jointly-trained network
+  before it is quoted as a general number. **This is the single highest-value
+  follow-up experiment.**
 - **One dataset, one scale.** CIFAR-100 at 32px, 15 architectures. ImageNet-100
   (2 architectures × 2 seeds) shows the same direction on the reliability atlas
   but cannot support a cross-seed bias estimate — one pair per architecture, no
