@@ -122,6 +122,72 @@ if pr:
         add("3", "Q3 pruning", f"target accuracy, {arm}", f"keep {rate}%",
             round(st.mean(v), 2), "%", "s3_pruning.csv")
 
+# ---- Study 4 -------------------------------------------------------------
+bs = load("s4_bootstrap.csv")
+for r in bs:
+    add("4", "P0 bootstrap CI", f"excess, {r['arch']}",
+        f"95% CI over {int(float(r['n_samples'])):,} TEST SAMPLES (not seeds)",
+        f"{float(r['excess']):.2f}  [{float(r['ci_lo']):.2f}, {float(r['ci_hi']):.2f}]",
+        "pt", "s4_bootstrap.csv")
+if bs:
+    add("4", "P0 bootstrap CI", "intervals excluding zero",
+        f"{len(bs)} joint runs",
+        sum(1 for r in bs if float(r["ci_lo"]) > 0), f"of {len(bs)}",
+        "s4_bootstrap.csv")
+
+im = load("s4_imagenet_excess.csv")
+for r in im:
+    add("4", "P2 ImageNet-100 @224px", f"excess, {r['arch']}",
+        "1 seed; per-run identity", round(float(r["excess"]), 2), "pt",
+        "s4_imagenet_excess.csv")
+    add("4", "P2 ImageNet-100 @224px", f"full-compute accuracy, {r['arch']}",
+        "1 seed", round(float(r["acc_full"]), 2), "%", "s4_imagenet_excess.csv")
+if im:
+    add("4", "P2 ImageNet-100 @224px", "H4: excess >= 2.0 pt",
+        f"{sum(1 for r in im if float(r['excess']) >= 2.0)} of {len(im)} archs",
+        round(min(float(r["excess"]) for r in im), 2), "pt (min)",
+        "s4_imagenet_excess.csv")
+    vit = [r for r in im if "vit" in r["arch"]]
+    if vit:
+        add("4", "P2 ImageNet-100 @224px", "H4b: the TRANSFORMER alone",
+            vit[0]["arch"], round(float(vit[0]["excess"]), 2), "pt",
+            "s4_imagenet_excess.csv")
+
+bl = load("s4_baselines.csv")
+if bl:
+    hh = defaultdict(list)
+    accs = defaultdict(list)
+    for r in bl:
+        hh[(float(r["target_rho"]), r["baseline"])].append(float(r["honest_headroom"]))
+        accs[(float(r["target_rho"]), r["baseline"])].append(float(r["baseline_acc"]))
+    rhos = sorted({float(r["target_rho"]) for r in bl})
+    # confidence and margin hit the budget exactly; patience cannot, so the
+    # sign question is answered on the two that are comparable.
+    for rr in rhos:
+        v = st.median(hh[(rr, "confidence")])
+        add("4", "P1 honest headroom vs budget",
+            f"cross-seed oracle - confidence, rho={rr:.2f}",
+            "median over 15 CIFAR architectures", round(v, 2), "pt",
+            "s4_baselines.csv")
+    flip = [rr for rr in rhos if st.median(hh[(rr, "confidence")]) > 0]
+    add("4", "P1 honest headroom vs budget", "budgets with POSITIVE honest headroom",
+        "confidence baseline", str(flip), "rho", "s4_baselines.csv")
+    sp = max(abs(st.median(hh[(rr, "confidence")]) - st.median(hh[(rr, "margin")]))
+             for rr in rhos)
+    add("4", "P1 baseline independence",
+        "max |confidence - margin| headroom gap",
+        "the two rules that hit the budget exactly", round(sp, 2), "pt",
+        "s4_baselines.csv")
+    fair = [r for r in bl
+            if float(r["achieved_cost"]) <= float(r["target_rho"]) + 0.01]
+    m = defaultdict(list)
+    for r in fair:
+        m[r["baseline"]].append(float(r["baseline_acc"]))
+    for k in sorted(m):
+        add("4", "P1 baseline strength", f"{k}, at matched cost",
+            "median accuracy, never overspending", round(st.median(m[k]), 2), "%",
+            "s4_baselines.csv")
+
 # ---- write ---------------------------------------------------------------
 with (out_dir / "RESULTS.csv").open("w", newline="", encoding="utf-8") as fh:
     w = csv.writer(fh)

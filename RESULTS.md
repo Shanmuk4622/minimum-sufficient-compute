@@ -70,3 +70,50 @@ under `analysis/`, byte-identical to the local copies.
 | target accuracy, sat | keep 50% | **25.05 %** | `s3_pruning.csv` |
 | target accuracy, uns | keep 50% | **14.76 %** | `s3_pruning.csv` |
 | target accuracy, full | keep 100% | **70.24 %** | `s3_pruning.csv` |
+
+## Study 4 — P0 bootstrap CI
+
+| metric | scope | value | source |
+|---|---|---|---|
+| excess, resnet20 | 95% CI over 10,000 TEST SAMPLES (not seeds) | **10.64  [10.00, 11.28] pt** | `s4_bootstrap.csv` |
+| excess, resnet32x4 | 95% CI over 10,000 TEST SAMPLES (not seeds) | **8.55  [7.98, 9.10] pt** | `s4_bootstrap.csv` |
+| excess, vgg8 | 95% CI over 10,000 TEST SAMPLES (not seeds) | **9.15  [8.61, 9.71] pt** | `s4_bootstrap.csv` |
+| intervals excluding zero | 3 joint runs | **3 of 3** | `s4_bootstrap.csv` |
+
+## Study 4 — P2 ImageNet-100 @224px
+
+| metric | scope | value | source |
+|---|---|---|---|
+| excess, resnet50 | 1 seed; per-run identity | **7.39 pt** | `s4_imagenet_excess.csv` |
+| full-compute accuracy, resnet50 | 1 seed | **81.58 %** | `s4_imagenet_excess.csv` |
+| excess, vit_small_p16 | 1 seed; per-run identity | **6.91 pt** | `s4_imagenet_excess.csv` |
+| full-compute accuracy, vit_small_p16 | 1 seed | **63.23 %** | `s4_imagenet_excess.csv` |
+| H4: excess >= 2.0 pt | 2 of 2 archs | **6.91 pt (min)** | `s4_imagenet_excess.csv` |
+| H4b: the TRANSFORMER alone | vit_small_p16 | **6.91 pt** | `s4_imagenet_excess.csv` |
+
+## Study 4 — P1 honest headroom vs budget
+
+| metric | scope | value | source |
+|---|---|---|---|
+| cross-seed oracle - confidence, rho=0.40 | median over 15 CIFAR architectures | **7.74 pt** | `s4_baselines.csv` |
+| cross-seed oracle - confidence, rho=0.50 | median over 15 CIFAR architectures | **7.29 pt** | `s4_baselines.csv` |
+| cross-seed oracle - confidence, rho=0.60 | median over 15 CIFAR architectures | **3.74 pt** | `s4_baselines.csv` |
+| cross-seed oracle - confidence, rho=0.70 | median over 15 CIFAR architectures | **-3.05 pt** | `s4_baselines.csv` |
+| cross-seed oracle - confidence, rho=0.80 | median over 15 CIFAR architectures | **-8.3 pt** | `s4_baselines.csv` |
+| cross-seed oracle - confidence, rho=0.90 | median over 15 CIFAR architectures | **-13.13 pt** | `s4_baselines.csv` |
+| cross-seed oracle - confidence, rho=0.95 | median over 15 CIFAR architectures | **-14.98 pt** | `s4_baselines.csv` |
+| budgets with POSITIVE honest headroom | confidence baseline | **[0.4, 0.5, 0.6] rho** | `s4_baselines.csv` |
+
+## Study 4 — P1 baseline independence
+
+| metric | scope | value | source |
+|---|---|---|---|
+| max |confidence - margin| headroom gap | the two rules that hit the budget exactly | **1.78 pt** | `s4_baselines.csv` |
+
+## Study 4 — P1 baseline strength
+
+| metric | scope | value | source |
+|---|---|---|---|
+| confidence, at matched cost | median accuracy, never overspending | **58.03 %** | `s4_baselines.csv` |
+| margin, at matched cost | median accuracy, never overspending | **58.18 %** | `s4_baselines.csv` |
+| patience, at matched cost | median accuracy, never overspending | **55.62 %** | `s4_baselines.csv` |
