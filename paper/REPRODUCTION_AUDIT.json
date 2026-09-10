@@ -1,0 +1,52 @@
+[
+  {
+    "file": "backbone_summary.csv",
+    "rows": 15,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "budget_summary.csv",
+    "rows": 7,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "complementarity.csv",
+    "rows": 45,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "gate_gain_intervals.csv",
+    "rows": 4,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "gate_summary.csv",
+    "rows": 28,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "heldout_routing.csv",
+    "rows": 1575,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "optimal_policy_envelope.csv",
+    "rows": 90,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "oracle_audit.csv",
+    "rows": 630,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "router_split.csv",
+    "rows": 10000,
+    "status": "reproduced within 1e-10 tolerance"
+  },
+  {
+    "file": "routing_comparisons.csv",
+    "rows": 1575,
+    "status": "reproduced within 1e-10 tolerance"
+  }
+]

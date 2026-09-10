@@ -1,5 +1,15 @@
 # Oracle upper bounds for early-exit routing are inflated by per-exit noise
 
+> **Current interpretation — 2026-09-07.** This is a historical Study 2/3 record.
+> Study 4 P3 is now verified: **+7.74/+7.91 pt**, H5 supported for the MSDNet
+> variant. See [Study 4 findings](../study4/04_FINDINGS.md) and
+> [current progress](../PROGRESS.md). All-budget negativity applies only to the
+> earlier difficulty-score sweep; the per-exit transfer sweep is positive at
+> budgets 0.40–0.60. An oracle above final accuracy is not proof of router
+> impossibility; cross-seed transfer is not established as unbiased debiasing.
+> Older stronger wording below is superseded by [PAPER_CLAIM.md](../PAPER_CLAIM.md).
+> Joint-run generic final-evaluation metrics require the D-91 repair.
+
 **Status: draft. The blocking limitation is RESOLVED** — Study 3 Q1 retrained
 three architectures with jointly supervised exits and the excess came out
 *larger*, not smaller (8.55 / 9.15 / 10.64 pt vs 6.42 / 7.95 / 6.69 frozen),

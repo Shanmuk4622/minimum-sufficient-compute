@@ -1,39 +1,57 @@
 # Minimum Sufficient Compute (MSC)
 
+**2026-09-08 manuscript:** [LaTeX, PDF and reproducible analysis](paper/README.md).
+The paper audits exact oracle allocation, realized-cost matching, and non-unique
+source-optimal policies. Its new disjoint gate experiment supersedes the older
+test-overlapping gate result. Authors are intentionally empty.
+
+**Current entry points:** [Project understanding](PROJECT_UNDERSTANDING.md) ·
+[Progress](PROGRESS.md) · [Verified Study 4 results](study4/04_FINDINGS.md) ·
+[Paper recommendation](PAPER_CLAIM.md).
+
+**2026-09-07 HF audit:** MSDNet seeds 1/2 are complete, with **7.74/7.91 pt**
+oracle excess and **73.93/74.08%** final-exit accuracy. P3 was completed on
+2026-09-01; no rerun is needed to recover these results. Generic final-evaluation
+metrics have a classifier mismatch (D-91) and are quarantined pending repair.
+The historical narrative below must be read with the current paper's scope:
+oracle complementarity is established, universal router impossibility is not.
+
 **How much compute does *this* sample actually need, and is that a property of
 the sample or of the seed?**
 
 MSC is a per-sample, cost-normalised, multi-axis, stability-closed measure of
-the compute a trained network needs to reach its final decision. Two studies
+the compute a trained network needs to reach its final decision. Four numbered studies
 live in this repository:
 
 | study | dataset | scale | architectures | status |
 |---|---|---|---|---|
 | **Study 1 · CIFAR-100** | 50k @ 32px | small | 15 | complete — [`docs/cifar100/10_FINAL_RESULTS.md`](docs/cifar100/10_FINAL_RESULTS.md) |
-| **Study 1 · ImageNet-100** | 130k @ 224px | 40× data, 49× pixels | 2 (pilot) + 3 students | pilot complete — [`docs/imagenet100/26_IN100_FINDINGS.md`](docs/imagenet100/26_IN100_FINDINGS.md) |
+| **Study 1 · ImageNet-100** | 130k @ 224px | ~2.4× training images, 49× pixels | 2 (pilot) + 3 students | pilot complete — [`docs/imagenet100/26_IN100_FINDINGS.md`](docs/imagenet100/26_IN100_FINDINGS.md) |
 | **Study 2** | CIFAR-100, re-analysed | — | 15 | **complete** — [`study2/PAPER.md`](study2/PAPER.md) |
 | **Study 3** | CIFAR-100 | — | 3 + pruning | **complete** — [`study3/04_FINDINGS.md`](study3/04_FINDINGS.md) |
-| **Study 4** | CIFAR-100 + ImageNet-100 | 32px + 224px | 2 + MSDNet | **P0–P2 complete, P3 built** — [`study4/README.md`](study4/README.md) |
+| **Study 4** | CIFAR-100 + ImageNet-100 | 32px + 224px | 2 + MSDNet | **P0–P3 complete; HF verified 2026-09-07** — [`study4/README.md`](study4/README.md) |
 
 **Study 3 runs offline.** Training and analysis notebooks never touch the network; `S3_NB5_Publish` uploads the finished tree in one pass at the end.
 
 ### Study 2, in one line
 
-> **Oracle upper bounds for early-exit routing are inflated by +22.41 accuracy
-> points — more than the entire headroom they appear to show — and the excess is
-> per-exit noise that does not survive a change of training seed.**
+> **Same-seed and cross-seed oracle-policy accuracies differ by a median
+> 22.41 points at budget 0.80. This measures a seed-transfer gap; it is not
+> established as pure noise or an unbiased correction of attainable accuracy.**
 
 At ρ = 0.80, across 15 architectures × 3 seeds (90 ordered seed pairs): an
 oracle scored from the **same** seed it routes reaches **78.30 %**; scored from a
 **different** seed it reaches **54.50 %**; a deployable confidence baseline
-reaches **62.39 %**. **0 of 15** architectures keep positive honest headroom, at
-any budget from ρ = 0.40 to 0.95.
+reaches **62.39 %**. At this budget the cross-seed policy underperforms confidence
+in the architecture summaries. The separate difficulty-score sweep was negative
+from ρ = 0.40 to 0.95; the later per-exit policy sweep is positive at tight
+budgets, so those two analyses must not be conflated.
 
 The load-bearing part is an **exact identity**: the in-seed oracle beats the
 network's *own full-compute accuracy* (71.21 %) in 100 % of runs by a median of
 **+6.86 pt**, which equals the fraction of samples that are right at some early
-exit and **wrong at the final layer**. A bound above full compute cannot be
-reached by any router. That component needs no second seed; the remaining
+exit and **wrong at the final layer**. This identity measures complementary early predictions; it does not prove
+that a router cannot exceed final-layer accuracy. That component needs no second seed; the remaining
 +15.33 pt of the bias measures cross-seed non-transfer and is reported
 separately as weaker evidence.
 
@@ -52,15 +70,16 @@ on almost nothing, so they cannot rescue a sample the final layer gets wrong;
 rescues need competent exits, and the pool grows with exit quality.
 
 Study 3 Q2 then asked whether a *learned* gate can reach that gap **at
-ρ = 0.80**. It captures **1.7 %**, and in-seed capture is no higher than
-cross-seed, so it is not even memorising noise.
+ρ = 0.80**. It captures **1.7 %**, versus 2.36% in-seed capture. These are results for a restricted gate at one
+budget, not proof that richer features carry no useful signal.
 
 **Study 4 closed the scale objection and qualified the claim.** The excess holds
 at 224 px on ImageNet-100 — `resnet50` **+7.39 pt**, `vit_small_p16`
 **+6.91 pt**, a vision transformer. But sweeping the compute budget, the honest
 cross-seed ceiling **changes sign at ρ ≈ 0.65**: negative above it, **positive
-below** (+7.74 pt at ρ = 0.40), with three independent exit rules agreeing
-within 1.8 pt. *"No headroom"* is true only at generous budgets.
+below** (+7.74 pt at ρ = 0.40), with confidence and margin agreeing
+within 1.8 pt. This cross-seed policy is a transfer diagnostic, not a proven
+upper bound on deployable routing.
 Q3 (does the memorisation collapse damage pruning?) came back inconclusive with
 a confounded design, recorded rather than re-cut. See
 [`study3/04_FINDINGS.md`](study3/04_FINDINGS.md).
@@ -72,11 +91,11 @@ a confounded design, recorded rather than re-cut. See
 | | |
 |---|---|
 | [`RESULTS.md`](RESULTS.md) / [`RESULTS.csv`](RESULTS.csv) | **every headline number**, generated from the artifacts by `tools/build_results.py` — never hand-edited |
-| [`PAPER_CLAIM.md`](PAPER_CLAIM.md) | **what is publishable, where, and what is missing** — two papers, with a costed gap analysis |
+| [`PAPER_CLAIM.md`](PAPER_CLAIM.md) | **what is publishable, where, and what is missing** — current paper recommendation and evidence limits |
 
 All source CSVs are on
 [`Shanmuk4622/msc-cifar100`](https://huggingface.co/datasets/Shanmuk4622/msc-cifar100)
-under `analysis/`, verified byte-identical to the local copies (12/12).
+under `analysis/`, verified byte-identical to the local copies at the pinned revision in [the evidence manifest](docs/evidence/hf_2026-09-07/manifest.json).
 
 ---
 

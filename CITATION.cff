@@ -9,10 +9,12 @@ repository-code: "https://github.com/NewUser4622/minimum-sufficient-compute"
 abstract: >-
   Per-sample, cost-normalised measurement of the compute a trained network
   needs, and an analysis of oracle upper bounds for early-exit inference.
-  Oracle bounds are shown to exceed the accuracy of the network they bound
-  (+6.86 pt on CIFAR-100 over 90 runs; +7.39 and +6.91 pt on ImageNet-100 at
-  224 px including a vision transformer), with the excess growing as the exits
-  improve.
+  Any-correct-exit oracle accuracy exceeds final-exit accuracy
+  (+6.86 pt median on the CIFAR-100 atlas, evaluated over 90 ordered seed
+  pairs from 45 models; +7.39 and +6.91 pt on a custom ImageNet-100 subset;
+  +7.74 and +7.91 pt in two seeds of a documented MSDNet variant).
+  The project studies complementary exit predictions, seed-transfer policies,
+  and budget-dependent comparisons with practical early-exit rules.
 keywords:
   - early exit
   - adaptive inference

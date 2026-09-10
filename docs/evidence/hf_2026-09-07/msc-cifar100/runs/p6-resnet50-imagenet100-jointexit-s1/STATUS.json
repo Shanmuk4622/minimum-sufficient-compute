@@ -1,0 +1,10 @@
+{
+  "run_id": "p6-resnet50-imagenet100-jointexit-s1",
+  "account": "local",
+  "session_id": "local-ac35a4a3df",
+  "hostname": "CB-410-122",
+  "updated_at": "2026-08-29T15:29:04Z",
+  "state": "completed",
+  "epoch": 99,
+  "best_metric": 0.8158
+}

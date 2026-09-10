@@ -1,0 +1,106 @@
+{
+  "pages": [
+    {
+      "page": 1,
+      "words": 497,
+      "first": "Oracle Headroom Is Policy-Dependent:\nA Seed-Transfer Audit of Early-Exit Networks\nAbstract\nEarly-exit networks o\ufb00er several predic",
+      "last": "only the feasible side of such a switch can leave avoidable budget slack. Once all source-correct\n1\n"
+    },
+    {
+      "page": 2,
+      "words": 576,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\nexamples have been recovered, a minimum-cost oracle leaves additional budget",
+      "last": "ined\nnetworks [11]. Patience-based early exiting uses repeated prediction agreement as a stopping\n2\n"
+    },
+    {
+      "page": 3,
+      "words": 499,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\nsignal in language models [23]. These methods establish that router design i",
+      "last": "he any-correct-exit and \ufb01nal-exit accuracies as\nUs = 1\nn\nX\ni\nmax\nk\ncs\nik,\nFs = 1\nn\nX\ni\ncs\niK.\n(3)\n3\n"
+    },
+    {
+      "page": 4,
+      "words": 504,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\nTable 1: The information hierarchy. \u201cTarget labels\u201d refers to their use in s",
+      "last": "le\nside. All examples with the same earliest-correct exit have the same upgrade cost, so they may\n4\n"
+    },
+    {
+      "page": 5,
+      "words": 431,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\nchange decisions together. Bisection does not by itself interpolate across t",
+      "last": "y\nreproduced published reference models. Each architecture has seeds 1\u20133. The backbone is trained\n5\n"
+    },
+    {
+      "page": 6,
+      "words": 633,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\n\ufb01rst and attached exits are then \ufb01tted with the backbone frozen. Fourteen ar",
+      "last": "se\nsettings and the split were \ufb01xed for this analysis; no hyperparameter search on the evaluation\n6\n"
+    },
+    {
+      "page": 7,
+      "words": 555,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\nsubset was performed. The same-seed gate is \ufb01tted on its target model; the t",
+      "last": "d-\npair/budget rows. Same-seed values are duplicated across source pairs in that count; it is not\n7\n"
+    },
+    {
+      "page": 8,
+      "words": 401,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\n5\n6\n7\n8\n9\n10\n11\nAny-correct-exit minus final-exit accuracy (pp)\nresnet8x4\nre",
+      "last": "nd negative from 0.70 onward. At 0.80 it is \u22127.43 pp, and no architecture has a positive mean ad-\n8\n"
+    },
+    {
+      "page": 9,
+      "words": 446,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\n0.4\n0.5\n0.6\n0.7\n0.8\n0.9\nNormalized prefix budget\n0\n1\n2\n3\n4\n5\n6\n7\n8\nExact min",
+      "last": "e\nindistinguishable under the source accuracy objective and budget constraint. Its width provides\n9\n"
+    },
+    {
+      "page": 10,
+      "words": 503,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\n0.4\n0.5\n0.6\n0.7\n0.8\n0.9\nNormalized prefix budget\n40\n50\n60\n70\nAccuracy (%)\nSa",
+      "last": "eci\ufb01ed learned policy and oracle diagnostics; it does\nnot establish that the gap is unlearnable.\n10\n"
+    },
+    {
+      "page": 11,
+      "words": 428,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\n40\n50\n60\n70\n80\nTarget accuracy among source-optimal policies at budget 0.80 ",
+      "last": "ts.\nThe broader project also examines cross-axis compute di\ufb03culty, softmax reliability, and data\n11\n"
+    },
+    {
+      "page": 12,
+      "words": 428,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\n0.4\n0.5\n0.6\n0.7\n0.8\n0.9\nCalibration target budget\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\nGa",
+      "last": "es\ntight-budget oracle values; matched realized cost reverses the interpretation of a common-cap\n12\n"
+    },
+    {
+      "page": 13,
+      "words": 386,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\ntransfer de\ufb01cit; and source-optimal policies admit a wide range of target ac",
+      "last": "ng\nbudget is B, the group upgrade probability is\nqk = min\n\u0012\n1, max\n\u0012\n0,\nB\n|Gk|(rk \u2212r1)\n\u0013\u0013\n.\n(11)\n13\n"
+    },
+    {
+      "page": 14,
+      "words": 576,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\nTransferred accuracy adds qk\nP\ni\u2208Gk(ct\nik \u2212ct\ni1)/n to the target \ufb01rst-exit ",
+      "last": "analyses developed during the audit. No preregistration\nclaim is made for their headline values.\n14\n"
+    },
+    {
+      "page": 15,
+      "words": 420,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\nReferences\n[1] Robert J. N. Baldock, Hartmut Maennel, and Behnam Neyshabur. ",
+      "last": "rchitecture Design. arXiv preprint arXiv:1807.11164, 2018. URL\nhttps://arxiv.org/abs/1807.11164.\n15\n"
+    },
+    {
+      "page": 16,
+      "words": 291,
+      "first": "Oracle headroom and seed transfer\nResearch manuscript\n[15] Haseena Rahmath P, Vishal Srivastava, Kuldeep Chaurasia, Roberto G. Pac",
+      "last": "ce with Early Exit. arXiv preprint arXiv:2006.04152, 2020. URL\nhttps://arxiv.org/abs/2006.04152.\n16\n"
+    }
+  ],
+  "page_count": 16,
+  "total_words_including_references": 7574,
+  "no_unresolved_question_mark_references": true,
+  "text_within_page_bounds": true,
+  "visual_review": "All 16 pages inspected via rendered contact sheets; revised Table 3 inspected at full page size. No clipping, overlap, or unreadable table layout found.",
+  "source_archive_compile": "Compact Overleaf ZIP extracted and independently compiled successfully."
+}

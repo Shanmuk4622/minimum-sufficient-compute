@@ -1,0 +1,685 @@
+{
+  "verified_date": "2026-09-07",
+  "repositories": {
+    "Shanmuk4622/msc-cifar100": {
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "last_modified": "2026-09-02T05:00:54.000Z",
+      "file_count": 2168
+    },
+    "Shanmuk4622/msc-imagenet100": {
+      "revision": "e3b461cf412dc46acfa4a482638dcde014ac0813",
+      "last_modified": "2026-08-19T07:54:06.000Z",
+      "file_count": 291
+    }
+  },
+  "files": [
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s1_B10_msc_kd.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s1_B10_msc_kd.csv",
+      "bytes": 10038,
+      "sha256": "ac33770af56350cdd9484407dc23bc7780f40993c4ec0c521bd63bf50f9a5a65"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s1_B2_confidence.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s1_B2_confidence.csv",
+      "bytes": 10280,
+      "sha256": "ac61736b7b8f5256762eaf59c5e8420b7c3c6743ed15b4fb1356e95eb7fe66a2"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s2_B10_msc_kd.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s2_B10_msc_kd.csv",
+      "bytes": 10040,
+      "sha256": "edc3e1bed5fec2c0ce0e5d73f276529318996560f6f4a2e46c29082f08cbeae8"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s2_B2_confidence.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s2_B2_confidence.csv",
+      "bytes": 10276,
+      "sha256": "e33de40e5b930262bf24fe9f3c98cf214ed5a876fb808b650cc78f4d59be1e7e"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s3_B10_msc_kd.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s3_B10_msc_kd.csv",
+      "bytes": 10035,
+      "sha256": "6e6ca9f807392cd7b59a8086a05d6430b5d2ab4a1cc9cbda15f60cc700b3b4d6"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s3_B2_confidence.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-resnet20-cifar100-mscKDfromresnet32x4-s3_B2_confidence.csv",
+      "bytes": 10276,
+      "sha256": "6b4223e3405d8986bb46cdfb5247c6f390b78096564f880628102b24114d370b"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s1_B10_msc_kd.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s1_B10_msc_kd.csv",
+      "bytes": 9751,
+      "sha256": "2b24441297fdd476047cbb45a298fb32e3a43e4ce06f08d0342942db45b2f1bd"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s1_B2_confidence.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s1_B2_confidence.csv",
+      "bytes": 9977,
+      "sha256": "e551fce7e3da432487ca41fdf67875bf756e090b83a87b643471466594bbf2a5"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s2_B10_msc_kd.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s2_B10_msc_kd.csv",
+      "bytes": 9750,
+      "sha256": "8d3fd9db62fe9202055744e2b8a4d1043a523e27fd925802acc2bd1657c4c51a"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s2_B2_confidence.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s2_B2_confidence.csv",
+      "bytes": 9975,
+      "sha256": "52ea29871e50e4fcf8be7ed206f55cc5c58a205a17d007ea02d40dc9cd07f942"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s3_B10_msc_kd.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s3_B10_msc_kd.csv",
+      "bytes": 9738,
+      "sha256": "8610dd87f1927dc750addfd4cc656c753f17465d3a438c10f83e6211704beba4"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s3_B2_confidence.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/curve_p3-vgg8-cifar100-mscKDfromresnet32x4-s3_B2_confidence.csv",
+      "bytes": 9981,
+      "sha256": "130455550d00875d8b7be8b469f02dc44968e9457d2afa1502f0b02427566253"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/irreducible_subpopulation.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/irreducible_subpopulation.csv",
+      "bytes": 16910,
+      "sha256": "36d0f6ebc1dc94e2583bf194e70fe9d266dccd8b16393483786bfbd2ffbaedfa"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/per_sample_alignment.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/per_sample_alignment.csv",
+      "bytes": 1138,
+      "sha256": "771da42ff2d504f36abc618bd07f1c7c0920a0d4e4c0fadae710518533ac3c09"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/per_sample_alignment_phase0.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/per_sample_alignment_phase0.csv",
+      "bytes": 617,
+      "sha256": "d01cda158a9486441a2c18fa04394ec9a5259d25cc088c0ef087cf33c73f9e40"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q1_seed_ceiling.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q1_seed_ceiling.csv",
+      "bytes": 1687,
+      "sha256": "6913569bedd7d9eb8ae064a94afb23c2b1cf40d5c2b18e6c0204f3c46924151a"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q1_seed_ceilings_all.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q1_seed_ceilings_all.csv",
+      "bytes": 12698,
+      "sha256": "7749ef69157aea6b35e9c5d6f2b084b51a492f763564a3b34c0e198014019597"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q2_axis_structure_all.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q2_axis_structure_all.csv",
+      "bytes": 21232,
+      "sha256": "c7bccd7604c7ca3f3c4fc0c2fd768afccd65417b8e1c3c493a1b4dcbd8772071"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q2_axis_structure_phase0.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q2_axis_structure_phase0.csv",
+      "bytes": 1336,
+      "sha256": "9132526e53ae0e7a65e88fa523a70937390029fe721460e7755cca5ff0c6d1b7"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q2_resolution_native_vs_proxy.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q2_resolution_native_vs_proxy.csv",
+      "bytes": 2506,
+      "sha256": "af16dafe6ec5f3c956c7e53ee24d0ba3636aa65c0ccf6bf7cc0c9db3024c6a07"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q3_shuffled_control.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q3_shuffled_control.csv",
+      "bytes": 13717,
+      "sha256": "00046f64c9b4be5a2f0dd3e240a376830e78d3bbb3a62646b67939561ac0fbd0"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q3_transfer.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q3_transfer.csv",
+      "bytes": 1117,
+      "sha256": "8a3cf54774c94cf0e2a0931ea4e5e58b73873b4427e9ed878d8e18f431674eb3"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q3_transfer_matrix.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q3_transfer_matrix.csv",
+      "bytes": 27234,
+      "sha256": "8a710800a761fc10fca133359a9501096e527028ee2b2d6f8ad6d053bcc621c2"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q3_transfer_tau_curves.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q3_transfer_tau_curves.csv",
+      "bytes": 11887,
+      "sha256": "375ac14f196d5e3bdff28cd47667d73a8289353a36d7a90c8835a79c5c99f5cd"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q4_irreducibility.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q4_irreducibility.csv",
+      "bytes": 1281,
+      "sha256": "0ba7d3095b085b23099f6945addb2915110bdbf50794ccb89be55efa9b26a9c5"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q4_irreducibility_all.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q4_irreducibility_all.csv",
+      "bytes": 30903,
+      "sha256": "502c2b40d6367eebd5b00f9ae845a061fb46f5b3ab62acb2a1a6766d5c8f5233"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q5_matched_flops.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q5_matched_flops.csv",
+      "bytes": 1184,
+      "sha256": "d6d2077a34aec513d19f641368b2304520ab482bbef8b783d245218b6d8b44c9"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q5_method_comparison.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q5_method_comparison.csv",
+      "bytes": 2898,
+      "sha256": "f64a92a40e8fea348ea26b0b945e4e688977b1945f133f6615516ed764634617"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/q5_risk_calibration.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/q5_risk_calibration.csv",
+      "bytes": 946,
+      "sha256": "4539a087d4810b96dbb4fb0110dbad6b54628d6f45ad02685a8842067b34107a"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/run_ledger.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/run_ledger.csv",
+      "bytes": 14427,
+      "sha256": "364ca0750cfcae4da3394a0a85dfd603a61c50a3788df11bc6e7e8b9e4e3c138"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s2_bias_vs_reliability.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s2_bias_vs_reliability.csv",
+      "bytes": 5910,
+      "sha256": "ad8ce40a2371fc3b7858c16c624b70f7163f46c93d515700791845a30be3fefb"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s2_headroom_sweep.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s2_headroom_sweep.csv",
+      "bytes": 21169,
+      "sha256": "aab150e14283bc5af8d3879bd6c23c4727b7df5b7479d4635100eb78d1ee77f1"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s2_memorisation.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s2_memorisation.csv",
+      "bytes": 1473,
+      "sha256": "0197fe59c90382606826d328c2e19e155a99cbbc2cf824b85349f2eb6363b52a"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s2_optimism_bias.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s2_optimism_bias.csv",
+      "bytes": 45211,
+      "sha256": "ffacd413b5be7d69b120be719c9c8d379b1270c39bd6020efeca1d06b84f0d61"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s2_reliability_grid.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s2_reliability_grid.csv",
+      "bytes": 15940,
+      "sha256": "b197c45482515a39f3639d338f510b41e41d77af5e2b2e8512ad7cfd6b1a0a72"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s2_reliability_pairs.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s2_reliability_pairs.csv",
+      "bytes": 38755,
+      "sha256": "a664a5a7ef5dcf8a9280919749c3abfa55c0f76851fb80d4097d3f762ac0bbd7"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s2_true_oracle.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s2_true_oracle.csv",
+      "bytes": 11304,
+      "sha256": "4fc63576d67e98b50e932d9705317f688b066caf0def06042b1afa1a5379182a"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s3_exit_quality.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s3_exit_quality.csv",
+      "bytes": 4375,
+      "sha256": "ff90a01dbecfc48301044fc6c045cb38475457f46053d419728a678e5392e7f0"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s3_frozen_vs_joint.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s3_frozen_vs_joint.csv",
+      "bytes": 6496,
+      "sha256": "7a4caaebdca0d3688bce691b8f138a4b816018353ea551c550e14f9548dfc0f5"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s3_pruning.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s3_pruning.csv",
+      "bytes": 264,
+      "sha256": "68f84355841bc7a89b38e749626e74816b6f58ae030613e3e432588c45310ebb"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s3_q1_comparison.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s3_q1_comparison.csv",
+      "bytes": 509,
+      "sha256": "bffacbe2eff2e68030f2078941c719154cd14a7812ea3e307c7ebc9a32a5d5cb"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s3_router_capture.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s3_router_capture.csv",
+      "bytes": 697,
+      "sha256": "bcdc7c1f91b444b3589d13df37545f73d8f703778afb63207ff47c2c6404a251"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s4_baselines.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s4_baselines.csv",
+      "bytes": 25575,
+      "sha256": "c29abcf38aea7e80c85e7d3e7b03bc1b154e6c145c2be1431c740e7d522832e4"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s4_bootstrap.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s4_bootstrap.csv",
+      "bytes": 351,
+      "sha256": "a2f3307791f96dec04814cb5038177ceb1ddd6649aec1bc5149d9440cc9edebc"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s4_imagenet_excess.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s4_imagenet_excess.csv",
+      "bytes": 96,
+      "sha256": "3e8c37a3e6b4df66f3bc26324c1c107c7e0de439cdc3f4fcf6f8c60a544085f0"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/s4_msdnet.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/s4_msdnet.csv",
+      "bytes": 565,
+      "sha256": "be447b1eceda67b9a577157a5b8f69d6a9b2143d468dff53818e3aaddda5bb46"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/table1_atlas.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/table1_atlas.csv",
+      "bytes": 12166,
+      "sha256": "5ebe801470e5a71994a5bbb0a5f22ea1f6675b2f5c1892b9e809ccd95d3a7ea5"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/table1_atlas_aggregated.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/table1_atlas_aggregated.csv",
+      "bytes": 561,
+      "sha256": "7307167592c855ddae6519ec0b7ce90c4c81ddaf43b053bd381bcc502c5e04f5"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/table_energy_accounting.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/table_energy_accounting.csv",
+      "bytes": 254,
+      "sha256": "12cfa4fc641abadbaeaa3ad53c658004a516ffd85e861dd41bf9c297c44345be"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/table_msckd_runs.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/table_msckd_runs.csv",
+      "bytes": 4188,
+      "sha256": "02762e6e6a890252b518771af61807c5e649f66191b28fd6aac17d08e93295be"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "analysis/table_training_telemetry.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/analysis/table_training_telemetry.csv",
+      "bytes": 12081,
+      "sha256": "81b683046493ed0328ba22f536f3eb03031c63e7c2fee9f63e0bf69b22e15035"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-resnet50-imagenet100-jointexit-s1/STATUS.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/STATUS.json",
+      "bytes": 253,
+      "sha256": "af9838331f0226985fb5195afc0683c5e4d3f09ecc9a11a86f435b1762dff833"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-resnet50-imagenet100-jointexit-s1/config.yaml",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/config.yaml",
+      "bytes": 1225,
+      "sha256": "23351df6ce040cc8de961597e71a4c78e05377def5770fec74ae43cc7b14cfcf"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-resnet50-imagenet100-jointexit-s1/metrics/epochs.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/metrics/epochs.csv",
+      "bytes": 199688,
+      "sha256": "23fe9144b31c88cd816bf6c7b446914eca1a5ed6468522ab1e96687475fcc46c"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-resnet50-imagenet100-jointexit-s1/metrics/exit_metrics.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/metrics/exit_metrics.csv",
+      "bytes": 269,
+      "sha256": "de75ce2bf2772a11aacac2ed86825028e83affa0b71302564d74ebba4608c360"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-resnet50-imagenet100-jointexit-s1/metrics/final.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/metrics/final.json",
+      "bytes": 3182,
+      "sha256": "99fc9ba2021cadfc6df3514a3453f3ce272472995744ea50ca776d2624ad09fd"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-resnet50-imagenet100-jointexit-s1/per_sample/meta.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/per_sample/meta.json",
+      "bytes": 3452,
+      "sha256": "15108844b3a9f668cb6d48772cd7671c78d0af6143c1ba8ee414cafd4204ac0b"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-resnet50-imagenet100-jointexit-s1/summary.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/summary.json",
+      "bytes": 918,
+      "sha256": "adeec71700e5d6136cc7bc60b6851717b614b9b5fa0a66abd3c19fc5b30318d0"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-vit_small_p16-imagenet100-jointexit-s1/STATUS.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/STATUS.json",
+      "bytes": 258,
+      "sha256": "2c398bf5930a579eb4c5b21a4f1d20a8abdbb05e96ca2d3d5c3173846feb3d12"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-vit_small_p16-imagenet100-jointexit-s1/config.yaml",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/config.yaml",
+      "bytes": 1237,
+      "sha256": "5f4571b63aa4d2ae01004946ca52a628e8d57a6951cbb721da84e1dfd9b5604a"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-vit_small_p16-imagenet100-jointexit-s1/metrics/epochs.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/metrics/epochs.csv",
+      "bytes": 200332,
+      "sha256": "974c059328345b10acbaa2782b8c2ddd9450fdeca44b96eeceac654c8fc75018"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-vit_small_p16-imagenet100-jointexit-s1/metrics/exit_metrics.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/metrics/exit_metrics.csv",
+      "bytes": 316,
+      "sha256": "b6847306d1def2e86590570e685c534ffae3096496efb87b452f3d04ffc819f6"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-vit_small_p16-imagenet100-jointexit-s1/metrics/final.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/metrics/final.json",
+      "bytes": 3242,
+      "sha256": "e046f3e837d7237d60f6fedd11fffeb7e4277d81548af6d071c74475c0e035c7"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-vit_small_p16-imagenet100-jointexit-s1/per_sample/meta.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/per_sample/meta.json",
+      "bytes": 3506,
+      "sha256": "2dcf3cd681a43fb1ce3c2ac5f759c3af16f462551132bde0327304992d2f393e"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-vit_small_p16-imagenet100-jointexit-s1/summary.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/summary.json",
+      "bytes": 926,
+      "sha256": "0752b64eb21e8a3e14250e22a4e62bf64e2d686c6a5d84a11fe0d981fde0fed6"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s1/STATUS.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s1/STATUS.json",
+      "bytes": 249,
+      "sha256": "d2fc913c9a1fa9d87897d67e692274e35e57659fc7489189bb67c9a09a8cb61b"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s1/config.yaml",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s1/config.yaml",
+      "bytes": 1039,
+      "sha256": "cd85b9c191f271ad46c5a8f96ae6db2a3310af4c99a5d1d052c54869adf62b6b"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s1/metrics/epochs.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s1/metrics/epochs.csv",
+      "bytes": 454484,
+      "sha256": "1932edf9a27cf083ddc6a8091a5379d27bd913c49070da5b068f1bc9205308fa"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s1/metrics/exit_metrics.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s1/metrics/exit_metrics.csv",
+      "bytes": 251,
+      "sha256": "1ef936d2fcc5be44084601a27bdef4540a5daf981642f23c7df86ad9f3e4d906"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s1/metrics/final.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s1/metrics/final.json",
+      "bytes": 3204,
+      "sha256": "42b04202a431aba8fcb3c131d1f9e3b35af31e0ae12c0df221e24d4d415c2c6e"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s1/per_sample/meta.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s1/per_sample/meta.json",
+      "bytes": 3336,
+      "sha256": "e40de6010e84ae08a412f1bc58fbd8fca80c7de989a85568a18bc24a1d3bf80e"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s1/summary.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s1/summary.json",
+      "bytes": 903,
+      "sha256": "f13be364b1896dcda83e1af0c015d905f0b095fe15039b0a51a7d00fe2d44db8"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s2/STATUS.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s2/STATUS.json",
+      "bytes": 249,
+      "sha256": "8079e9f1c98a62ea770532ad719086993900aa549edd1e9b08cc24c8ab5dfd7d"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s2/config.yaml",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s2/config.yaml",
+      "bytes": 1039,
+      "sha256": "f043bde4a23fe490bac4f64da46e1f7918bee58eb8b0d37584886d388ba5a5d6"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s2/metrics/epochs.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s2/metrics/epochs.csv",
+      "bytes": 453662,
+      "sha256": "706c5514b6c2b0b50899845a2ded8bc7b7728bc1b8f9f2ee3de99c1bbd571fd9"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s2/metrics/exit_metrics.csv",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s2/metrics/exit_metrics.csv",
+      "bytes": 251,
+      "sha256": "1ef936d2fcc5be44084601a27bdef4540a5daf981642f23c7df86ad9f3e4d906"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s2/metrics/final.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s2/metrics/final.json",
+      "bytes": 3218,
+      "sha256": "9b70487f2a72d85846dd59872d57a4530fd40a3aa4759e9bbaba110865cb3316"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s2/per_sample/meta.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s2/per_sample/meta.json",
+      "bytes": 3336,
+      "sha256": "e4987c05389582cfde30476196badb32323ee25ec4d423d74fe8270cc12055c4"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s2/summary.json",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s2/summary.json",
+      "bytes": 901,
+      "sha256": "df2a0ff92e9fe09b2690b69d60856b575cbb3be974dfadae48120ae9f29e9789"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s1/per_sample/test.parquet",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s1/per_sample/test.parquet",
+      "bytes": 2717114,
+      "sha256": "2156aedef9dc9a8dc3a018ef4929cdc3a9630f49bcdc25529857c72ea4db4e55",
+      "retained": "msc_results only; large per-sample file excluded from git"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p7-msdnet-cifar100-jointexit-s2/per_sample/test.parquet",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p7-msdnet-cifar100-jointexit-s2/per_sample/test.parquet",
+      "bytes": 2719936,
+      "sha256": "d5cc635010add4e6390913a423f45cf3e9521e896dea9f94407e1f18be121f1b",
+      "retained": "msc_results only; large per-sample file excluded from git"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-resnet50-imagenet100-jointexit-s1/per_sample/test.parquet",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/per_sample/test.parquet",
+      "bytes": 2692014,
+      "sha256": "671f1f3c7b4a5deba674069a41020805ef316d5745222a33a9eb1a53f41ade7c",
+      "retained": "msc_results only; large per-sample file excluded from git"
+    },
+    {
+      "repo": "Shanmuk4622/msc-cifar100",
+      "path": "runs/p6-vit_small_p16-imagenet100-jointexit-s1/per_sample/test.parquet",
+      "revision": "a6356f6a8dee0be1c8bdbfa55e07924b62976da8",
+      "url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/per_sample/test.parquet",
+      "bytes": 2809979,
+      "sha256": "5f6103b04124a52c3401be7aba43ec6e208fa375032ef3bb5d9f62a64f9b7fa0",
+      "retained": "msc_results only; large per-sample file excluded from git"
+    }
+  ]
+}

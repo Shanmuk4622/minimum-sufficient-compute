@@ -1,0 +1,34 @@
+[
+  {
+    "run_id": "p6-resnet50-imagenet100-jointexit-s1",
+    "arch": "resnet50",
+    "n_samples": 10000,
+    "n_exits": 5,
+    "final_exit_correct": 8158,
+    "any_exit_correct": 8897,
+    "early_saves": 739,
+    "acc_full_percent": 81.58,
+    "oracle_percent": 88.97,
+    "excess_points": 7.39,
+    "num_epochs_run": 100,
+    "generic_final_json_top1_percent": 1.24,
+    "parquet_sha256": "671f1f3c7b4a5deba674069a41020805ef316d5745222a33a9eb1a53f41ade7c",
+    "source_url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-resnet50-imagenet100-jointexit-s1/per_sample/test.parquet"
+  },
+  {
+    "run_id": "p6-vit_small_p16-imagenet100-jointexit-s1",
+    "arch": "vit_small_p16",
+    "n_samples": 10000,
+    "n_exits": 5,
+    "final_exit_correct": 6323,
+    "any_exit_correct": 7014,
+    "early_saves": 691,
+    "acc_full_percent": 63.23,
+    "oracle_percent": 70.14,
+    "excess_points": 6.91,
+    "num_epochs_run": 100,
+    "generic_final_json_top1_percent": 1.5599999999999998,
+    "parquet_sha256": "5f6103b04124a52c3401be7aba43ec6e208fa375032ef3bb5d9f62a64f9b7fa0",
+    "source_url": "https://huggingface.co/datasets/Shanmuk4622/msc-cifar100/resolve/a6356f6a8dee0be1c8bdbfa55e07924b62976da8/runs/p6-vit_small_p16-imagenet100-jointexit-s1/per_sample/test.parquet"
+  }
+]

@@ -3,9 +3,23 @@
 **Do not hand-edit.** Regenerate with `python tools/build_results.py`.
 Machine-readable copy: [`RESULTS.csv`](RESULTS.csv).
 
+**September 8 manuscript extension:** these are archived study summaries, not the new paper-analysis tables.
+See [`paper/README.md`](paper/README.md) for exact oracle allocation, realized-cost matching,
+source-optimal policy envelopes, and the disjoint router experiment. Historical gate capture
+reused test images for fitting and evaluation and is not held-out generalization evidence.
+
 Source CSVs are on HuggingFace at
 [`Shanmuk4622/msc-cifar100`](https://huggingface.co/datasets/Shanmuk4622/msc-cifar100)
-under `analysis/`, byte-identical to the local copies.
+under `analysis/`. The default input is the pinned 2026-09-07 snapshot;
+pass `--results-root` explicitly to use another analysis tree.
+Provenance: [`manifest.json`](docs/evidence/hf_2026-09-07/manifest.json).
+
+Differences are aggregated per row; subtracting separately aggregated levels need not reproduce them.
+Study 2 has 90 ordered seed pairs from 45 models, not 90 independent training runs.
+Historical CSV fields `oracle_cross` / `honest_headroom` describe seed-transfer diagnostics,
+not proven upper bounds on deployable routing. See [`PAPER_CLAIM.md`](PAPER_CLAIM.md).
+MSDNet values use the trained final exit; generic `metrics/final.json` is quarantined
+because it evaluates a different classifier. See [`Study 4 findings`](study4/04_FINDINGS.md).
 
 ## Study 2 — oracle ceiling
 
@@ -19,7 +33,7 @@ under `analysis/`, byte-identical to the local copies.
 | cross-seed - baseline | CIFAR-100, 90 seed pairs, rho=0.80 | **-7.9 pt** | `s2_true_oracle.csv` |
 | optimism bias | CIFAR-100, 90 seed pairs, rho=0.80 | **22.41 pt** | `s2_true_oracle.csv` |
 | early-right/final-wrong pool | CIFAR-100, 90 seed pairs, rho=0.80 | **6.86 pt** | `s2_true_oracle.csv` |
-| oracle ABOVE own full-compute accuracy | 90/90 runs | **6.86 pt** | `s2_true_oracle.csv` |
+| oracle ABOVE own full-compute accuracy | 90/90 ordered seed-pair rows (45 trained models) | **6.86 pt** | `s2_true_oracle.csv` |
 
 ## Study 2 — reliability atlas
 
@@ -108,12 +122,25 @@ under `analysis/`, byte-identical to the local copies.
 
 | metric | scope | value | source |
 |---|---|---|---|
-| max |confidence - margin| headroom gap | the two rules that hit the budget exactly | **1.78 pt** | `s4_baselines.csv` |
+| max \|confidence - margin\| headroom gap | difference of architecture medians across 7 target budgets | **1.78 pt** | `s4_baselines.csv` |
 
 ## Study 4 — P1 baseline strength
 
 | metric | scope | value | source |
 |---|---|---|---|
-| confidence, at matched cost | median accuracy, never overspending | **58.03 %** | `s4_baselines.csv` |
-| margin, at matched cost | median accuracy, never overspending | **58.18 %** | `s4_baselines.csv` |
-| patience, at matched cost | median accuracy, never overspending | **55.62 %** | `s4_baselines.csv` |
+| confidence, common eligible cells | median over 46 shared arch/budget cells; cost <= target + 0.01 (not exact cost matching) | **58.1 %** | `s4_baselines.csv` |
+| margin, common eligible cells | median over 46 shared arch/budget cells; cost <= target + 0.01 (not exact cost matching) | **58.38 %** | `s4_baselines.csv` |
+| patience, common eligible cells | median over 46 shared arch/budget cells; cost <= target + 0.01 (not exact cost matching) | **55.62 %** | `s4_baselines.csv` |
+
+## Study 4 — P3 MSDNet variant
+
+| metric | scope | value | source |
+|---|---|---|---|
+| final-exit accuracy | seed 1; 5 joint exits; 10,000 test samples | **73.93 %** | `s4_msdnet.csv` |
+| any-correct-exit oracle | seed 1; 5 joint exits; 10,000 test samples | **81.67 %** | `s4_msdnet.csv` |
+| oracle excess | seed 1; 5 joint exits; 10,000 test samples | **7.74 pt** | `s4_msdnet.csv` |
+| final-exit accuracy | seed 2; 5 joint exits; 10,000 test samples | **74.08 %** | `s4_msdnet.csv` |
+| any-correct-exit oracle | seed 2; 5 joint exits; 10,000 test samples | **81.99 %** | `s4_msdnet.csv` |
+| oracle excess | seed 2; 5 joint exits; 10,000 test samples | **7.91 pt** | `s4_msdnet.csv` |
+| H5: excess >= 2.0 pt in both seeds | documented variant; not an official MSDNet replication | **2 of 2** | `s4_msdnet.csv` |
+| mean excess | 2 seeds; descriptive mean, not a seed confidence interval | **7.825 pt** | `s4_msdnet.csv` |

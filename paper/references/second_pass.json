@@ -1,0 +1,134 @@
+[
+  {
+    "key": "selection",
+    "url": "https://arxiv.org/abs/2608.08265",
+    "status": "title reverified from primary metadata",
+    "sha256": "95d2d08f924a7ca79aaa7bc5a8c6b34ad962c614609cf8b311a80fe835387278"
+  },
+  {
+    "key": "routingnoise",
+    "url": "https://arxiv.org/abs/2607.03436",
+    "status": "title reverified from primary metadata",
+    "sha256": "bf5ced832890e38e88763f147777be89baf7fc7f25690a41956a2ac3e606b218"
+  },
+  {
+    "key": "msdnet",
+    "url": "https://arxiv.org/abs/1703.09844",
+    "status": "title reverified from primary metadata",
+    "sha256": "83f56e753e9d04c952b85ea003984e587007c0574bdae0adc454a0cf8902b816"
+  },
+  {
+    "key": "eenet",
+    "url": "https://arxiv.org/abs/2301.07099",
+    "status": "title reverified from primary metadata",
+    "sha256": "ff9b2f2983907047e86dde102d18c425d1dd5996df26ae70a341eb9ef0c55abd"
+  },
+  {
+    "key": "adaptive",
+    "url": "https://arxiv.org/abs/2106.05022",
+    "status": "title reverified from primary metadata",
+    "sha256": "e00bfa08812290dda46834a4b3060eb2d152dbafb8e4f05fa31b27580fc8e9f8"
+  },
+  {
+    "key": "patience",
+    "url": "https://arxiv.org/abs/2006.04152",
+    "status": "title reverified from primary metadata",
+    "sha256": "1aa41b57110a7f7e45c4baeabdae8761f08aaef56620431a91c33f42ceb67ed5"
+  },
+  {
+    "key": "difficulty",
+    "url": "https://arxiv.org/abs/2106.09647",
+    "status": "title reverified from primary metadata",
+    "sha256": "8e9ae2d2ec0b32d58edf26d1a0e9149adea86da9e9608bd1096ac34d94af877c"
+  },
+  {
+    "key": "resnet",
+    "url": "https://arxiv.org/abs/1512.03385",
+    "status": "title reverified from primary metadata",
+    "sha256": "818e6e7c7934ebdc143f0e50b5f4d96cb1229e53932a9d3c7f7c86bcc2d37f16"
+  },
+  {
+    "key": "wide",
+    "url": "https://arxiv.org/abs/1605.07146",
+    "status": "title reverified from primary metadata",
+    "sha256": "f9cbfd30fd703017df577dcc51d2a5a69362053924ba51462b88f7949f105170"
+  },
+  {
+    "key": "vgg",
+    "url": "https://arxiv.org/abs/1409.1556",
+    "status": "title reverified from primary metadata",
+    "sha256": "e864eb6377d63d51f3c8e0ff9f68019e4b860ad12bc27c9f01c754334f4e58c7"
+  },
+  {
+    "key": "vit",
+    "url": "https://arxiv.org/abs/2010.11929",
+    "status": "title reverified from primary metadata",
+    "sha256": "f6b204434096778f0bf56bdaaffc8b14fdef1703075c2e42b521d53281ad3f94"
+  },
+  {
+    "key": "mobile",
+    "url": "https://arxiv.org/abs/1801.04381",
+    "status": "title reverified from primary metadata",
+    "sha256": "efab895482658e2ec2d57fb7ed944722d2a5193de3a389ce367faa9945845a9f"
+  },
+  {
+    "key": "shuffle",
+    "url": "https://arxiv.org/abs/1807.11164",
+    "status": "title reverified from primary metadata",
+    "sha256": "ab7955b013962b22645fcc8c14079c6bf8dcfc599184221b7c5bc4b86553bea0"
+  },
+  {
+    "key": "convnext",
+    "url": "https://arxiv.org/abs/2201.03545",
+    "status": "title reverified from primary metadata",
+    "sha256": "bd4aee0eaba3a156f6f8f8766e50530bbe6730e45e46d1e3e773775549180b23"
+  },
+  {
+    "key": "mixer",
+    "url": "https://arxiv.org/abs/2105.01601",
+    "status": "title reverified from primary metadata",
+    "sha256": "e59cfa27bbd73ef3c513ce8ddaeac28ef6e5b7cac4ba346cf1c0e2497afaaeb0"
+  },
+  {
+    "key": "dynamic",
+    "url": "https://arxiv.org/abs/2102.04906",
+    "status": "title reverified from primary metadata",
+    "sha256": "711f098ce77ef26abd0952427c5edad3704584393c400334b611e2d665aaf6f2"
+  },
+  {
+    "key": "pteenet",
+    "url": "https://arxiv.org/abs/2501.02508",
+    "status": "title reverified from primary metadata",
+    "sha256": "ac638978519bc6c9646c7cdd0ecc133a8f081582455e7e342e696d889aff9f36"
+  },
+  {
+    "key": "overthinking",
+    "url": "https://proceedings.mlr.press/v97/kaya19a.html",
+    "status": "title reverified from primary metadata",
+    "sha256": "eabd94149e5b947bfe7acf70c06782fd546394f01c962c7a721f24c52ab5449b"
+  },
+  {
+    "key": "calibration",
+    "url": "https://proceedings.mlr.press/v70/guo17a.html",
+    "status": "title reverified from primary metadata",
+    "sha256": "fcd644b81c1d06d034060e3ff8079ccc6acc2213dbf846043b92059ce10d26f8"
+  },
+  {
+    "key": "branchynet",
+    "url": "https://api.crossref.org/works/10.1109/ICPR.2016.7900006",
+    "status": "title reverified from primary metadata",
+    "sha256": "4f497141ecb19b5ae55ad8e989f23f8e7ec6226a2dfa6b410772067a1b29dd3d"
+  },
+  {
+    "key": "imagenet",
+    "url": "https://api.crossref.org/works/10.1007/s11263-015-0816-y",
+    "status": "title reverified from primary metadata",
+    "sha256": "45c617595f680fd2ee8cc8caeb51857bac7e680c5d521973d44b3bfc61c0df92"
+  },
+  {
+    "key": "survey",
+    "url": "https://api.crossref.org/works/10.1145/3698767",
+    "status": "title reverified from primary metadata",
+    "sha256": "7ceeec99b2907b3744c3ab30ff879d84357720f1b0904195a5ec8aa368efcbb4"
+  }
+]

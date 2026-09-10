@@ -1,0 +1,277 @@
+{
+  "aggregation": "mean seed pairs within architecture, median of 15 architecture means",
+  "budget": [
+    {
+      "budget": 0.4,
+      "n_arch": 15,
+      "oracle": 0.618209797179487,
+      "cross": 0.4809487387308608,
+      "confidence": 0.3617666666666666,
+      "gap": 18.692983721231748,
+      "cross_adv": 13.611059832969532,
+      "legacy_adv": 7.391666666666666,
+      "solver_gain": 7.2533637646652025,
+      "avoidable_slack": 0.04759109513509833,
+      "cross_solver_change": 5.275299613958138,
+      "oracle_cost": 0.4000000000000001,
+      "cross_cost": 0.4000000000000001,
+      "legacy_cost": 0.3439171611819545,
+      "matched_adv": 13.611059832969532,
+      "confidence_matched_cost": 0.3617666666666666,
+      "cross_adv_interval": [
+        9.294399542160965,
+        15.25496754354844
+      ],
+      "positive_architectures": 14,
+      "matched_positive_architectures": 15,
+      "matched_adv_interval": [
+        9.294399542160965,
+        15.918938571135326
+      ]
+    },
+    {
+      "budget": 0.5,
+      "n_arch": 15,
+      "oracle": 0.7354666666666666,
+      "cross": 0.5326833333333333,
+      "confidence": 0.44573333333333337,
+      "gap": 22.078640715946793,
+      "cross_adv": 10.89423609077894,
+      "legacy_adv": 7.560000000000001,
+      "solver_gain": 7.879148004160078,
+      "avoidable_slack": 0.06411677054430898,
+      "cross_solver_change": 4.888965193268135,
+      "oracle_cost": 0.4928168114793112,
+      "cross_cost": 0.4928168114793112,
+      "legacy_cost": 0.40582150938544603,
+      "matched_adv": 14.194999999999999,
+      "confidence_matched_cost": 0.40335000000000004,
+      "cross_adv_interval": [
+        7.041666666666669,
+        16.747909451152875
+      ],
+      "positive_architectures": 13,
+      "matched_positive_architectures": 15,
+      "matched_adv_interval": [
+        10.89423609077894,
+        16.95711837157868
+      ]
+    },
+    {
+      "budget": 0.6,
+      "n_arch": 15,
+      "oracle": 0.7757333333333333,
+      "cross": 0.5454833333333333,
+      "confidence": 0.5189333333333334,
+      "gap": 22.465000000000003,
+      "cross_adv": 3.4050000000000007,
+      "legacy_adv": 3.4050000000000007,
+      "solver_gain": 0.0,
+      "avoidable_slack": 0.0,
+      "cross_solver_change": 0.0,
+      "oracle_cost": 0.4961601302151734,
+      "cross_cost": 0.4961601302151734,
+      "legacy_cost": 0.4961601302151734,
+      "matched_adv": 14.194999999999999,
+      "confidence_matched_cost": 0.42043333333333327,
+      "cross_adv_interval": [
+        0.2950000000000008,
+        13.156666666666668
+      ],
+      "positive_architectures": 12,
+      "matched_positive_architectures": 15,
+      "matched_adv_interval": [
+        11.375,
+        16.99
+      ]
+    },
+    {
+      "budget": 0.7,
+      "n_arch": 15,
+      "oracle": 0.7757333333333333,
+      "cross": 0.5454833333333333,
+      "confidence": 0.5745,
+      "gap": 22.465000000000003,
+      "cross_adv": -3.2916666666666665,
+      "legacy_adv": -3.2916666666666665,
+      "solver_gain": 0.0,
+      "avoidable_slack": 0.0,
+      "cross_solver_change": 0.0,
+      "oracle_cost": 0.4961601302151734,
+      "cross_cost": 0.4961601302151734,
+      "legacy_cost": 0.4961601302151734,
+      "matched_adv": 14.194999999999999,
+      "confidence_matched_cost": 0.42043333333333327,
+      "cross_adv_interval": [
+        -4.978333333333334,
+        3.600000000000002
+      ],
+      "positive_architectures": 6,
+      "matched_positive_architectures": 15,
+      "matched_adv_interval": [
+        11.375,
+        17.213333333333335
+      ]
+    },
+    {
+      "budget": 0.8,
+      "n_arch": 15,
+      "oracle": 0.7757333333333333,
+      "cross": 0.5454833333333333,
+      "confidence": 0.6175333333333333,
+      "gap": 22.465000000000003,
+      "cross_adv": -7.433333333333334,
+      "legacy_adv": -7.433333333333334,
+      "solver_gain": 0.0,
+      "avoidable_slack": 0.0,
+      "cross_solver_change": 0.0,
+      "oracle_cost": 0.4961601302151734,
+      "cross_cost": 0.4961601302151734,
+      "legacy_cost": 0.4961601302151734,
+      "matched_adv": 14.194999999999999,
+      "confidence_matched_cost": 0.42043333333333327,
+      "cross_adv_interval": [
+        -9.576666666666664,
+        -7.030000000000004
+      ],
+      "positive_architectures": 0,
+      "matched_positive_architectures": 15,
+      "matched_adv_interval": [
+        11.375,
+        16.99
+      ]
+    },
+    {
+      "budget": 0.9,
+      "n_arch": 15,
+      "oracle": 0.7757333333333333,
+      "cross": 0.5454833333333333,
+      "confidence": 0.7031000000000001,
+      "gap": 22.465000000000003,
+      "cross_adv": -14.088333333333333,
+      "legacy_adv": -14.088333333333333,
+      "solver_gain": 0.0,
+      "avoidable_slack": 0.0,
+      "cross_solver_change": 0.0,
+      "oracle_cost": 0.4961601302151734,
+      "cross_cost": 0.4961601302151734,
+      "legacy_cost": 0.4961601302151734,
+      "matched_adv": 14.194999999999999,
+      "confidence_matched_cost": 0.42043333333333327,
+      "cross_adv_interval": [
+        -15.561666666666667,
+        -10.778333333333334
+      ],
+      "positive_architectures": 0,
+      "matched_positive_architectures": 15,
+      "matched_adv_interval": [
+        12.505000000000003,
+        17.213333333333335
+      ]
+    },
+    {
+      "budget": 0.95,
+      "n_arch": 15,
+      "oracle": 0.7757333333333333,
+      "cross": 0.5454833333333333,
+      "confidence": 0.7119,
+      "gap": 22.465000000000003,
+      "cross_adv": -15.55333333333333,
+      "legacy_adv": -15.55333333333333,
+      "solver_gain": 0.0,
+      "avoidable_slack": 0.0,
+      "cross_solver_change": 0.0,
+      "oracle_cost": 0.4961601302151734,
+      "cross_cost": 0.4961601302151734,
+      "legacy_cost": 0.4961601302151734,
+      "matched_adv": 14.194999999999999,
+      "confidence_matched_cost": 0.42043333333333327,
+      "cross_adv_interval": [
+        -17.941666666666666,
+        -10.891666666666666
+      ],
+      "positive_architectures": 0,
+      "matched_positive_architectures": 15,
+      "matched_adv_interval": [
+        12.505000000000003,
+        17.213333333333335
+      ]
+    }
+  ],
+  "envelope": {
+    "median_width": 25.778333333333048,
+    "interval": [
+      24.019999999999904,
+      26.726666666666297
+    ],
+    "min_arch_width": 17.376666666666672,
+    "max_arch_width": 31.73499999999982,
+    "lower_median": 48.90333333333352,
+    "upper_median": 76.12
+  },
+  "complementarity": {
+    "median_of_45": 6.859999999999999,
+    "median_of_15_seed_means": 6.716666666666667,
+    "min": 4.81,
+    "max": 11.559999999999999
+  },
+  "gate_080": [
+    {
+      "budget": 0.8,
+      "rule": "confidence",
+      "kind": "same",
+      "source": 2.0,
+      "target": 2.0,
+      "gain": 0.0,
+      "cost_difference": 0.0,
+      "accuracy": 0.6219166666666667,
+      "cost": 0.8057445633454016,
+      "overspend": 0.005744563345401447,
+      "headroom": 11.508333333333331
+    },
+    {
+      "budget": 0.8,
+      "rule": "logistic",
+      "kind": "same",
+      "source": 2.0,
+      "target": 2.0,
+      "gain": 0.11666666666667232,
+      "cost_difference": -0.000879607653976581,
+      "accuracy": 0.6274166666666666,
+      "cost": 0.8048287301304562,
+      "overspend": 0.004828730130456149,
+      "headroom": 11.799999999999999
+    },
+    {
+      "budget": 0.8,
+      "rule": "logistic",
+      "kind": "transfer",
+      "source": 2.0,
+      "target": 2.0,
+      "gain": 0.17500000000000293,
+      "cost_difference": -0.0003312590025500069,
+      "accuracy": 0.6259166666666667,
+      "cost": 0.804975254193002,
+      "overspend": 0.004975254193001932,
+      "headroom": 11.470833333333331
+    },
+    {
+      "budget": 0.8,
+      "rule": "margin",
+      "kind": "same",
+      "source": 2.0,
+      "target": 2.0,
+      "gain": 0.4166666666666689,
+      "cost_difference": -0.000883358680176675,
+      "accuracy": 0.63025,
+      "cost": 0.8040541867652582,
+      "overspend": 0.0040541867652581125,
+      "headroom": 11.391666666666666
+    }
+  ],
+  "max_oracle_gain": 24.609769965277778,
+  "changed_oracle_rows": 122,
+  "gate_budget_violation_count": 89,
+  "gate_rows": 1575,
+  "gate_max_overspend": 0.016724804646292557
+}

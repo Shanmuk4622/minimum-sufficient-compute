@@ -1,0 +1,6 @@
+arch,seed,run_id,n_exits,n_samples,acc_full,oracle_in,excess,exits,joint
+msdnet,1,p7-msdnet-cifar100-jointexit-s1,5,10000,73.92999999999999,81.67,7.740000000000002,designed,True
+msdnet,2,p7-msdnet-cifar100-jointexit-s2,5,10000,74.08,81.99,7.909999999999995,designed,True
+resnet20,1,p4-resnet20-cifar100-jointexit-s1,5,10000,68.02,78.66,10.639999999999993,attached,True
+resnet32x4,1,p4-resnet32x4-cifar100-jointexit-s1,5,10000,77.83,86.38,8.550000000000002,attached,True
+vgg8,1,p4-vgg8-cifar100-jointexit-s1,5,10000,72.28,81.43,9.150000000000002,attached,True

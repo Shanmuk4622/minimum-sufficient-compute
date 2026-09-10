@@ -1,5 +1,17 @@
 # Study 4 — pre-registration
 
+> **Outcome audit — 2026-09-07.** Original predictions and thresholds below are
+> preserved. H4/H4b: supported (+7.39/+6.91 pt). H5: supported for the documented
+> MSDNet variant, **+7.74/+7.91 pt in seeds 1/2**, directly recomputed from HF
+> test parquets. Both runs completed 2026-09-01. H6's all-budget negativity
+> prediction is falsified; similarity of confidence and margin is a separate
+> descriptive result. Original consequence statements such as “architecture-independent”
+> exceed what two seeds of a variant establish and are not adopted as current claims.
+> The registered R-03 reference check was weakened to a 55% floor at build time;
+> the floor is met by the final-exit predictions, but the notebook's generic
+> final-metric guard is defective (D-91). See [04_FINDINGS.md](04_FINDINGS.md)
+> for validation, evaluation mismatch, revised baseline aggregation and remaining scope.
+
 **Written before any run.** Predictions and thresholds fixed here so results
 cannot be re-cut. Amendments get a date and a reason, above the original text.
 

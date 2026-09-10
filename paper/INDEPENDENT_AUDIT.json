@@ -1,0 +1,9 @@
+{
+  "real_model_LP_comparisons": 315,
+  "max_oracle_accuracy_difference": 8.881784197001252e-16,
+  "full_allocation_transfer_comparisons": 630,
+  "max_transfer_accuracy_difference": 1.6653345369377348e-16,
+  "raw_threshold_rule_checks": 630,
+  "input_hashes_checked": 85,
+  "status": "passed"
+}

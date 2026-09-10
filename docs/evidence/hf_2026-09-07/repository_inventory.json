@@ -1,0 +1,877 @@
+[
+  {
+    "path": ".gitignore",
+    "bytes": 574,
+    "sha256": "e36e4124246d6e02016eba289060d73323748f0ab9630cc6d209c2e81ea71242",
+    "lines": 21,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "AGENTS.md",
+    "bytes": 47,
+    "sha256": "a89f940f05478ce29e78d75d652312e1d2ba1c5bc0f31c16695f29245a73949a",
+    "lines": 1,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "benchmark/bench_throughput.py",
+    "bytes": 21971,
+    "sha256": "ed99b77c80ee3316dd66d20f38b43960e0526dc1e162385b0f594824680fb08f",
+    "lines": 506,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "benchmark/convsweep_resnet50_20260812_074341.json",
+    "bytes": 1024,
+    "sha256": "c35727bba75d68bbd99c43cfdde03b4bc9abad3fceeed4d6400a739dd07d035f",
+    "lines": 44,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "benchmark/README.md",
+    "bytes": 7017,
+    "sha256": "c2b658942acc93cea19ac877d05c243739be0cca2826ab1fd1ac9e2090e19719",
+    "lines": 172,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "benchmark/results/bench_CB-410-122_20260808_101635.json",
+    "bytes": 7475,
+    "sha256": "459a3ba4322ffe41bca2c4fe04f911b444dc01392cdf5f117bb998ed3ab805a9",
+    "lines": 333,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "build_notebooks.py",
+    "bytes": 149053,
+    "sha256": "80da022994617e1a3a5389f011789e50e209d337c777ea60878d2f9c3d3a9e15",
+    "lines": 3334,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "build_notebooks_in100.py",
+    "bytes": 89083,
+    "sha256": "f8ed004a5b17acd22d34b56aeb8e96adefd43f8d0dda515dd833085dd80982ff",
+    "lines": 2069,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "build_notebooks_study2.py",
+    "bytes": 49465,
+    "sha256": "b263d0c4c154b68c9b41a6faed04d8c771aed7ed2ff973775fd38a4cdd81b0e2",
+    "lines": 1140,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "build_notebooks_study3.py",
+    "bytes": 68308,
+    "sha256": "6d3b691d071185b0f27c9e1613fe36884de464ce9b199c207c203873afdc4037",
+    "lines": 1702,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "build_notebooks_study4.py",
+    "bytes": 73863,
+    "sha256": "2524f0e68968d213cb561dc3666ad08101238554a2342e09bd9b7136e1168f82",
+    "lines": 1823,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "CITATION.cff",
+    "bytes": 777,
+    "sha256": "cf1bbbff3a4835737312c3b1e65717210010f7426bda16c215ec9852ab4c1a9b",
+    "lines": 21,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/00_RESEARCH_PROTOCOL.md",
+    "bytes": 30601,
+    "sha256": "abe82676e8faf2c22963726d68514edc22c14a020f8d5ead456988e0067e42a6",
+    "lines": 429,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/01_PHASE0_GO_NOGO.md",
+    "bytes": 7164,
+    "sha256": "2799273922affa4b69932a1121414d7be370ee698ff8fd1a6c6c61796513b229",
+    "lines": 126,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/02_ENGINEERING_SPEC.md",
+    "bytes": 15093,
+    "sha256": "22a7d53696b4d57cd7a91206b6ea6a4e4e3ed003071d945550895acb921f660e",
+    "lines": 291,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/03_IMPLEMENTATION_PLAN.md",
+    "bytes": 24131,
+    "sha256": "7fa70af5a4ad6678b5595a8512703d78c7c21498bfa3b408f5ef053c94e566db",
+    "lines": 290,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/04_NOTEBOOK_RUNBOOK.md",
+    "bytes": 24005,
+    "sha256": "dd964da0630bb1e06a5f90811d9a449416226b3eeaed88a8cbdcb6e063c3a2ee",
+    "lines": 480,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/05_PLAIN_ENGLISH_GUIDE.md",
+    "bytes": 26620,
+    "sha256": "66b32ba5ec81dfdf72612cdef16392993c68d4c3de4afcfb6e3aa9f5f99487a6",
+    "lines": 499,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/06_DATA_SCHEMA.md",
+    "bytes": 14866,
+    "sha256": "59a894e9d86ec3a443e1e19d158d5d190a2e558f4b33847df50b6c13c2a21989",
+    "lines": 235,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/07_REPLICATION_PLAYBOOK.md",
+    "bytes": 33210,
+    "sha256": "547f55c276f1db1e958de2d7f7e46e39fc1f10689e6e351b04953a83934044bc",
+    "lines": 738,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/08_PHASE0_RESULTS.md",
+    "bytes": 9751,
+    "sha256": "3c78f1a160b6c14fa32faded43e449a0cfd27dbc658923ab8c3eb1142a5a633e",
+    "lines": 177,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/09_LAB_NOTEBOOK.md",
+    "bytes": 126796,
+    "sha256": "41cc45c7725264c4500a293a541de2091ec3f0cd1b1acdf03c5eaff9e246b6ab",
+    "lines": 2199,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/cifar100/10_FINAL_RESULTS.md",
+    "bytes": 12408,
+    "sha256": "03162077c68786f5b91903cd53a7a8b2569d43795d91b388bb1b27391bb3d438",
+    "lines": 278,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/imagenet100/20_IN100_PORT_PLAN.md",
+    "bytes": 24011,
+    "sha256": "a142342fea791d1634d0957a8f7d29e2040eb62d6750375ce9b27ee0adde794a",
+    "lines": 436,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/imagenet100/21_IN100_ENGINEERING_DELTA.md",
+    "bytes": 13409,
+    "sha256": "c43c0325499780c924b2975a3ff0d8d9712a21749de1702db6a0e8a344aa5182",
+    "lines": 267,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/imagenet100/22_IN100_LAB_NOTEBOOK.md",
+    "bytes": 169275,
+    "sha256": "2b19ea4752b2659035aed23b9cd3e66c43bc43b64b2624027a8358a4faa50044",
+    "lines": 3300,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/imagenet100/23_IN100_RUNBOOK.md",
+    "bytes": 26050,
+    "sha256": "e17929adedd3136fe78186ef25bfc663667d0c779fdc2b442f38d296ff4196a3",
+    "lines": 397,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/imagenet100/24_IN100_STATUS.md",
+    "bytes": 15683,
+    "sha256": "bfbf7abc8e748e51d60015c2b0413f42cce921a4ac3e5440c396df25e6dcb1d6",
+    "lines": 307,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/imagenet100/25_IN100_DATA_CARD.md",
+    "bytes": 10846,
+    "sha256": "01e7a2c61f582c68e6c217efb95f4ca5310d418aa5d4a81da116730eb31f6305",
+    "lines": 248,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "docs/imagenet100/26_IN100_FINDINGS.md",
+    "bytes": 8193,
+    "sha256": "74e29a940fc63eda1e49da08e8e9309379c84a9abadeeea4451a24135cf435dd",
+    "lines": 177,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "LICENSE",
+    "bytes": 1073,
+    "sha256": "b3d30bc0c6782900c3278d4989ce958883f7233660bd8836d3d98e73dbdce6d3",
+    "lines": 21,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "msc_core.py",
+    "bytes": 20703,
+    "sha256": "2cc4ba5e0935433534cfc19e65405fca905bce8922c446a8fe93b01d0d2f0c2e",
+    "lines": 545,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "msc_torch.py",
+    "bytes": 11773,
+    "sha256": "2c09ffea219692aeddf50fb9b8e1e331004317550608eae0f86661728b7796c1",
+    "lines": 311,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "notebooks/Microsoft.Services.Store.winmd",
+    "bytes": 5120,
+    "sha256": "45715793b8c8571554b0bfb4eccc29e2884c16481e1c7dbee78363bbe4da3dd9",
+    "review": "binary metadata; not research source"
+  },
+  {
+    "path": "notebooks/NB00_Setup_And_Verify.ipynb",
+    "bytes": 742177,
+    "sha256": "c157e26c16df5267817e7e43847f5a298885ba9d118a896f0fa0964d92f9772c",
+    "lines": 6806,
+    "cells": 19,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB01_Phase0_Train.ipynb",
+    "bytes": 738509,
+    "sha256": "4842b1b126b5e6c8ab818c4b24d57b571ace0336bb2321ee0f56733418d39312",
+    "lines": 6735,
+    "cells": 17,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB02_Phase0_Measure.ipynb",
+    "bytes": 739140,
+    "sha256": "322e7b39cf05db773877e65d4b551469e105b176e90623199f63b5ee232353eb",
+    "lines": 6734,
+    "cells": 15,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB03_Phase0_Decision.ipynb",
+    "bytes": 745217,
+    "sha256": "dd2d435a471d6969b60b07d72d26bcb09c41d04aa44738789f59cb77023e90f8",
+    "lines": 6868,
+    "cells": 23,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB04_Atlas_Train_ResNets.ipynb",
+    "bytes": 739184,
+    "sha256": "788fe319508bd8356c8a0a27b2e5fd1673c7ecbb4789cddf7d20b4fb00bd6845",
+    "lines": 6747,
+    "cells": 18,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB05_Atlas_Train_WRN_VGG.ipynb",
+    "bytes": 739107,
+    "sha256": "85158c326d7d55dda71bcfb5df7f4eacebf29f5ad9ff8983cdeb084cf82d24fb",
+    "lines": 6747,
+    "cells": 18,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB06_Atlas_Train_Mobile.ipynb",
+    "bytes": 738828,
+    "sha256": "ae90234eca188a91e7ae1c16b4f37e60910ae6db174af4215bd4955c46d171b2",
+    "lines": 6744,
+    "cells": 18,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB07_Atlas_Train_Modern.ipynb",
+    "bytes": 739459,
+    "sha256": "f1c445f3c6febf68194a9d3038914c351856732507a56399ac4903e9b7d0dd69",
+    "lines": 6747,
+    "cells": 18,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB08_Atlas_Measure.ipynb",
+    "bytes": 736662,
+    "sha256": "cb359b326f373a67172af38d92bc3ff2263eb6d9b5811f677cc189ee8ba8f972",
+    "lines": 6703,
+    "cells": 17,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB09_Analysis_Q1_NoiseCeiling.ipynb",
+    "bytes": 736395,
+    "sha256": "8f324159ed1eb659b22931a1af0d2fe21d8e3fcfbc440e894c39e79304c012ae",
+    "lines": 6686,
+    "cells": 14,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB10_Analysis_Q2_AxisStructure.ipynb",
+    "bytes": 738817,
+    "sha256": "4f00272ea3c97fe96091905c31b818a8f0893556165d01a9bab6e4b95a727d8e",
+    "lines": 6723,
+    "cells": 14,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB11_Analysis_Q3_Transfer.ipynb",
+    "bytes": 742595,
+    "sha256": "c084eb5ba6d85ec85f403c12b010a9d9bc17118abe6afa06f533affb5b442dca",
+    "lines": 6817,
+    "cells": 18,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB12_Analysis_Q4_Irreducibility.ipynb",
+    "bytes": 739807,
+    "sha256": "d9f5c38971fb6a731fcd897f1296e4f09cab2fb13d80355c451f1c36c661c0f8",
+    "lines": 6734,
+    "cells": 14,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB13_Method_MSCKD_Train.ipynb",
+    "bytes": 740661,
+    "sha256": "07f03a756bd8c4733ecfdebc142a102eda330e7b4abfef45b8e32aa5c108d3fe",
+    "lines": 6763,
+    "cells": 16,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB14_Method_Comparison.ipynb",
+    "bytes": 745918,
+    "sha256": "2432a878424c0219034dea430f1852da2560cc54af3edc303c69662587172ec1",
+    "lines": 6867,
+    "cells": 18,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB15_Paper_Outputs.ipynb",
+    "bytes": 833597,
+    "sha256": "13e07528d60915423c11e35fde5824009f7827f1dde1513c67c2a3bb938a3a17",
+    "lines": 1,
+    "cells": 22,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks/NB16_Fix_Gaps.ipynb",
+    "bytes": 741922,
+    "sha256": "4fbf17561ef2cf7829314303b988118a5d38ab8e800c0e473bc7191eb19d4a3a",
+    "lines": 6811,
+    "cells": 19,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_in100/msc_core.py",
+    "bytes": 20735,
+    "sha256": "4cd0dfe5f06cd2d5c52eca089f8d8eb574425230bc8d186d2f3f7681b26be454",
+    "lines": 547,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "notebooks_in100/NB1_Setup.ipynb",
+    "bytes": 1232001,
+    "sha256": "f132c23e43fe40019a53adede3885a516d91cc36cd6847353b592ec46774fa8a",
+    "lines": 11282,
+    "cells": 17,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_in100/NB2_Train.ipynb",
+    "bytes": 1225391,
+    "sha256": "7eb9cefa9270207637eab61697673f4ecacabf72034f9007470332d7004407f7",
+    "lines": 11120,
+    "cells": 11,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_in100/NB3_Measure.ipynb",
+    "bytes": 1219542,
+    "sha256": "700cfc49ccf9ab7bee368d5e7a7899166a3cbeac35f5103372b137ee2c0fd30a",
+    "lines": 11004,
+    "cells": 8,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_in100/NB4_Analysis.ipynb",
+    "bytes": 1233740,
+    "sha256": "0b4c2112ebeab40aec80e9ef3a0bad4eb28aa2c2245b2fe119d51418e0775683",
+    "lines": 11299,
+    "cells": 19,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_in100/NB5_Method.ipynb",
+    "bytes": 1228655,
+    "sha256": "0199ce0a08c094f4f585b5f64ea8e03bc6ee4edd1173c9cf4620512e93c819c2",
+    "lines": 11180,
+    "cells": 12,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_in100/NB6_Publish.ipynb",
+    "bytes": 1240253,
+    "sha256": "41fdabe2147c4295487eda1f22f8f1aff88f29ba0728a0bf9278749e0f2457ab",
+    "lines": 11454,
+    "cells": 12,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study2/msc_core.py",
+    "bytes": 20735,
+    "sha256": "4cd0dfe5f06cd2d5c52eca089f8d8eb574425230bc8d186d2f3f7681b26be454",
+    "lines": 547,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "notebooks_study2/S2_NB0_Fetch.ipynb",
+    "bytes": 1271956,
+    "sha256": "b6a6858db843c971294152fb484b549c5be231497d6b26ad45910b7c088333d0",
+    "lines": 11488,
+    "cells": 10,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study2/S2_NB1_Reliability.ipynb",
+    "bytes": 1283761,
+    "sha256": "5e69fd0dc5c8045b10a30a5769811dda1508d5349f372f29bab154c4fc6dc2a0",
+    "lines": 11711,
+    "cells": 13,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study2/S2_NB2_Ceiling.ipynb",
+    "bytes": 1299072,
+    "sha256": "8da51a79a76457e37143ca07ae3906719a0995f5ec82e200cf7a39de130dad4f",
+    "lines": 11966,
+    "cells": 16,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study3/msc_core.py",
+    "bytes": 20703,
+    "sha256": "2cc4ba5e0935433534cfc19e65405fca905bce8922c446a8fe93b01d0d2f0c2e",
+    "lines": 545,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "notebooks_study3/S3_NB0_Extrapolate.ipynb",
+    "bytes": 1277517,
+    "sha256": "1e6994ae02d709f45931f27e3424bd63789f567a52078ffa6979d16857a72b2c",
+    "lines": 11607,
+    "cells": 11,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study3/S3_NB1_JointTrain.ipynb",
+    "bytes": 1279327,
+    "sha256": "5d083d6f76c0b42994ed51dfbac076618f8590a039e9329f61e91fc56896fd47",
+    "lines": 11668,
+    "cells": 15,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study3/S3_NB2_Compare.ipynb",
+    "bytes": 1276777,
+    "sha256": "77b3e7de59beb0d62086292a283a125d432b295980aa9d9092f7968d4363cb1c",
+    "lines": 11600,
+    "cells": 12,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study3/S3_NB3_Router.ipynb",
+    "bytes": 1281411,
+    "sha256": "cbcbbb6c3dbc30d786566d48cd6d70ca1daad6144e91f35f1b0df26204c6c221",
+    "lines": 11706,
+    "cells": 14,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study3/S3_NB4_Pruning.ipynb",
+    "bytes": 1279507,
+    "sha256": "a6bafa20f029cb903d79789fd4045b97de62bc71ac16472f60b46931be197ddc",
+    "lines": 11673,
+    "cells": 14,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study3/S3_NB5_Publish.ipynb",
+    "bytes": 1273162,
+    "sha256": "2362c5e72b92e0bc1a4a3bf9f047505bfda68c1a26d69e0e381b049dacf641a1",
+    "lines": 11545,
+    "cells": 11,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study4/S4_NB0_Figures.ipynb",
+    "bytes": 1275223,
+    "sha256": "aab2acd235e049848b5c5a12becf1aa37bfa599f4aa0cc3d6d3de21d91f6274d",
+    "lines": 11592,
+    "cells": 13,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study4/S4_NB1_Baselines.ipynb",
+    "bytes": 1285369,
+    "sha256": "2d69bf599373543b63ab7e12a41176b5e66d713f30d02551ab3a03178564453a",
+    "lines": 11775,
+    "cells": 16,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study4/S4_NB2_ImageNet.ipynb",
+    "bytes": 1273318,
+    "sha256": "8bb79b07004f34723fab0bf79e673be2e999c87d04208857e3645983d3f25947",
+    "lines": 11570,
+    "cells": 15,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study4/S4_NB3_Publish.ipynb",
+    "bytes": 1288550,
+    "sha256": "63e961860c9475a1f862bd62206ef10f416f8838e29c5da928196ac23df7c524",
+    "lines": 11718,
+    "cells": 12,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "notebooks_study4/S4_NB4_MSDNet.ipynb",
+    "bytes": 1596238,
+    "sha256": "3770164da5496a441b4010c77b16b3792ec28b5a7f01b5881997d47bb18dc87a",
+    "lines": 22888,
+    "cells": 25,
+    "review": "parsed every cell; unique cells extracted; embedded payloads deduplicated"
+  },
+  {
+    "path": "PAPER.md",
+    "bytes": 30845,
+    "sha256": "5ac613c920708acf3c5c1028a8b65911576061ad66fd8d9024ddf721831e7b90",
+    "lines": 609,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "PAPER_CLAIM.md",
+    "bytes": 16252,
+    "sha256": "7a9b8ce188fd0fa3756316e7eced0852dca06f027790dd23569b50507538471c",
+    "lines": 311,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "README.md",
+    "bytes": 13588,
+    "sha256": "94acb3e4752def9caeccf9fe51fa1852ef814984bb201bc9fa5f18b0aee48df8",
+    "lines": 274,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "requirements.txt",
+    "bytes": 2802,
+    "sha256": "c1b2df8f4cd3da7d7f1a8f23f1dd70fef960686ba944192c437301081d49e714",
+    "lines": 53,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "RESULTS.csv",
+    "bytes": 5790,
+    "sha256": "09b4e757fba15afd1821bd8c2555ca231e74cb5d4d83352f55d4f0065241a0e4",
+    "lines": 57,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "RESULTS.md",
+    "bytes": 6667,
+    "sha256": "832c30667cc441e64c65891818c3878728dbaa72910c8edec349c558867fb77d",
+    "lines": 119,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "src/__pycache__/msc_lib.cpython-310.pyc",
+    "bytes": 337244,
+    "sha256": "a5a7da97b0a90e2bb7d4ec20571d323568b779f76d7d54d8e030326efed45c54",
+    "review": "binary metadata; not research source"
+  },
+  {
+    "path": "src/msc_lib.py",
+    "bytes": 779063,
+    "sha256": "f737f75f9303a552f37389908616ebee6e3b7ae0083b155eaf6fe6a13ba0ad4b",
+    "lines": 16034,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/01_POSTMORTEM.md",
+    "bytes": 5581,
+    "sha256": "c1114244772c3fcf7890d27ce4c3ed8d1c1d18efbfbe8ad57b3a79f80f2f9f00",
+    "lines": 129,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/02_PROTOCOL.md",
+    "bytes": 8762,
+    "sha256": "f59cf0220d8d487a66220fd052d3e335a6e969fb6d3afc5666001e9d697ab846",
+    "lines": 197,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/03_INVENTORY.md",
+    "bytes": 6465,
+    "sha256": "36076a349e95803ba49c61991710bbfc991b3e9b00749944ca67be5426809842",
+    "lines": 144,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/04_DESIGN.md",
+    "bytes": 6219,
+    "sha256": "acaf878845582ca297dd2becda2af9941e3984c5c26670d1549ef93c1bfe7d22",
+    "lines": 158,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/05_OPEN_DECISIONS.md",
+    "bytes": 7563,
+    "sha256": "9d759ce4c4bfb5a11153a158a7454003b03357c3fcc2e483e9a85a2cb6915f78",
+    "lines": 170,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/06_RISK_REGISTER.md",
+    "bytes": 10736,
+    "sha256": "0db4a7fe0275984f5383d19f9e662b7f7214367cce7e83d86c3d4031f1070b92",
+    "lines": 251,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/07_PROGRESS.md",
+    "bytes": 22701,
+    "sha256": "c375717630b3f669494633692fcb9bb5cec66e70ef8bea5dd7106449006fb9d2",
+    "lines": 492,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/08_RELATED_WORK.md",
+    "bytes": 8463,
+    "sha256": "0eea6b4283811c1c6e3e0ca6b6326179341015f27cd76ad6f44ac1b51f0219b2",
+    "lines": 166,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/PAPER.md",
+    "bytes": 20799,
+    "sha256": "d74fcc37010df3c7cb17b2e6feb34e11199f982923ea57a51eed457f22ad8db3",
+    "lines": 392,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study2/README.md",
+    "bytes": 7652,
+    "sha256": "769e07dfccf675b818d7f2dbe34c5e5395d21a8980bc9a7408b2c7888fc7c64d",
+    "lines": 157,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study3/01_PROTOCOL.md",
+    "bytes": 10299,
+    "sha256": "34097ffba240a317ff3ff63c254a591ef7b6514ce0007994335fa8bd1ef87a7e",
+    "lines": 209,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study3/02_RISKS.md",
+    "bytes": 6988,
+    "sha256": "a1f45fea81e8e213f2c0da1f37afd8ca1013bf35d5449ee7486cf149faeaa655",
+    "lines": 149,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study3/03_LOG.md",
+    "bytes": 36251,
+    "sha256": "aadf19eed5b15056bed5133732a31173023dd976700e8ed5242c4e327ce50f74",
+    "lines": 823,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study3/04_FINDINGS.md",
+    "bytes": 10163,
+    "sha256": "d58a40eaa7664661b83508e4e2ea3df6a54514b1b308db3ff78f52be18ca0864",
+    "lines": 229,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study3/README.md",
+    "bytes": 8003,
+    "sha256": "2959a4a0488d93093be3668a532edbab176fa6b66769f146dd7d7d77fe65fd9b",
+    "lines": 170,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study4/01_PROTOCOL.md",
+    "bytes": 10124,
+    "sha256": "84f965d2029dd26763407ad54640875cd8d58b86bbc838969a0a838892958374",
+    "lines": 208,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study4/02_RISKS.md",
+    "bytes": 6359,
+    "sha256": "93047e28cb16cfc343f99122a0cbea4a8063271262dc9b1a56fc7ccdbd3801ad",
+    "lines": 138,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study4/03_LOG.md",
+    "bytes": 19011,
+    "sha256": "53410c8aaef814dfeee49efd4a8d214ee63edbb03a6f7dfe854c85a9df2e4b53",
+    "lines": 400,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "study4/README.md",
+    "bytes": 7514,
+    "sha256": "53f7937cbf1306629a8bd2b707e255ac5ad76884b3657e3e041a2686196fa385",
+    "lines": 164,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/bisect_speed.py",
+    "bytes": 11055,
+    "sha256": "b2b4675bc6701d9c3179b4a7909d1dc23ef03e8022093cabdc14201c54d1ee81",
+    "lines": 285,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/build_results.py",
+    "bytes": 10474,
+    "sha256": "f54160ac534290eba07265dd9fa254691d50516590bb0dd607c69ed4f9679f96",
+    "lines": 212,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/check_links.py",
+    "bytes": 2510,
+    "sha256": "1be9cd75ac0fa5505f38eb2eb8bed5023ed25789228db0867fc593aaf5864ed9",
+    "lines": 71,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/check_names.py",
+    "bytes": 9505,
+    "sha256": "5be82a8065ffe421586f7d733c9c1d216306179262a4af8a76d6cbc3b6f0d9b5",
+    "lines": 230,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/conv_sweep.py",
+    "bytes": 8195,
+    "sha256": "9e65520a90e919506f22ce984197add574e7ef72d1a49827f3068896962be6b4",
+    "lines": 210,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/diagnose_epochs.py",
+    "bytes": 6992,
+    "sha256": "358fdd2fdb40770b6b02d550ea965953f5da9ebabc58be5e918dffe2f08bf439",
+    "lines": 177,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/fetch_assets.py",
+    "bytes": 13877,
+    "sha256": "d322d5d7f92f3b20f566b8be214de797252459d34141a37d2358c82d11df1fd0",
+    "lines": 318,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/pack_imagenet100.py",
+    "bytes": 18041,
+    "sha256": "207fa8329b3e81fb80e3a651d6a318b54e0ae8d7457f52632021bc332dce10f6",
+    "lines": 402,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/s2_canaries.py",
+    "bytes": 2241,
+    "sha256": "c81ec0ba1f02d4690f8ce028c3363fbccc32872ce242f6a47ececdec4d3f4c3c",
+    "lines": 52,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/s2_cell_harness.py",
+    "bytes": 3795,
+    "sha256": "8e24fe7d5236e77df423cdbb3b0fd96e283dab1fd0cb55ce6b62218f46f731cd",
+    "lines": 87,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/s2_routing_canaries.py",
+    "bytes": 9592,
+    "sha256": "44b42fa7bb7068ba8282c37f85d1157946dcc01619a486ca9453e69197c9a2ac",
+    "lines": 200,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/s3_canaries.py",
+    "bytes": 13537,
+    "sha256": "b1ff0819dc4743979afdf650efa4556ee635f47faf7db956232740f1018256dd",
+    "lines": 283,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/s3_nb0_harness.py",
+    "bytes": 3669,
+    "sha256": "361bd8daed5427de5569ce2917cdec33bc158fa9a7b5822e1899c0d67eff3f30",
+    "lines": 90,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/s3_nb3_harness.py",
+    "bytes": 5380,
+    "sha256": "449b37d92aab530471490832b9de27fefa23bdef7ceae8d1cda9caf737529d7c",
+    "lines": 119,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/s4_harness.py",
+    "bytes": 12246,
+    "sha256": "f301b73a15359b90e8d7a22d054768ec76f621342539d3c6804f808bfd9f6d02",
+    "lines": 262,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/s4_msdnet_canaries.py",
+    "bytes": 16363,
+    "sha256": "5c651c5ec83b449210e58e4b6ca1b0b69ba1c9a1caa67ff463c80c2d1f16785b",
+    "lines": 420,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/validate_notebooks.py",
+    "bytes": 49506,
+    "sha256": "aef51fb1f2d69cbeddd582c852214d722dd983c7258cf0cc4baebad8920a9361",
+    "lines": 1062,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/verify_d55.py",
+    "bytes": 8365,
+    "sha256": "ff52f9260b40094bb65afadbc1b8a70bc10ecd9183073f1b7fa3b5fbf5cbef26",
+    "lines": 208,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  },
+  {
+    "path": "tools/verify_loader.py",
+    "bytes": 6141,
+    "sha256": "0680a7d587627d52e4945737a4af97dc2e372f16f971096493e82ef9b2127566",
+    "lines": 159,
+    "review": "All text loaded and hashed; documentation reviewed, code structurally inspected with targeted path review"
+  }
+]

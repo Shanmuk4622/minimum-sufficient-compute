@@ -1,0 +1,10 @@
+{
+  "run_id": "p7-msdnet-cifar100-jointexit-s2",
+  "account": "local",
+  "session_id": "local-1c8d861c2a",
+  "hostname": "CB-410-122",
+  "updated_at": "2026-09-01T16:55:57Z",
+  "state": "completed",
+  "epoch": 239,
+  "best_metric": 0.7409
+}

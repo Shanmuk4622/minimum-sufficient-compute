@@ -1,0 +1,3 @@
+arch,excess,acc_full
+resnet50,7.390000000000008,81.58
+vit_small_p16,6.9100000000000055,63.23

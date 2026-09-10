@@ -1,5 +1,16 @@
 # Study 4 — risk register
 
+> **Risk review — 2026-09-07.** P0–P3 artifacts are present and P3 was independently
+> checked from both test parquets. R-03 is **not fully retired**: the implemented
+> MSDNet variant has no matching published recipe reference. Its 55% floor is
+> cleared by measured final-exit accuracy, but does not establish fidelity to
+> official MSDNet. R-05: transformer excess observed (+6.91 pt), one seed.
+> R-06 still requires sample/seed uncertainty labels. R-07 found **D-91**:
+> generic final.json evaluates the bare classifier, not the jointly trained
+> final exit (MSDNet 1.81%/1.44%; P6 ResNet/ViT 1.24%/1.56%). Those generic
+> metrics are quarantined. No GPU re-evaluation was performed in this audit.
+> See [04_FINDINGS.md](04_FINDINGS.md). Original detector/response text follows.
+
 Each risk has a **detector**, a **trigger**, and a **response**, fixed before
 any result exists.
 

@@ -1,0 +1,163 @@
+{
+  "run_id": "p7-msdnet-cifar100-jointexit-s1",
+  "arch": "msdnet",
+  "family": "msdnet",
+  "dataset": "cifar100",
+  "seed": 1,
+  "sample_order_hash": "80031c23f8300724c6fbc588e4bccbe41c6392041782148727bb497b0132c4ad",
+  "config_hash": "49fd74a2ab0863226c5a3e8c535afbf6dfbef29c39d0bda5aca7334f5d2e5d69",
+  "budgets": {
+    "depth": {
+      "configs": [
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5"
+      ],
+      "K": 5,
+      "fractions": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "requested_fractions": [
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1.0
+      ],
+      "stage_cuts": [
+        4,
+        8,
+        12,
+        16,
+        20
+      ],
+      "n_blocks": 20,
+      "feature_dims": [
+        160,
+        256,
+        352,
+        448,
+        544
+      ],
+      "flops": [
+        33283328,
+        87492608,
+        168243968,
+        275537408,
+        409372928
+      ],
+      "rho": [
+        0.08130319746009194,
+        0.21372348295586366,
+        0.4109797118777722,
+        0.6730718842258177,
+        1.0
+      ],
+      "note": "prefix backbone + linear exit head; forward_prefix stops early. K is adaptive: a backbone with fewer blocks than requested exits carries fewer distinct depth budgets."
+    },
+    "resolution": {
+      "configs": [
+        "r16",
+        "r20",
+        "r24",
+        "r28",
+        "r32"
+      ],
+      "values": [
+        16,
+        20,
+        24,
+        28,
+        32
+      ],
+      "flops": [
+        102424832,
+        159977600,
+        230319872,
+        313451648,
+        409372928
+      ],
+      "rho": [
+        0.25019932925315475,
+        0.3907869550181882,
+        0.5626162753976736,
+        0.7656872903916109,
+        1.0
+      ],
+      "native_supported": true,
+      "native_supported_per_res": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "native_errors": {},
+      "note": "cost measured at NATIVE input size where the architecture tolerates it; otherwise an analytic quadratic-in-r model. The proxy sweep (downsample-then-upsample to 32px) shares this cost table and is labelled idealised."
+    },
+    "precision": {
+      "configs": [
+        "int4",
+        "int6",
+        "int8",
+        "fp16",
+        "fp32"
+      ],
+      "bits": [
+        4,
+        6,
+        8,
+        16,
+        32
+      ],
+      "flops": [
+        51171616,
+        76757424,
+        102343232,
+        204686464,
+        409372928
+      ],
+      "rho": [
+        0.125,
+        0.1875,
+        0.25,
+        0.5,
+        1.0
+      ],
+      "note": "analytic bit-operation model rho = bits/32. INT4/INT6 are simulated by fake quantisation; no T4 kernel exists to time. Never reported as measured latency."
+    }
+  },
+  "full_flops": 409372928,
+  "exit_count": 5,
+  "resolutions": [
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "input_res": 32,
+  "data_fingerprint": "NA",
+  "precisions": [
+    "int4",
+    "int6",
+    "int8",
+    "fp16",
+    "fp32"
+  ],
+  "tau_grid": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.5
+  ],
+  "created_utc": "2026-09-01T16:57:35Z",
+  "msc_lib_version": "1.0.0"
+}

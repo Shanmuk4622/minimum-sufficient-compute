@@ -1,5 +1,12 @@
 # How Much Computation Does an Image Need? A Noise-Ceiling-Corrected Atlas of Per-Sample Compute Requirements Across Fifteen Architectures
 
+> **Audit note — 2026-09-07.** Historical Study 1 draft, retained for later writing.
+> The current combined-paper recommendation is [PAPER_CLAIM.md](PAPER_CLAIM.md),
+> with [project progress](PROGRESS.md) and [Study 4 findings](study4/04_FINDINGS.md).
+> The PCA results reject the registered dominant-factor threshold; they do not
+> alone prove exactly three independent latent dimensions. Later ImageNet and
+> MSDNet results do not remove this draft's dataset/recipe-specific limitations.
+
 > **Scope note.** This document is the **CIFAR-100** paper. The ImageNet-100
 > study is not written up here yet — its results, the pre-registered scorecard
 > across both studies, and the novelty assessment are in

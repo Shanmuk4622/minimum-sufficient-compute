@@ -1,5 +1,13 @@
 # ImageNet-100 — FINDINGS
 
+> **Repository status — 2026-09-07.** This file retains its Study 1 scope and
+> historical record. Current repository-wide work is in [PROGRESS.md](../../PROGRESS.md).
+> Study 4 P0–P3 artifacts are available; MSDNet excess is **7.74/7.91 pt** in
+> two seeds. See [verified findings](../../study4/04_FINDINGS.md), including the
+> joint-run generic evaluation mismatch (D-91). ImageNet B11 does not by itself
+> resolve CIFAR's O-21. Earlier next actions and broader no-headroom claims
+> should not be used as the current paper plan.
+
 **What was predicted, what was measured, and what is actually new.**
 
 Companion to `docs/cifar100/10_FINAL_RESULTS.md`. Operational state is in

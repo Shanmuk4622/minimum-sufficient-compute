@@ -1,0 +1,58 @@
+[
+  {
+    "run_id": "p4-resnet20-cifar100-jointexit-s1",
+    "n": 10000,
+    "final_correct": 6802,
+    "any_correct": 7866,
+    "early_saves": 1064,
+    "sha256": "821be29cad2cc54fefa193382ce3b0c56f2b760c90f4a67a34cf6f1e8af79913"
+  },
+  {
+    "run_id": "p4-resnet32x4-cifar100-jointexit-s1",
+    "n": 10000,
+    "final_correct": 7783,
+    "any_correct": 8638,
+    "early_saves": 855,
+    "sha256": "718e01e2922b9492bf4baf9a5f10dd77a5f1217653215db0a7416458a6e8795d"
+  },
+  {
+    "run_id": "p4-vgg8-cifar100-jointexit-s1",
+    "n": 10000,
+    "final_correct": 7228,
+    "any_correct": 8143,
+    "early_saves": 915,
+    "sha256": "60f8ac89e3ce0b39b4db038e843d0f0be3a7d931bbda032b73f864580b3a0af6"
+  },
+  {
+    "run_id": "p6-resnet50-imagenet100-jointexit-s1",
+    "n": 10000,
+    "final_correct": 8158,
+    "any_correct": 8897,
+    "early_saves": 739,
+    "sha256": "671f1f3c7b4a5deba674069a41020805ef316d5745222a33a9eb1a53f41ade7c"
+  },
+  {
+    "run_id": "p6-vit_small_p16-imagenet100-jointexit-s1",
+    "n": 10000,
+    "final_correct": 6323,
+    "any_correct": 7014,
+    "early_saves": 691,
+    "sha256": "5f6103b04124a52c3401be7aba43ec6e208fa375032ef3bb5d9f62a64f9b7fa0"
+  },
+  {
+    "run_id": "p7-msdnet-cifar100-jointexit-s1",
+    "n": 10000,
+    "final_correct": 7393,
+    "any_correct": 8167,
+    "early_saves": 774,
+    "sha256": "2156aedef9dc9a8dc3a018ef4929cdc3a9630f49bcdc25529857c72ea4db4e55"
+  },
+  {
+    "run_id": "p7-msdnet-cifar100-jointexit-s2",
+    "n": 10000,
+    "final_correct": 7408,
+    "any_correct": 8199,
+    "early_saves": 791,
+    "sha256": "d5cc635010add4e6390913a423f45cf3e9521e896dea9f94407e1f18be121f1b"
+  }
+]

@@ -1,5 +1,17 @@
 # Study 3 — findings
 
+> **September 8 manuscript correction:** the original gate fits on all source-seed test images and evaluates the same images, even in its cross-seed arm. Its capture percentages are not held-out generalization evidence. The [new manuscript](../paper/README.md) uses a disjoint 4,000/2,000/4,000 router split; transferred logistic gain at target 0.80 is +0.175 points, with a descriptive interval including zero. The historical findings below are preserved as provenance.
+
+> **Current interpretation — 2026-09-07.** This is a historical Study 2/3 record.
+> Study 4 P3 is now verified: **+7.74/+7.91 pt**, H5 supported for the MSDNet
+> variant. See [Study 4 findings](../study4/04_FINDINGS.md) and
+> [current progress](../PROGRESS.md). All-budget negativity applies only to the
+> earlier difficulty-score sweep; the per-exit transfer sweep is positive at
+> budgets 0.40–0.60. An oracle above final accuracy is not proof of router
+> impossibility; cross-seed transfer is not established as unbiased debiasing.
+> Older stronger wording below is superseded by [PAPER_CLAIM.md](../PAPER_CLAIM.md).
+> Joint-run generic final-evaluation metrics require the D-91 repair.
+
 **All three questions have answers.** Two are clean; the third is a null whose
 design flaw is visible and stated. Every number traces to a CSV in `analysis/`.
 

@@ -1,5 +1,36 @@
 # Study 4 — live log
 
+## 2026-09-07 — Hugging Face reconciliation; P3 complete; D-91 identified
+
+Direct HF retrieval at revision `a6356f6a8dee0be1c8bdbfa55e07924b62976da8`
+found both P7 MSDNet runs complete at 240/240 epochs on 2026-09-01. A fresh
+per-image calculation exactly reproduces 73.93/74.08% final-exit accuracy,
+81.67/81.99% oracle accuracy and **7.74/7.91 pt excess** (774/791 early saves).
+**H5 supported in 2/2 seeds for this variant.** Recorded training: 6.9412 hours
+total, not the estimated 5; measured full FLOPs 0.4094 GFLOPs, not estimated 0.24.
+
+**D-91: evaluation-classifier mismatch.** Generic `metrics/final.json` reports
+1.81/1.44% for P7 and 1.24/1.56% for the P6 ResNet/ViT. Source inspection shows
+`run_oracle` evaluates the bare backbone separately from the jointly trained
+exit heads. The depth parquets use the exit heads; their P3 results were
+independently recomputed. Quarantine generic classifier metrics and audit other
+joint-run non-depth measurements. The recipe guard also reads accuracy keys
+absent from generic final.json. Repair is pending, not silently marked fixed.
+
+The results generator now includes P3 and compares baseline summaries on the
+same 46 eligible architecture/budget cells: confidence 58.10%, margin 58.38%,
+patience 55.62%. This corrects aggregation, not the source CSV or headroom curve.
+H6's registered negativity prediction remains falsified. The sign change is
+bracketed by 0.60/0.70 and does not establish a universal attainable ceiling.
+
+Evidence, checksums and scope: [04_FINDINGS.md](04_FINDINGS.md). Current next
+actions: [../PROGRESS.md](../PROGRESS.md). Older entries below describe the
+state at their date, including superseded “not yet run” and claim language.
+
+---
+
+
+
 **Newest first.** One entry per session: what changed, what it cost, what it
 **settled**, what is next.
 
@@ -36,10 +67,10 @@ and checked**.
 | **P0** | Figure 1 (ρ-sweep) + bootstrap CIs | free | **DONE — 3/3 CIs exclude zero** | `analysis/s4_bootstrap.csv`, `paper/figures/fig1_headroom.png` |
 | **P1** | margin + patience baselines | free | **DONE — H6 split: baselines agree, but headroom is NOT negative everywhere** | `analysis/s4_baselines.csv` |
 | **P2** | ImageNet-100 + transformer | ~20 GPU-h | **DONE — H4 and H4b SUPPORTED** | `runs/p6-*-jointexit-s1` |
-| **P3** | MSDNet, a designed early-exit net | **~5 GPU-h** (revised) | **BUILT — ready to run.** `S4_NB4_MSDNet.ipynb` | `runs/p7-msdnet-*` |
+| **P3** | MSDNet variant | **6.9412 training hours measured** | **DONE — H5 supported, 2/2 seeds** | `analysis/s4_msdnet.csv` |
 
-**Next action: run `S4_NB4_MSDNet.ipynb`, then `S4_NB3_Publish.ipynb`.**
-The manuscript is updated for H6. P3 is the last gap before submission.
+**Next action: address D-91 and the paper-readiness checks in [../PROGRESS.md](../PROGRESS.md).**
+P3 training and publication are complete.
 
 > **The ~15 GPU-h estimate was wrong, and low is the safe direction.** It was a
 > guess made before the architecture existed. With the configuration now in the
@@ -59,7 +90,7 @@ Do not edit the prediction column.
 | **H6** | conclusion is baseline-independent | negative at all 7 budgets | **spread ≤ 1.78 pt; POSITIVE at ρ ≤ 0.60** | **SPLIT** — see below |
 | **H4** | excess holds at ImageNet-100 scale | ≥ 2.0 pt, 2 of 2 | **7.39 / 6.91 pt** | **SUPPORTED** |
 | **H4b** | it holds on the **transformer** specifically | ≥ 2.0 pt | **6.91 pt** | **SUPPORTED** |
-| **H5** | excess holds on MSDNet | ≥ 2.0 pt, 2 of 2 seeds | _pending_ | _pending_ |
+| **H5** | excess holds on MSDNet | ≥ 2.0 pt, 2 of 2 seeds | **7.74 / 7.91 pt** | **SUPPORTED for this variant** |
 
 ---
 
