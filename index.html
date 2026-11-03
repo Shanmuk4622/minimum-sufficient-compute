@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Interactive Dice Roller</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Three.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            mono: ['Space Grotesk', 'monospace']
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-subtle': 'bounceSubtle 2s infinite',
+            'glow-pulse': 'glowPulse 2s ease-in-out infinite'
+          },
+          keyframes: {
+            bounceSubtle: {
+              '0%, 100%': { transform: 'translateY(-3%)' },
+              '50%': { transform: 'translateY(3%)' }
+            },
+            glowPulse: {
+              '0%, 100%': { opacity: '0.6', filter: 'drop-shadow(0 0 15px rgba(99, 102, 241, 0.6))' },
+              '50%': { opacity: '1', filter: 'drop-shadow(0 0 30px rgba(129, 140, 248, 0.9))' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Glassmorphic Utilities & Smooth Animations */
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .text-glow {
+      text-shadow: 0 0 20px rgba(129, 140, 248, 0.6);
+    }
+    .text-glow-gold {
+      text-shadow: 0 0 25px rgba(250, 204, 21, 0.8);
+    }
+    /* Hide scrollbars for crisp UI */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    canvas {
+      touch-action: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+
+  <!-- BACKGROUND GLOW EFFECT -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div id="bgGlow1" class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl transition-all duration-700"></div>
+    <div id="bgGlow2" class="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl transition-all duration-700"></div>
+  </div>
+
+  <!-- TOP HEADER NAVBAR -->
+  <header class="w-full border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-xl sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <!-- Logo & Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-none bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">DICE SPHERE 3D</h1>
+          <p class="text-xs text-slate-400 font-medium">Interactive Dice Roller</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Controls (Top Bar) -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- History Drawer Toggle -->
+        <button id="toggleHistoryBtn" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 text-xs font-semibold text-slate-300 transition-all hover:text-white" title="View Roll History">
+          <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="hidden sm:inline">History</span>
+          <span id="historyCountBadge" class="bg-indigo-600/80 text-white text-[10px] px-1.5 py-0.5 rounded-full font-mono">0</span>
+        </button>
+
+        <!-- Sound Toggle Button -->
+        <button id="toggleSoundBtn" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 text-slate-300 transition-all hover:text-white" title="Toggle Sound Audio">
+          <svg id="soundIconOn" class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+          </svg>
+          <svg id="soundIconOff" class="w-4 h-4 text-rose-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+          </svg>
+        </button>
+
+        <!-- Top-Right Settings Toggle -->
+        <button id="toggleSettingsBtn" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600/90 hover:bg-indigo-500 border border-indigo-400/30 text-xs font-semibold text-white shadow-lg shadow-indigo-600/20 transition-all" title="Customize Range & Dice">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span>Settings</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 relative flex flex-col items-center justify-between p-4 md:p-6 max-w-7xl w-full mx-auto z-10">
+
+    <!-- TOP-RIGHT CORNER SETTINGS PANEL (DYNAMICALLY TOGGLEABLE & ABSOLUTE IN TOP RIGHT) -->
+    <div id="settingsPanel" class="absolute top-4 right-4 sm:right-6 w-[calc(100%-2rem)] sm:w-96 glass-panel rounded-2xl p-5 shadow-2xl z-40 transition-all duration-300 transform scale-100 opacity-100 origin-top-right">
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-700/60">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+          </svg>
+          <h2 class="font-bold text-base text-slate-100">Dice Customization</h2>
+        </div>
+        <button id="closeSettingsBtn" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Quick RPG Dice Presets -->
+      <div class="mb-5">
+        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">RPG Dice Presets</label>
+        <div class="grid grid-cols-4 gap-2" id="presetButtonsGroup">
+          <button data-preset="D4" data-min="1" data-max="4" class="preset-btn px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition-all hover:border-indigo-500">D4</button>
+          <button data-preset="D6" data-min="1" data-max="6" class="preset-btn active-preset px-2.5 py-2 rounded-xl bg-indigo-600 border border-indigo-400 text-xs font-bold text-white shadow-md shadow-indigo-600/30 transition-all">D6</button>
+          <button data-preset="D8" data-min="1" data-max="8" class="preset-btn px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition-all hover:border-indigo-500">D8</button>
+          <button data-preset="D10" data-min="1" data-max="10" class="preset-btn px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition-all hover:border-indigo-500">D10</button>
+          <button data-preset="D12" data-min="1" data-max="12" class="preset-btn px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition-all hover:border-indigo-500">D12</button>
+          <button data-preset="D20" data-min="1" data-max="20" class="preset-btn px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition-all hover:border-indigo-500">D20</button>
+          <button data-preset="D100" data-min="1" data-max="100" class="preset-btn px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition-all hover:border-indigo-500">D100</button>
+          <button data-preset="CUSTOM" data-min="1" data-max="50" class="preset-btn px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition-all hover:border-indigo-500 text-indigo-300">Custom</button>
+        </div>
+      </div>
+
+      <!-- Min and Max Range Customization Inputs -->
+      <div class="mb-5">
+        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Custom Value Range</label>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] text-slate-400 mb-1">Minimum Value</label>
+            <input type="number" id="minRangeInput" value="1" min="-9999" max="9999" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-indigo-500 transition-colors" />
+          </div>
+          <div>
+            <label class="block text-[11px] text-slate-400 mb-1">Maximum Value</label>
+            <input type="number" id="maxRangeInput" value="6" min="-9999" max="9999" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-indigo-500 transition-colors" />
+          </div>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-2 flex items-center gap-1">
+          <svg class="w-3.5 h-3.5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Roll outcomes will generate integers in range [<span id="rangePreviewText" class="font-mono text-indigo-300">1 to 6</span>].
+        </p>
+      </div>
+
+      <!-- Theme Customization Options -->
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Visual Color Theme</label>
+        <div class="grid grid-cols-3 gap-2" id="themeButtonsGroup">
+          <button data-theme="cosmic" class="theme-btn active-theme p-2 rounded-xl border border-indigo-400 bg-slate-800 text-xs font-medium flex items-center gap-2">
+            <span class="w-3.5 h-3.5 rounded-full bg-indigo-500 inline-block"></span> Cosmic
+          </button>
+          <button data-theme="emerald" class="theme-btn p-2 rounded-xl border border-slate-700 bg-slate-800 text-xs font-medium flex items-center gap-2 hover:border-slate-500">
+            <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 inline-block"></span> Emerald
+          </button>
+          <button data-theme="cyber" class="theme-btn p-2 rounded-xl border border-slate-700 bg-slate-800 text-xs font-medium flex items-center gap-2 hover:border-slate-500">
+            <span class="w-3.5 h-3.5 rounded-full bg-rose-500 inline-block"></span> Cyber
+          </button>
+          <button data-theme="crimson" class="theme-btn p-2 rounded-xl border border-slate-700 bg-slate-800 text-xs font-medium flex items-center gap-2 hover:border-slate-500">
+            <span class="w-3.5 h-3.5 rounded-full bg-red-600 inline-block"></span> Crimson
+          </button>
+          <button data-theme="obsidian" class="theme-btn p-2 rounded-xl border border-slate-700 bg-slate-800 text-xs font-medium flex items-center gap-2 hover:border-slate-500">
+            <span class="w-3.5 h-3.5 rounded-full bg-amber-400 inline-block"></span> Obsidian
+          </button>
+          <button data-theme="amethyst" class="theme-btn p-2 rounded-xl border border-slate-700 bg-slate-800 text-xs font-medium flex items-center gap-2 hover:border-slate-500">
+            <span class="w-3.5 h-3.5 rounded-full bg-purple-500 inline-block"></span> Amethyst
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER 3D DICE DISPLAY STAGE -->
+    <div class="w-full flex-1 flex flex-col items-center justify-center relative min-h-[340px] md:min-h-[440px] my-2">
+      
+      <!-- STATUS / RESULT BANNER ABOVE DIE -->
+      <div id="statusBadge" class="mb-4 px-4 py-1.5 rounded-full glass-card border border-slate-700/60 flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-300 shadow-lg">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span id="statusText">Ready to Roll &bull; Range: <span class="font-mono text-indigo-300">1 - 6</span></span>
+      </div>
+
+      <!-- THREE.JS 3D CANVAS & OVERLAY PARTICLES -->
+      <div id="canvasContainer" class="w-full h-72 sm:h-96 max-w-lg relative flex items-center justify-center cursor-grab active:cursor-grabbing rounded-3xl overflow-hidden border border-slate-800/40 bg-slate-900/20 backdrop-blur-sm shadow-inner">
+        <!-- Overlay Canvas for Particle Celebration Effects -->
+        <canvas id="particleCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+        
+        <!-- Interactive Drag Hint -->
+        <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 text-[11px] text-slate-500 pointer-events-none flex items-center gap-1.5 bg-slate-950/60 px-3 py-1 rounded-full border border-slate-800/60">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+          <span>Drag die to rotate &bull; Click to roll</span>
+        </div>
+      </div>
+
+      <!-- DISPLAY RESULT NUMBER OVERLAY BADGE -->
+      <div id="resultOverlay" class="mt-4 transition-all duration-500 opacity-0 transform scale-75">
+        <div class="glass-card px-6 py-2 rounded-2xl border border-indigo-500/40 flex items-center gap-3 shadow-xl">
+          <span class="text-xs uppercase font-bold text-slate-400 tracking-wider">Result</span>
+          <span id="resultValue" class="text-3xl sm:text-4xl font-extrabold font-mono text-indigo-400 text-glow">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN ROLL BUTTON CONTAINER -->
+    <div class="w-full flex flex-col items-center gap-3 pb-2 z-20">
+      <!-- MAIN ROLL BUTTON -->
+      <button id="rollBtn" class="group relative px-10 py-4 sm:px-14 sm:py-5 rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold text-lg sm:text-xl tracking-wide shadow-2xl shadow-indigo-600/40 hover:shadow-indigo-500/60 transform hover:-translate-y-0.5 active:translate-y-0.5 transition-all duration-200 border border-indigo-400/30 flex items-center justify-center gap-3">
+        <svg id="rollIcon" class="w-6 h-6 transition-transform group-hover:rotate-180 duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        <span id="rollBtnText" class="drop-shadow-md">ROLL DIE</span>
+      </button>
+
+      <span class="text-[11px] text-slate-400 font-medium">Tip: Press <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 font-mono text-[10px]">Space</kbd> or click the 3D die to roll</span>
+    </div>
+
+  </main>
+
+  <!-- HISTORY & STATISTIC DRAWER (SLIDE-IN MODAL / PANEL) -->
+  <div id="historyDrawer" class="fixed inset-y-0 left-0 w-full sm:w-96 glass-panel z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+    <div class="p-4 border-b border-slate-700/60 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+        <h2 class="font-bold text-base text-slate-100">Roll Log & Statistics</h2>
+      </div>
+      <button id="closeHistoryBtn" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Quick Stats Summary Grid -->
+    <div class="p-4 grid grid-cols-4 gap-2 bg-slate-900/50 border-b border-slate-800">
+      <div class="bg-slate-800/80 p-2 rounded-xl text-center border border-slate-700/50">
+        <div class="text-[10px] text-slate-400 uppercase font-semibold">Total</div>
+        <div id="statTotal" class="text-sm font-bold font-mono text-indigo-400">0</div>
+      </div>
+      <div class="bg-slate-800/80 p-2 rounded-xl text-center border border-slate-700/50">
+        <div class="text-[10px] text-slate-400 uppercase font-semibold">Average</div>
+        <div id="statAvg" class="text-sm font-bold font-mono text-emerald-400">0</div>
+      </div>
+      <div class="bg-slate-800/80 p-2 rounded-xl text-center border border-slate-700/50">
+        <div class="text-[10px] text-slate-400 uppercase font-semibold">Highest</div>
+        <div id="statMax" class="text-sm font-bold font-mono text-amber-400">--</div>
+      </div>
+      <div class="bg-slate-800/80 p-2 rounded-xl text-center border border-slate-700/50">
+        <div class="text-[10px] text-slate-400 uppercase font-semibold">Lowest</div>
+        <div id="statMin" class="text-sm font-bold font-mono text-rose-400">--</div>
+      </div>
+    </div>
+
+    <!-- History List -->
+    <div id="historyList" class="flex-1 overflow-y-auto p-4 space-y-2.5 no-scrollbar">
+      <div id="emptyHistoryMsg" class="h-full flex flex-col items-center justify-center text-slate-500 py-12">
+        <svg class="w-12 h-12 mb-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+        </svg>
+        <p class="text-sm">No rolls recorded yet.</p>
+        <p class="text-xs text-slate-600 mt-1">Press "ROLL DIE" to get started!</p>
+      </div>
+    </div>
+
+    <!-- Drawer Footer Actions -->
+    <div class="p-4 border-t border-slate-800 flex gap-2">
+      <button id="clearHistoryBtn" class="flex-1 py-2 px-3 rounded-xl bg-slate-800 hover:bg-rose-950/40 hover:text-rose-300 border border-slate-700 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        Clear Log
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // --- STATE MANAGEMENT ---
+    const state = {
+      min: 1,
+      max: 6,
+      preset: 'D6',
+      currentVal: null, // Initial State is BLANK (no number)
+      isRolling: false,
+      theme: 'cosmic',
+      soundEnabled: true,
+      history: [],
+      stats: { total: 0, sum: 0, min: null, max: null }
+    };
+
+    // --- COLOR THEMES PALETTE ---
+    const THEMES = {
+      cosmic: { bg1: '#0f172a', bg2: '#1e1b4b', border: '#6366f1', text: '#ffffff', glow: '#818cf8', light: 0x818cf8 },
+      emerald: { bg1: '#064e3b', bg2: '#022c22', border: '#10b981', text: '#ffffff', glow: '#34d399', light: 0x34d399 },
+      cyber: { bg1: '#180b2d', bg2: '#050515', border: '#f43f5e', text: '#00f0ff', glow: '#f43f5e', light: 0x00f0ff },
+      crimson: { bg1: '#450a0a', bg2: '#1c1917', border: '#ef4444', text: '#ffffff', glow: '#f87171', light: 0xf87171 },
+      obsidian: { bg1: '#18181b', bg2: '#09090b', border: '#eab308', text: '#fef08a', glow: '#fde047', light: 0xfde047 },
+      amethyst: { bg1: '#3b0764', bg2: '#1e1b4b', border: '#c084fc', text: '#ffffff', glow: '#e9d5ff', light: 0xc084fc }
+    };
+
+    // --- WEB AUDIO API SOUND SYNTHESIZER ---
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      playClick() {
+        if (!state.soundEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(180 + Math.random() * 400, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 0.04);
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.04);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.04);
+        } catch (e) {}
+      }
+      playThud() {
+        if (!state.soundEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(130, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(25, this.ctx.currentTime + 0.22);
+          gain.gain.setValueAtTime(0.4, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.22);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.22);
+        } catch (e) {}
+      }
+      playChime() {
+        if (!state.soundEnabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const notes = [523.25, 659.25, 783.99, 1046.50];
+          notes.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.07);
+            gain.gain.setValueAtTime(0.18, this.ctx.currentTime + idx * 0.07);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.07 + 0.3);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + idx * 0.07);
+            osc.stop(this.ctx.currentTime + idx * 0.07 + 0.3);
+          });
+        } catch (e) {}
+      }
+    }
+
+    const sound = new SoundEngine();
+
+    // --- PARTICLE CELEBRATION ENGINE ---
+    class ParticleEngine {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.particles = [];
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+      }
+      resize() {
+        if (!this.canvas.parentElement) return;
+        this.canvas.width = this.canvas.parentElement.clientWidth;
+        this.canvas.height = this.canvas.parentElement.clientHeight;
+      }
+      burst(isMax = false) {
+        this.resize();
+        const count = isMax ? 70 : 35;
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        const colors = isMax 
+          ? ['#facc15', '#fbbf24', '#f59e0b', '#ffffff', '#eab308'] 
+          : [THEMES[state.theme].glow, THEMES[state.theme].border, '#ffffff', '#a5b4fc'];
+
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = (Math.random() * 6 + 2) * (isMax ? 1.5 : 1.0);
+          this.particles.push({
+            x: centerX,
+            y: centerY,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 1.5,
+            size: Math.random() * 6 + 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: 1,
+            decay: Math.random() * 0.02 + 0.015,
+            rotation: Math.random() * Math.PI * 2,
+            vRot: (Math.random() - 0.5) * 0.2
+          });
+        }
+      }
+      update() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+          const p = this.particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.12; // Gravity
+          p.alpha -= p.decay;
+          p.rotation += p.vRot;
+
+          if (p.alpha <= 0) {
+            this.particles.splice(i, 1);
+            continue;
+          }
+
+          this.ctx.save();
+          this.ctx.globalAlpha = p.alpha;
+          this.ctx.translate(p.x, p.y);
+          this.ctx.rotate(p.rotation);
+          this.ctx.fillStyle = p.color;
+          this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          this.ctx.restore();
+        }
+      }
+    }
+
+    // --- THREE.JS 3D SCENE & ENGINE SETUP ---
+    let scene, camera, renderer, dieMesh, pointLight;
+    let particleEngine;
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+
+    // Create Dynamic Canvas Texture for Die Faces
+    function createDieFaceTexture(text = null) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+      const t = THEMES[state.theme] || THEMES.cosmic;
+
+      // Radial Background Gradient
+      const grad = ctx.createRadialGradient(256, 256, 40, 256, 256, 320);
+      grad.addColorStop(0, t.bg1);
+      grad.addColorStop(1, t.bg2);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 512, 512);
+
+      // Outer Stylish Metallic Frame
+      ctx.strokeStyle = t.border;
+      ctx.lineWidth = 18;
+      ctx.strokeRect(20, 20, 472, 472);
+
+      // Inner Frame
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(38, 38, 436, 436);
+
+      // Decorative Corner Accents
+      ctx.fillStyle = t.border;
+      const cs = 22;
+      ctx.fillRect(20, 20, cs, cs);
+      ctx.fillRect(512 - 20 - cs, 20, cs, cs);
+      ctx.fillRect(20, 512 - 20 - cs, cs, cs);
+      ctx.fillRect(512 - 20 - cs, 512 - 20 - cs, cs, cs);
+
+      // DRAW NUMBER (ONLY IF PROVIDED, INITIALLY BLANK!)
+      if (text !== null && text !== undefined && text !== '') {
+        ctx.shadowColor = t.glow;
+        ctx.shadowBlur = 30;
+        ctx.fillStyle = t.text;
+        
+        const strVal = text.toString();
+        const fontSize = strVal.length > 4 ? 100 : strVal.length > 2 ? 140 : 210;
+        ctx.font = `bold ${fontSize}px "Space Grotesk", "Outfit", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(strVal, 256, 256);
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+      return texture;
+    }
+
+    // Generate 3D Polyhedral Geometry Based on Preset
+    function createDieGeometry(preset) {
+      switch(preset) {
+        case 'D4': return new THREE.TetrahedronGeometry(1.6);
+        case 'D6': return new THREE.BoxGeometry(2, 2, 2);
+        case 'D8': return new THREE.OctahedronGeometry(1.6);
+        case 'D12': return new THREE.DodecahedronGeometry(1.5);
+        case 'D20': return new THREE.IcosahedronGeometry(1.5);
+        case 'D100': return new THREE.IcosahedronGeometry(1.5, 2);
+        case 'D10': return new THREE.DodecahedronGeometry(1.4);
+        default: return new THREE.BoxGeometry(2, 2, 2);
+      }
+    }
+
+    // Build/Rebuild 3D Mesh
+    function updateDieMesh() {
+      if (dieMesh) scene.remove(dieMesh);
+
+      const geometry = createDieGeometry(state.preset);
+      const texture = createDieFaceTexture(state.currentVal);
+
+      // Create Physical Metallic Material
+      const material = new THREE.MeshPhysicalMaterial({
+        map: texture,
+        roughness: 0.15,
+        metalness: 0.15,
+        clearcoat: 0.8,
+        clearcoatRoughness: 0.1,
+        reflectivity: 0.9,
+        transmission: 0.05
+      });
+
+      dieMesh = new THREE.Mesh(geometry, material);
+      scene.add(dieMesh);
+
+      // Update Point Light Color based on theme
+      if (pointLight) {
+        pointLight.color.setHex(THEMES[state.theme].light);
+      }
+    }
+
+    // Initialize 3D Engine Scene
+    function init3D() {
+      const container = document.getElementById('canvasContainer');
+      const particleCanvas = document.getElementById('particleCanvas');
+      particleEngine = new ParticleEngine(particleCanvas);
+
+      scene = new THREE.Scene();
+
+      camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.z = 5.8;
+
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      container.appendChild(renderer.domElement);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      dirLight.position.set(5, 8, 5);
+      scene.add(dirLight);
+
+      pointLight = new THREE.PointLight(THEMES[state.theme].light, 2, 10);
+      pointLight.position.set(-3, 2, 3);
+      scene.add(pointLight);
+
+      updateDieMesh();
+
+      // Mouse & Touch Drag Controls to Rotate 3D Model manually
+      const domEl = renderer.domElement;
+      
+      const onPointerDown = (e) => {
+        if (state.isRolling) return;
+        isDragging = true;
+        previousMousePosition = {
+          x: e.clientX || (e.touches && e.touches[0].clientX),
+          y: e.clientY || (e.touches && e.touches[0].clientY)
+        };
+      };
+
+      const onPointerMove = (e) => {
+        if (!isDragging || state.isRolling || !dieMesh) return;
+        const currentX = e.clientX || (e.touches && e.touches[0].clientX);
+        const currentY = e.clientY || (e.touches && e.touches[0].clientY);
+        
+        const deltaX = currentX - previousMousePosition.x;
+        const deltaY = currentY - previousMousePosition.y;
+
+        dieMesh.rotation.y += deltaX * 0.01;
+        dieMesh.rotation.x += deltaY * 0.01;
+
+        previousMousePosition = { x: currentX, y: currentY };
+      };
+
+      const onPointerUp = () => { isDragging = false; };
+
+      domEl.addEventListener('mousedown', onPointerDown);
+      domEl.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('mouseup', onPointerUp);
+
+      domEl.addEventListener('touchstart', onPointerDown, { passive: true });
+      domEl.addEventListener('touchmove', onPointerMove, { passive: true });
+      window.addEventListener('touchend', onPointerUp);
+
+      // Click Canvas directly to Roll
+      domEl.addEventListener('click', (e) => {
+        if (!isDragging) triggerRoll();
+      });
+
+      // Window Resize Listener
+      window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+
+      // Start Animation Render Loop
+      animate(0);
+    }
+
+    // Animation Loop
+    let rotSpeedX = 0, rotSpeedY = 0, rotSpeedZ = 0;
+    let rollStartTime = 0;
+
+    function animate(time) {
+      requestAnimationFrame(animate);
+
+      if (particleEngine) particleEngine.update();
+
+      if (dieMesh) {
+        if (state.isRolling) {
+          // Dynamic tumble spin physics
+          dieMesh.rotation.x += rotSpeedX;
+          dieMesh.rotation.y += rotSpeedY;
+          dieMesh.rotation.z += rotSpeedZ;
+
+          rotSpeedX *= 0.985;
+          rotSpeedY *= 0.985;
+          rotSpeedZ *= 0.985;
+
+          // Bobbing effect
+          dieMesh.position.y = Math.sin((time - rollStartTime) * 0.015) * 0.25;
+
+          // Sound rattle frequency
+          if (Math.random() < 0.35) sound.playClick();
+        } else if (!isDragging) {
+          // Gentle Idle Sway & Floating
+          dieMesh.rotation.y += 0.005;
+          dieMesh.rotation.x = Math.sin(time * 0.001) * 0.1;
+          dieMesh.position.y = Math.sin(time * 0.002) * 0.12;
+        }
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    // --- ROLL MECHANICS LOGIC ---
+    function triggerRoll() {
+      if (state.isRolling) return;
+
+      // Validate Min / Max Range
+      let min = parseInt(document.getElementById('minRangeInput').value) || 1;
+      let max = parseInt(document.getElementById('maxRangeInput').value) || 6;
+      if (min > max) {
+        const tmp = min; min = max; max = tmp;
+        document.getElementById('minRangeInput').value = min;
+        document.getElementById('maxRangeInput').value = max;
+      }
+      state.min = min;
+      state.max = max;
+
+      state.isRolling = true;
+      rollStartTime = performance.now();
+
+      // UI Rolling States
+      const rollBtn = document.getElementById('rollBtn');
+      const rollBtnText = document.getElementById('rollBtnText');
+      const rollIcon = document.getElementById('rollIcon');
+      const statusText = document.getElementById('statusText');
+
+      rollBtn.disabled = true;
+      rollBtn.classList.add('opacity-90', 'scale-95');
+      rollBtnText.innerText = "ROLLING...";
+      rollIcon.classList.add('animate-spin');
+      statusText.innerHTML = `Tumbling... Range: <span class="font-mono text-indigo-300">${state.min} to ${state.max}</span>`;
+
+      // Set tumble angular velocity
+      rotSpeedX = (Math.random() + 1.2) * 0.28;
+      rotSpeedY = (Math.random() + 1.2) * 0.28;
+      rotSpeedZ = (Math.random() + 1.2) * 0.18;
+
+      const duration = 1400; // ms
+
+      setTimeout(() => {
+        // Calculate Random Integer in Range [Min, Max]
+        const range = state.max - state.min + 1;
+        const rolledNumber = Math.floor(Math.random() * range) + state.min;
+        state.currentVal = rolledNumber;
+
+        // Reset mesh position & smoothly align face front
+        dieMesh.position.y = 0;
+        dieMesh.rotation.set(0, 0, 0);
+
+        // Update Mesh Canvas Texture with the Result Number
+        const newTexture = createDieFaceTexture(rolledNumber);
+        dieMesh.material.map = newTexture;
+        dieMesh.material.needsUpdate = true;
+
+        // Sound Effects
+        const isMaxRoll = rolledNumber === state.max;
+        if (isMaxRoll) {
+          sound.playChime();
+        } else {
+          sound.playThud();
+        }
+
+        // Particle FX Burst
+        particleEngine.burst(isMaxRoll);
+
+        // Update UI Result Badge & Overlay
+        const resultValue = document.getElementById('resultValue');
+        const resultOverlay = document.getElementById('resultOverlay');
+        resultValue.innerText = rolledNumber;
+        resultOverlay.classList.remove('opacity-0', 'scale-75');
+        resultOverlay.classList.add('opacity-100', 'scale-100');
+
+        if (isMaxRoll) {
+          resultValue.className = "text-3xl sm:text-4xl font-extrabold font-mono text-amber-300 text-glow-gold animate-bounce-subtle";
+          statusText.innerHTML = `<span class="text-amber-400 font-bold">✨ CRITICAL HIGH ROLL! ✨ (${rolledNumber})</span>`;
+        } else {
+          resultValue.className = "text-3xl sm:text-4xl font-extrabold font-mono text-indigo-400 text-glow";
+          statusText.innerHTML = `Rolled: <span class="font-bold text-indigo-300">${rolledNumber}</span> &bull; Range: [${state.min} - ${state.max}]`;
+        }
+
+        // Reset Roll Button UI
+        rollBtn.disabled = false;
+        rollBtn.classList.remove('opacity-90', 'scale-95');
+        rollBtnText.innerText = "ROLL AGAIN";
+        rollIcon.classList.remove('animate-spin');
+        state.isRolling = false;
+
+        // Log Roll to History
+        addHistoryEntry(rolledNumber, state.preset, state.min, state.max);
+      }, duration);
+    }
+
+    // --- HISTORY & STATS MANAGEMENT ---
+    function addHistoryEntry(value, preset, min, max) {
+      const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      state.history.unshift({ value, preset, min, max, timestamp });
+
+      // Update Stats
+      state.stats.total++;
+      state.stats.sum += value;
+      if (state.stats.max === null || value > state.stats.max) state.stats.max = value;
+      if (state.stats.min === null || value < state.stats.min) state.stats.min = value;
+
+      updateStatsUI();
+      renderHistoryUI();
+    }
+
+    function updateStatsUI() {
+      document.getElementById('statTotal').innerText = state.stats.total;
+      document.getElementById('statAvg').innerText = state.stats.total > 0 ? (state.stats.sum / state.stats.total).toFixed(1) : 0;
+      document.getElementById('statMax').innerText = state.stats.max !== null ? state.stats.max : '--';
+      document.getElementById('statMin').innerText = state.stats.min !== null ? state.stats.min : '--';
+      document.getElementById('historyCountBadge').innerText = state.stats.total;
+    }
+
+    function renderHistoryUI() {
+      const historyList = document.getElementById('historyList');
+      const emptyMsg = document.getElementById('emptyHistoryMsg');
+
+      if (state.history.length === 0) {
+        if (emptyMsg) emptyMsg.classList.remove('hidden');
+        return;
+      }
+
+      if (emptyMsg) emptyMsg.classList.add('hidden');
+      historyList.innerHTML = '';
+
+      state.history.forEach((entry) => {
+        const isMax = entry.value === entry.max;
+        const item = document.createElement('div');
+        item.className = `p-3 rounded-xl border flex items-center justify-between transition-all ${
+          isMax 
+            ? 'bg-amber-950/30 border-amber-500/40 text-amber-200' 
+            : 'bg-slate-900/70 border-slate-800 text-slate-200'
+        }`;
+
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg ${isMax ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40' : 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30'} flex items-center justify-center font-bold font-mono text-sm">
+              ${entry.preset}
+            </div>
+            <div>
+              <div class="text-xs font-medium text-slate-400">Range: [${entry.min} - ${entry.max}]</div>
+              <div class="text-[10px] text-slate-500">${entry.timestamp}</div>
+            </div>
+          </div>
+          <div class="text-xl font-extrabold font-mono ${isMax ? 'text-amber-400 text-glow-gold' : 'text-indigo-300'}">
+            ${entry.value}
+          </div>
+        `;
+
+        historyList.appendChild(item);
+      });
+    }
+
+    // --- EVENT LISTENERS & UI HANDLERS ---
+    window.addEventListener('DOMContentLoaded', () => {
+      init3D();
+
+      // Roll Button Event
+      document.getElementById('rollBtn').addEventListener('click', triggerRoll);
+
+      // Keyboard Spacebar / Enter Shortcut to Roll
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && e.target.tagName !== 'INPUT') {
+          e.preventDefault();
+          triggerRoll();
+        }
+      });
+
+      // Settings Panel Open/Close Handlers
+      const settingsPanel = document.getElementById('settingsPanel');
+      document.getElementById('toggleSettingsBtn').addEventListener('click', () => {
+        settingsPanel.classList.toggle('scale-100');
+        settingsPanel.classList.toggle('opacity-100');
+        settingsPanel.classList.toggle('scale-95');
+        settingsPanel.classList.toggle('opacity-0');
+        settingsPanel.classList.toggle('pointer-events-none');
+      });
+      document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+        settingsPanel.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+        settingsPanel.classList.remove('scale-100', 'opacity-100');
+      });
+
+      // History Drawer Open/Close Handlers
+      const historyDrawer = document.getElementById('historyDrawer');
+      document.getElementById('toggleHistoryBtn').addEventListener('click', () => {
+        historyDrawer.classList.remove('-translate-x-full');
+      });
+      document.getElementById('closeHistoryBtn').addEventListener('click', () => {
+        historyDrawer.classList.add('-translate-x-full');
+      });
+
+      // Clear History Handler
+      document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+        state.history = [];
+        state.stats = { total: 0, sum: 0, min: null, max: null };
+        updateStatsUI();
+        document.getElementById('historyList').innerHTML = `
+          <div id="emptyHistoryMsg" class="h-full flex flex-col items-center justify-center text-slate-500 py-12">
+            <svg class="w-12 h-12 mb-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+            <p class="text-sm">No rolls recorded yet.</p>
+          </div>`;
+      });
+
+      // Sound Toggle Handler
+      document.getElementById('toggleSoundBtn').addEventListener('click', () => {
+        state.soundEnabled = !state.soundEnabled;
+        document.getElementById('soundIconOn').classList.toggle('hidden', !state.soundEnabled);
+        document.getElementById('soundIconOff').classList.toggle('hidden', state.soundEnabled);
+      });
+
+      // Range Inputs Dynamic Update
+      const minInput = document.getElementById('minRangeInput');
+      const maxInput = document.getElementById('maxRangeInput');
+      const rangePreviewText = document.getElementById('rangePreviewText');
+
+      function updateRangeUI() {
+        const minVal = parseInt(minInput.value) || 1;
+        const maxVal = parseInt(maxInput.value) || 6;
+        state.min = minVal;
+        state.max = maxVal;
+        rangePreviewText.innerText = `${minVal} to ${maxVal}`;
+        if (!state.isRolling && state.currentVal === null) {
+          document.getElementById('statusText').innerHTML = `Ready to Roll &bull; Range: <span class="font-mono text-indigo-300">${minVal} - ${maxVal}</span>`;
+        }
+      }
+
+      minInput.addEventListener('input', updateRangeUI);
+      maxInput.addEventListener('input', updateRangeUI);
+
+      // RPG Preset Buttons Selection
+      const presetButtons = document.querySelectorAll('.preset-btn');
+      presetButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          presetButtons.forEach(b => {
+            b.classList.remove('bg-indigo-600', 'text-white', 'border-indigo-400', 'shadow-md');
+            b.classList.add('bg-slate-800', 'border-slate-700');
+          });
+
+          btn.classList.remove('bg-slate-800', 'border-slate-700');
+          btn.classList.add('bg-indigo-600', 'text-white', 'border-indigo-400', 'shadow-md');
+
+          const preset = btn.dataset.preset;
+          const min = parseInt(btn.dataset.min);
+          const max = parseInt(btn.dataset.max);
+
+          state.preset = preset;
+          minInput.value = min;
+          maxInput.value = max;
+          updateRangeUI();
+
+          // Rebuild 3D Mesh for Selected Geometry
+          updateDieMesh();
+        });
+      });
+
+      // Color Theme Selection Handlers
+      const themeButtons = document.querySelectorAll('.theme-btn');
+      themeButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          themeButtons.forEach(b => b.classList.remove('border-indigo-400'));
+          btn.classList.add('border-indigo-400');
+          state.theme = btn.dataset.theme;
+
+          // Re-render Mesh with New Theme Palette
+          updateDieMesh();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
